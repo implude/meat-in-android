@@ -1,0 +1,17 @@
+name: Base Lint
+
+on:
+  pull_request:
+    paths:
+      - "**/*.kt"
+      - ".github/workflows/lint.yml"
+
+jobs:
+  kotlin-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: ktlint
+        uses: "vroy/gha-kotlin-linter@v3"

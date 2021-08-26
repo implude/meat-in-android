@@ -1,0 +1,68 @@
+name: Android CI
+
+on:
+  pull_request:
+    paths:
+      - "app/**"
+      - "build.gradle"
+      - "gradle.properties"
+      - "settings.gradle"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Assemble debug with Gradle
+        run: ./gradlew assembleDebug
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # Execute unit tests
+      - name: Unit Test
+        run: ./gradlew testDebugUnitTest
+
+      - name: Android Test Report
+        uses: asadmansr/android-test-report-action@v1.2.0
+        if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
+
+  instrumented-test-api-23:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Android Emulator Runner (API 23)
+        uses: ReactiveCircus/android-emulator-runner@v2.17.0
+        with:
+          api-level: 23
+          script: ./gradlew connectedAndroidTest
