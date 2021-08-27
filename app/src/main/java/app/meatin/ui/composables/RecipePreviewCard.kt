@@ -99,6 +99,6 @@ fun RecipeCardPreview() {
         title = "나이아가라 폭포",
         subtitle = "집에서도 시원한 나이아가라 폭포를 즐겨보세요.",
         imageUri = URI("https://ychef.files.bbci.co.uk/976x549/p04kt0s1.jpg"),
-        hearts = 777
+        hearts = 777,
     )
 }
