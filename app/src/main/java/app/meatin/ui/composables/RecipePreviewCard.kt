@@ -1,6 +1,7 @@
 package app.meatin.ui.composables
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -34,11 +35,13 @@ fun RecipeCard(
     subtitle: String,
     imageUri: URI,
     hearts: Int,
+    onClick: () -> Unit,
 ) {
     Card(
         modifier
             .requiredSize(161.dp, 142.dp)
-            .clip(RoundedCornerShape(5.dp)),
+            .clip(RoundedCornerShape(5.dp))
+            .clickable { onClick() },
         backgroundColor = Color.White,
     ) {
         Column {
@@ -100,5 +103,5 @@ fun RecipeCardPreview() {
         subtitle = "집에서도 시원한 나이아가라 폭포를 즐겨보세요.",
         imageUri = URI("https://ychef.files.bbci.co.uk/976x549/p04kt0s1.jpg"),
         hearts = 777,
-    )
+    ) {}
 }
