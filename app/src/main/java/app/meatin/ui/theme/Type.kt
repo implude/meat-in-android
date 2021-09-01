@@ -18,32 +18,32 @@ val PretendardFontFamily = FontFamily(
 val Typography = Typography(
     h1 = TextStyle(
         fontFamily = PretendardFontFamily,
-        fontWeight = FontWeight.Bold,
-        fontSize = 24.sp,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp,
         color = Color.Black,
     ),
     h2 = TextStyle(
         fontFamily = PretendardFontFamily,
         fontWeight = FontWeight.Medium,
-        fontSize = 16.sp,
+        fontSize = 14.sp,
         color = Color.Black.copy(alpha = 0.6f),
-    ),
-    subtitle1 = TextStyle(
-        fontFamily = PretendardFontFamily,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 20.sp,
-        color = Color.Black,
     ),
     body1 = TextStyle(
         fontFamily = PretendardFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 14.sp,
         color = Color.Black,
     ),
     body2 = TextStyle(
         fontFamily = PretendardFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
+        fontSize = 12.sp,
+        color = Color.Black,
+    ),
+    caption = TextStyle(
+        fontFamily = PretendardFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
         color = Color.Black.copy(alpha = 0.4f),
     ),
 )
