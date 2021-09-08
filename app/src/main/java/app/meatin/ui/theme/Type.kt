@@ -42,7 +42,7 @@ val Typography = Typography(
     ),
     caption = TextStyle(
         fontFamily = PretendardFontFamily,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Medium,
         fontSize = 12.sp,
         color = Color.Black.copy(alpha = 0.4f),
     ),
