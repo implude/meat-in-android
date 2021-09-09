@@ -51,7 +51,7 @@ fun Advertisement(
 
         Column(
             Modifier
-                .padding(14.dp)
+                .padding(16.dp)
                 .align(Alignment.BottomStart)
         ) {
             Text(
