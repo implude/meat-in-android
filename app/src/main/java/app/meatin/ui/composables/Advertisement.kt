@@ -23,7 +23,6 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import java.net.URI
 
-
 @ExperimentalCoilApi
 @Composable
 fun Advertisement(
@@ -35,10 +34,10 @@ fun Advertisement(
 ) {
     Box(
         modifier
-        .size(343.dp, 88.dp)
-        .clip(RoundedCornerShape(5.dp))
-        .clickable { onClick() }
-        .background(Color.White)
+            .size(343.dp, 88.dp)
+            .clip(RoundedCornerShape(5.dp))
+            .clickable { onClick() }
+            .background(Color.White)
     ) {
         Image(
             modifier = Modifier
@@ -53,7 +52,8 @@ fun Advertisement(
         Column(
             Modifier
                 .padding(14.dp)
-                .align(Alignment.BottomStart)) {
+                .align(Alignment.BottomStart)
+        ) {
             Text(
                 text = title,
                 style = Typography.h1,
@@ -65,9 +65,7 @@ fun Advertisement(
                 color = Color.White
             )
         }
-
     }
-
 }
 
 @ExperimentalCoilApi
