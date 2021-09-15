@@ -65,7 +65,7 @@ fun PostCard(
             val format = DateTimeFormatter.ofPattern("yyyy-MM-dd")
             val str: String = format.format(date)
             Column(Modifier.align(Alignment.TopStart)) {
-                Row() {
+                Row {
                     Image(
                         modifier = Modifier
                             .height(55.dp)
@@ -75,8 +75,8 @@ fun PostCard(
                         ),
                         contentDescription = null
                     )
-                    Column() {
-                        Row() {
+                    Column {
+                        Row {
                             Image(
                                 modifier = Modifier
                                     .height(15.dp)
@@ -127,7 +127,7 @@ fun PostCard(
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                 )
-                Row() {
+                Row {
                     val heartIcon = if (isHearted) {
                         Icons.Default.Favorite
                     } else {
