@@ -47,16 +47,16 @@ fun PostCard(
             .clip(RoundedCornerShape(5.dp))
             .clickable{onClick()},
         backgroundColor=Color.White,
-    ){
+    ) {
         Box(
             Modifier
                 .fillMaxSize()
                 .padding(12.dp)
-        ){
+        ) {
             val format=DateTimeFormatter.ofPattern("yyyy-MM-dd")
             val str: String=format.format(date)
             Column(Modifier.align(Alignment.TopStart)){
-                Row(){
+                Row() {
                     Image(
                         modifier=Modifier
                             .height(55.dp)
@@ -66,8 +66,8 @@ fun PostCard(
                         ),
                         contentDescription=null
                     )
-                    Column(){
-                        Row(){
+                    Column() {
+                        Row() {
                             Image(
                                 modifier=Modifier
                                     .height(15.dp)
@@ -118,42 +118,42 @@ fun PostCard(
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
             )
-            Row(){
-                val heartIcon = if (isHearted) {
-                    Icons.Default.Favorite
-                } else {
-                    Icons.Default.FavoriteBorder
+                Row() {
+                    val heartIcon = if (isHearted) {
+                        Icons.Default.Favorite
+                    } else {
+                        Icons.Default.FavoriteBorder
+                    }
+
+                    Icon(
+                        modifier = Modifier
+                            .padding(end = 2.dp)
+                            .size(12.dp),
+                        imageVector = heartIcon,
+                        contentDescription = null,
+                        tint = DarkFlamingo,
+                    )
+                    Text(
+                        text = hearts.toString(),
+                        style = Typography.body2,
+                        color = DarkFlamingo,
+                    )
+                    Spacer(modifier = Modifier.width(11.dp))
+                    Icon(
+                        modifier = Modifier
+                            .padding(end = 2.dp)
+                            .size(12.dp),
+                        imageVector = Icons.Default.Send,
+                        contentDescription = null,
+                        tint = Color.Gray,
+                    )
+                    Text(
+                        text = chats.toString(),
+                        style = Typography.body2,
+                        color = Color.Gray,
+                    )
+
                 }
-
-                Icon(
-                    modifier = Modifier
-                        .padding(end = 2.dp)
-                        .size(12.dp),
-                    imageVector = heartIcon,
-                    contentDescription = null,
-                    tint = DarkFlamingo,
-                )
-                Text(
-                    text = hearts.toString(),
-                    style = Typography.body2,
-                    color = DarkFlamingo,
-                )
-                Spacer(modifier = Modifier.width(11.dp))
-                Icon(
-                    modifier = Modifier
-                        .padding(end = 2.dp)
-                        .size(12.dp),
-                    imageVector = Icons.Default.Send,
-                    contentDescription = null,
-                    tint = Color.Gray,
-                )
-                Text(
-                    text = chats.toString(),
-                    style = Typography.body2,
-                    color = Color.Gray,
-                )
-
-            }
             }
         }
     }
@@ -165,16 +165,16 @@ fun PostCard(
 @Composable
 fun PostCardPreview() {
     PostCard(
-        imageUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
+        imageUri= "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
         profileUri= "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
         mainimageUri= "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
-        classes = "유사 백선생" ,
-        hearts = 40,
-        chats = 50,
-        isHearted = true,
-        onClick = {},
-        username = "김응애",
-        date = LocalDateTime.of(1900, 1, 2 ,1,0, 0),
-        content = "응애"
+        classes= "유사 백선생" ,
+        hearts= 40,
+        chats= 50,
+        isHearted= true,
+        onClick= {},
+        username= "김응애",
+        date= LocalDateTime.of(1900, 1, 2 ,1,0, 0),
+        content= "응애"
     )
 }
