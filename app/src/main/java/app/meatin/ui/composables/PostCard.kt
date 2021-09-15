@@ -115,12 +115,14 @@ fun PostCard(
                         )
                     }
                 }
+                Spacer(modifier = Modifier.height(12.dp))
                 Text(
                     text = content,
                     overflow = TextOverflow.Ellipsis,
                     style = Typography.body2,
                     maxLines = 1,
                 )
+                Spacer(modifier = Modifier.height(12.dp))
                 Image(
                     modifier = Modifier
                         .height(170.dp)
@@ -131,6 +133,7 @@ fun PostCard(
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                 )
+                Spacer(modifier = Modifier.height(12.dp))
                 Row {
                     val heartIcon = if (isHearted) {
                         Icons.Default.Favorite
