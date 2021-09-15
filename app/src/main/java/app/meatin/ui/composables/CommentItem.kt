@@ -47,7 +47,9 @@ fun CommentItem(
 @Preview(showBackground = true)
 @Composable
 fun CommentItemPreview() {
-    CommentItem(writer = "박정한",
+    CommentItem(
+        writer = "박정한",
         date = "2021년 08년 34일",
-        content = "정말 맛있어보이네요,,^^ 저도  .. 아가들한테 해주야겠어요..^^,,")
+        content = "정말 맛있어보이네요,,^^ 저도  .. 아가들한테 해주야겠어요..^^,,"
+    )
 }
