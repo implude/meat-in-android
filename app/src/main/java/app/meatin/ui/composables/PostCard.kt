@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -68,8 +69,9 @@ fun PostCard(
                 Row {
                     Image(
                         modifier = Modifier
-                            .height(55.dp)
-                            .width(60.dp),
+                            .height(40.dp)
+                            .width(40.dp)
+                            .clip(CircleShape),
                         painter = rememberImagePainter(
                             data = profileUri
                         ),
