@@ -1,4 +1,3 @@
-
 package androidx.compose.material
 
 import androidx.compose.foundation.Image
@@ -172,7 +171,7 @@ fun PostCardPreview() {
         isHearted = true,
         onClick = {},
         username = "김응애",
-        date = LocalDateTime.of(1900, 1, 2, 1,0, 0),
+        date = LocalDateTime.of(1900, 1, 2, 1, 0, 0),
         content = "응애",
     )
 }
