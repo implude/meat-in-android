@@ -57,7 +57,7 @@ fun PostCard(
 ) {
     Card(
         modifier
-            .requiredHeight(318.dp)
+            .requiredHeight(302.dp)
             .requiredWidth(375.dp)
             .clip(RoundedCornerShape(5.dp))
             .clickable { onClick() },
