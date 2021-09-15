@@ -38,9 +38,10 @@ import java.time.format.DateTimeFormatter
 @ExperimentalCoilApi
 @Composable
 fun PostCard(
-    imageUri: String,
+    modifier: Modifier = Modifier,
+    badgeUri: String,
     profileUri: String,
-    mainimageUri: String,
+    mainImageUri: String,
     classes: String,
     hearts: Int,
     chats: Int,
@@ -51,7 +52,7 @@ fun PostCard(
     content: String,
 ) {
     Card(
-        Modifier
+        modifier
             .requiredHeight(287.dp)
             .requiredWidth(343.dp)
             .clip(RoundedCornerShape(5.dp))
@@ -84,7 +85,7 @@ fun PostCard(
                                     .height(15.dp)
                                     .width(18.dp),
                                 painter = rememberImagePainter(
-                                    data = imageUri
+                                    data = badgeUri
                                 ),
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop
@@ -124,7 +125,7 @@ fun PostCard(
                         .height(170.dp)
                         .width(343.dp),
                     painter = rememberImagePainter(
-                        data = mainimageUri
+                        data = mainImageUri
                     ),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
@@ -174,9 +175,10 @@ fun PostCard(
 @Composable
 fun PostCardPreview() {
     PostCard(
-        imageUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
+        Modifier.padding(10.dp),
+        badgeUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
         profileUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
-        mainimageUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
+        mainImageUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
         classes = "유사 백선생",
         hearts = 40,
         chats = 50,
