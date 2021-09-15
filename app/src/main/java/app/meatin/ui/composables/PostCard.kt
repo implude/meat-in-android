@@ -1,4 +1,4 @@
-package androidx.compose.material
+package app.meatin.ui.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -15,6 +15,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -54,8 +57,8 @@ fun PostCard(
 ) {
     Card(
         modifier
-            .requiredHeight(287.dp)
-            .requiredWidth(343.dp)
+            .requiredHeight(318.dp)
+            .requiredWidth(375.dp)
             .clip(RoundedCornerShape(5.dp))
             .clickable { onClick() },
         backgroundColor = Color.White,
@@ -134,13 +137,12 @@ fun PostCard(
                     contentScale = ContentScale.Crop,
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                Row {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     val heartIcon = if (isHearted) {
                         Icons.Default.Favorite
                     } else {
                         Icons.Default.FavoriteBorder
                     }
-
                     Icon(
                         modifier = Modifier
                             .padding(end = 2.dp)
@@ -179,7 +181,7 @@ fun PostCard(
 @Composable
 fun PostCardPreview() {
     PostCard(
-        Modifier.padding(10.dp),
+        modifier = Modifier.padding(10.dp),
         badgeUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
         profileUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
         mainImageUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
