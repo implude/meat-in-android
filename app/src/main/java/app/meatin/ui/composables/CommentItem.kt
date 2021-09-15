@@ -19,6 +19,7 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun CommentItem(
+    modifier: Modifier = Modifier,
     writer: String,
     date: String,
     content: String,
