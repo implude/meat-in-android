@@ -39,6 +39,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun PostCard(
     modifier: Modifier = Modifier,
+    classesColor: Color,
     badgeUri: String,
     profileUri: String,
     mainImageUri: String,
@@ -94,7 +95,7 @@ fun PostCard(
                                 text = classes,
                                 overflow = TextOverflow.Ellipsis,
                                 style = Typography.body2,
-                                color = Color(0xffFFA318),
+                                color = classesColor,
                                 maxLines = 1
                             )
                             Spacer(modifier = Modifier.width(4.dp))
@@ -180,6 +181,7 @@ fun PostCardPreview() {
         profileUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
         mainImageUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
         classes = "유사 백선생",
+        classesColor = Color(0xffFFA318),
         hearts = 40,
         chats = 50,
         isHearted = true,
