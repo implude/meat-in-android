@@ -28,62 +28,62 @@ import java.time.format.DateTimeFormatter
 @ExperimentalCoilApi
 @Composable
 fun PostCard(
-    imageUri:String,
-    profileUri:String,
-    mainimageUri:String,
-    classes:String,
-    hearts:Int,
-    chats:Int,
-    isHearted:Boolean,
-    onClick:()->Unit,
-    username:String,
-    date:LocalDateTime,
-    content:String,
+    imageUri: String,
+    profileUri: String,
+    mainimageUri: String,
+    classes: String,
+    hearts: Int,
+    chats: Int,
+    isHearted: Boolean,
+    onClick: () -> Unit,
+    username: String,
+    date: LocalDateTime,
+    content: String,
 ) {
     Card(
         Modifier
             .requiredHeight(287.dp)
             .requiredWidth(343.dp)
             .clip(RoundedCornerShape(5.dp))
-            .clickable{onClick()},
-        backgroundColor=Color.White,
+            .clickable { onClick() },
+        backgroundColor = Color.White,
     ) {
         Box(
             Modifier
                 .fillMaxSize()
                 .padding(12.dp)
         ) {
-            val format=DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            val str: String=format.format(date)
-            Column(Modifier.align(Alignment.TopStart)){
+            val format = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            val str: String = format.format(date)
+            Column(Modifier.align(Alignment.TopStart)) {
                 Row() {
                     Image(
-                        modifier=Modifier
+                        modifier = Modifier
                             .height(55.dp)
                             .width(60.dp),
-                        painter=rememberImagePainter(
-                            data=profileUri
+                        painter = rememberImagePainter(
+                            data = profileUri
                         ),
-                        contentDescription=null
+                        contentDescription = null
                     )
                     Column() {
                         Row() {
                             Image(
-                                modifier=Modifier
+                                modifier = Modifier
                                     .height(15.dp)
                                     .width(18.dp),
-                                painter=rememberImagePainter(
-                                    data=imageUri
+                                painter = rememberImagePainter(
+                                    data = imageUri
                                 ),
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop
                             )
                             Text(
-                                text=classes,
-                                overflow=TextOverflow.Ellipsis,
-                                style=Typography.body2,
-                                color=Color(0xffFFA318),
-                                maxLines=1
+                                text = classes,
+                                overflow = TextOverflow.Ellipsis,
+                                style = Typography.body2,
+                                color = Color(0xffFFA318),
+                                maxLines = 1
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
@@ -102,22 +102,22 @@ fun PostCard(
                         )
                     }
                 }
-            Text(
-                text = content,
-                overflow = TextOverflow.Ellipsis,
-                style = Typography.body2,
-                maxLines = 1,
-            )
-            Image(
-                modifier = Modifier
-                    .height(170.dp)
-                    .width(343.dp),
-                painter = rememberImagePainter(
-                    data = mainimageUri
-                ),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-            )
+                Text(
+                    text = content,
+                    overflow = TextOverflow.Ellipsis,
+                    style = Typography.body2,
+                    maxLines = 1,
+                )
+                Image(
+                    modifier = Modifier
+                        .height(170.dp)
+                        .width(343.dp),
+                    painter = rememberImagePainter(
+                        data = mainimageUri
+                    ),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                )
                 Row() {
                     val heartIcon = if (isHearted) {
                         Icons.Default.Favorite
@@ -152,7 +152,6 @@ fun PostCard(
                         style = Typography.body2,
                         color = Color.Gray,
                     )
-
                 }
             }
         }
@@ -165,16 +164,16 @@ fun PostCard(
 @Composable
 fun PostCardPreview() {
     PostCard(
-        imageUri= "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
-        profileUri= "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
-        mainimageUri= "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
-        classes= "유사 백선생" ,
-        hearts= 40,
-        chats= 50,
-        isHearted= true,
-        onClick= {},
-        username= "김응애",
-        date= LocalDateTime.of(1900, 1, 2 ,1,0, 0),
-        content= "응애"
+        imageUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
+        profileUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
+        mainimageUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
+        classes = "유사 백선생",
+        hearts = 40,
+        chats = 50,
+        isHearted = true,
+        onClick = {},
+        username = "김응애",
+        date = LocalDateTime.of(1900, 1, 2 ,1,0, 0),
+        content = "응애",
     )
 }
