@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter
 fun CommentItem(
     modifier: Modifier = Modifier,
     writer: String,
-    date: String,
+    date: LocalDateTime,
     content: String,
 ) {
     Column {
@@ -35,7 +35,7 @@ fun CommentItem(
             Text(
                 modifier = Modifier
                     .align(Alignment.CenterVertically),
-                text = date.toString(),
+                text = date.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")),
                 overflow = TextOverflow.Ellipsis,
                 style = Typography.caption,
                 maxLines = 1
@@ -53,8 +53,7 @@ fun CommentItem(
 fun CommentItemPreview() {
     CommentItem(
         writer = "박정한",
-        date = LocalDateTime.of(2022, Month.FEBRUARY, 22, 22, 22, 22)
-            .format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")),
+        date = LocalDateTime.of(2022, Month.FEBRUARY, 22, 22, 22, 22),
         content = "정말 맛있어보이네요,,^^ 저도  .. 아가들한테 해주야겠어요..^^,,"
     )
 }
