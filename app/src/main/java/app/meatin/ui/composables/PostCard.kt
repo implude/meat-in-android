@@ -86,7 +86,7 @@ fun PostCard(
                         Row {
                             Image(
                                 modifier = Modifier
-                                    .height(15.dp)
+                                    .height(18.dp)
                                     .width(18.dp),
                                 painter = rememberImagePainter(
                                     data = badgeUri
