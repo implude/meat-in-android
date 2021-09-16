@@ -33,7 +33,7 @@ fun IngredientItem(
     essential: String,
     content: String,
 
-    ) {
+) {
     Card(
         modifier
             .height(88.dp)
