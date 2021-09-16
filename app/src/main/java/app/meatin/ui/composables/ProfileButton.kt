@@ -18,12 +18,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import app.meatin.R
 import app.meatin.ui.theme.DisableLightGray2
 import app.meatin.ui.theme.Typography
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import java.net.URI
-import app.meatin.R
 
 @ExperimentalCoilApi
 @Composable
