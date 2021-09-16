@@ -15,6 +15,8 @@ val PretendardFontFamily = FontFamily(
     Font(R.font.pretendard_semibold, FontWeight.SemiBold),
     Font(R.font.pretendard_regular, FontWeight.Normal),
 )
+
+@Deprecated("This value will be removed. Use MeatInTypography instead.")
 val Typography = Typography(
     h1 = TextStyle(
         fontFamily = PretendardFontFamily,
@@ -47,3 +49,48 @@ val Typography = Typography(
         color = Color.Black.copy(alpha = 0.4f),
     ),
 )
+
+object MeatInTypography {
+    val pageTitle = TextStyle(
+        fontFamily = PretendardFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp,
+        color = Color.Black,
+    )
+    val sectionHeader = TextStyle(
+        fontFamily = PretendardFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp,
+        color = Color.Black,
+    )
+    val subHeader = TextStyle(
+        fontFamily = PretendardFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        color = Color.Black.copy(alpha = 0.6f),
+    )
+    val bigDescription = TextStyle(
+        fontFamily = PretendardFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 20.sp,
+        color = Color.Black,
+    )
+    val regularImportant = TextStyle(
+        fontFamily = PretendardFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        color = Color.Black,
+    )
+    val regular = TextStyle(
+        fontFamily = PretendardFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        color = Color.Black,
+    )
+    val description = TextStyle(
+        fontFamily = PretendardFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        color = Color.Black.copy(alpha = 0.4f),
+    )
+}
