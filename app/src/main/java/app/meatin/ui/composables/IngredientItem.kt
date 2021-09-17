@@ -71,15 +71,15 @@ fun IngredientItem(
                         color = DarkFlamingo,
                         maxLines = 1
                     )
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Text(
-                        text = content,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MeatInTypography.regular,
-                        color = Color.Gray,
-                        maxLines = 2
-                    )
                 }
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = content,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MeatInTypography.regular,
+                    color = Color.Gray,
+                    maxLines = 2
+                )
             }
         }
     }
