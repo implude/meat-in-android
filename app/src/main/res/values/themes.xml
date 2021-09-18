@@ -1,4 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
 	<!-- Base application theme. -->
 	<style name="Theme.MeatIn" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
 		<!-- Primary brand color. -->
@@ -22,4 +23,18 @@
 	<style name="Theme.MeatIn.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
 	<style name="Theme.MeatIn.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+	<style name="TextStyleBold">
+		<item name="fontFamily">@font/noto_sans_bold</item>
+		<item name="android:fontFamily">@font/noto_sans_bold</item>
+	</style>
+	<style name="TextStyleRegular">
+		<item name="fontFamily">@font/noto_sans_regular</item>
+		<item name="android:fontFamily">@font/noto_sans_regular</item>
+	</style>
+	<style name="TextStyleMedium">
+		<item name="fontFamily">@font/noto_sans_medium</item>
+		<item name="android:fontFamily">@font/noto_sans_medium</item>
+	</style>
+
 </resources>
