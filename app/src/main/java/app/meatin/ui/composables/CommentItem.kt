@@ -38,7 +38,7 @@ fun CommentItem(
     date: LocalDateTime,
     content: String,
 ) {
-    Column {
+    Column(modifier) {
         Row {
             Image(
                 modifier = Modifier
