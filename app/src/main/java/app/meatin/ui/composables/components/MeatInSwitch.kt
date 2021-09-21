@@ -193,9 +193,3 @@ fun ToggleSwitchPreview2() {
         onCheckedChange = {},
     )
 }
-
-@Preview
-@Composable
-fun Test() {
-    Switch(checked = true, onCheckedChange = {})
-}
