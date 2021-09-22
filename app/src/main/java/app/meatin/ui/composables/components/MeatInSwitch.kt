@@ -1,4 +1,4 @@
-package app.meatin.ui.composables
+package app.meatin.ui.composables.components
 
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.TweenSpec
@@ -21,7 +21,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.SwipeableDefaults
 import androidx.compose.material.SwipeableState
-import androidx.compose.material.Switch
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material.swipeable
 import androidx.compose.runtime.Composable
