@@ -178,17 +178,18 @@ internal fun <T : Any> rememberSwipeableStateFor(
 @Preview(name = "Switch On")
 @Composable
 fun ToggleSwitchPreview1() {
-    MeatInSwitch(
-        checked = true,
-        onCheckedChange = {},
-    )
+    MeatInSwitch(checked = true, onCheckedChange = {})
 }
 
 @Preview(name = "Switch Off")
 @Composable
 fun ToggleSwitchPreview2() {
-    MeatInSwitch(
-        checked = false,
-        onCheckedChange = {},
-    )
+    MeatInSwitch(checked = false, onCheckedChange = {})
+}
+
+@Preview(name = "Animated Switch Preview", showBackground = true)
+@Composable
+fun AnimatedSwitchPreview() {
+    val (checked, setChecked) = remember { mutableStateOf(false) }
+    MeatInSwitch(checked = checked, onCheckedChange = setChecked, modifier = Modifier.padding(20.dp))
 }
