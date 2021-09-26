@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto">
+	<font
+		app:font="@font/noto_sans_cjk_kr_medium"
+		app:fontStyle="normal"
+		app:fontWeight="500" />
+</font-family>
