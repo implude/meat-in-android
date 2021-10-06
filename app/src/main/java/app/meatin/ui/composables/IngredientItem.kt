@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import app.meatin.ui.theme.CoreText
 import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.MeatInTypography
 
@@ -55,22 +55,22 @@ fun IngredientItem(
             ) {
                 Row {
                     Row(
-                        Modifier.width(50.dp)
+                        Modifier.width(70.dp)
                     ) {
-                        Text(
+                        CoreText(
                             text = name,
                             overflow = TextOverflow.Ellipsis,
                             style = MeatInTypography.regularImportant,
                             maxLines = 1
                         )
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text(
+                        CoreText(
                             text = quantity.toString(),
                             overflow = TextOverflow.Ellipsis,
                             style = MeatInTypography.regular,
                             maxLines = 1
                         )
-                        Text(
+                        CoreText(
                             text = unit,
                             overflow = TextOverflow.Ellipsis,
                             style = MeatInTypography.regular,
@@ -79,7 +79,7 @@ fun IngredientItem(
                     }
                     Column(
                         modifier = Modifier
-                            .width(90.dp),
+                            .width(80.dp),
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.End,
                     ) {
@@ -93,7 +93,7 @@ fun IngredientItem(
                         } else {
                             Color.Gray
                         }
-                        Text(
+                        CoreText(
                             text = essentialText,
                             overflow = TextOverflow.Ellipsis,
                             style = MeatInTypography.regularImportant,
@@ -103,7 +103,7 @@ fun IngredientItem(
                     }
                 }
                 Spacer(modifier = Modifier.height(6.dp))
-                Text(
+                CoreText(
                     text = description,
                     overflow = TextOverflow.Ellipsis,
                     style = MeatInTypography.regular,
