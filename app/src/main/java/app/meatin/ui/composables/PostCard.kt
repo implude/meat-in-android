@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -31,8 +30,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import app.meatin.ui.theme.CoreText
 import app.meatin.ui.theme.DarkFlamingo
-import app.meatin.ui.theme.Typography
+import app.meatin.ui.theme.MeatInTypography
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import java.time.LocalDateTime
@@ -94,35 +95,35 @@ fun PostCard(
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop
                             )
-                            Text(
+                            CoreText(
                                 text = classes,
                                 overflow = TextOverflow.Ellipsis,
-                                style = Typography.body2,
+                                style = MeatInTypography.regular,
                                 color = classesColor,
                                 maxLines = 1
                             )
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text(
+                            CoreText(
                                 text = username,
                                 overflow = TextOverflow.Ellipsis,
-                                style = Typography.body2,
+                                style = MeatInTypography.regularImportant,
                                 maxLines = 1
                             )
                         }
                         Spacer(modifier = Modifier.height(4.dp))
-                        Text(
+                        CoreText(
                             text = str,
                             overflow = TextOverflow.Ellipsis,
-                            style = Typography.caption,
+                            style = MeatInTypography.regular,
                             maxLines = 1,
                         )
                     }
                 }
                 Spacer(modifier = Modifier.height(12.dp))
-                Text(
+                CoreText(
                     text = content,
                     overflow = TextOverflow.Ellipsis,
-                    style = Typography.body2,
+                    style = MeatInTypography.regular,
                     maxLines = 1,
                 )
                 Spacer(modifier = Modifier.height(12.dp))
@@ -151,9 +152,10 @@ fun PostCard(
                         contentDescription = null,
                         tint = DarkFlamingo,
                     )
-                    Text(
+                    CoreText(
                         text = hearts.toString(),
-                        style = Typography.body2,
+                        style = MeatInTypography.regularImportant
+                            .copy(fontSize = 12.sp),
                         color = DarkFlamingo,
                     )
                     Spacer(modifier = Modifier.width(11.dp))
@@ -165,9 +167,10 @@ fun PostCard(
                         contentDescription = null,
                         tint = Color.Gray,
                     )
-                    Text(
+                    CoreText(
                         text = chats.toString(),
-                        style = Typography.body2,
+                        style = MeatInTypography.regularImportant
+                            .copy(fontSize = 12.sp),
                         color = Color.Gray,
                     )
                 }

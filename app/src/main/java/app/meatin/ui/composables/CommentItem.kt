@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,7 +47,7 @@ fun CommentItem(
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )
-            Text(
+            CoreText(
                 modifier = Modifier
                     .padding(start = 4.dp, end = 4.dp)
                     .align(Alignment.CenterVertically),
@@ -58,7 +57,7 @@ fun CommentItem(
                 color = classesColor,
                 maxLines = 1
             )
-            Text(
+            CoreText(
                 modifier = Modifier
                     .padding(end = 8.dp)
                     .align(Alignment.CenterVertically),
@@ -73,12 +72,12 @@ fun CommentItem(
                 text = date.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")),
                 overflow = TextOverflow.Ellipsis,
                 style = MeatInTypography.regular,
-                color = Color(0xffB3B3B3),
+                color = Color.Black.copy(alpha = 0.3f),
                 maxLines = 1
             )
         }
         Spacer(modifier = Modifier.height(2.dp))
-        Text(
+        CoreText(
             text = content,
             style = MeatInTypography.regular
         )
