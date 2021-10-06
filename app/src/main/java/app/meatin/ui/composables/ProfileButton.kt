@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import app.meatin.R
-import app.meatin.ui.theme.CoreText
+import app.meatin.ui.theme.composefix.CoreText
 import app.meatin.ui.theme.DisableLightGray2
 import app.meatin.ui.theme.MeatInTypography
 import coil.annotation.ExperimentalCoilApi
