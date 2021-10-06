@@ -37,7 +37,7 @@ fun IngredientItem(
 ) {
     Card(
         modifier
-            .height(88.dp)
+            .height(130.dp)
             .width(167.dp)
             .clip(RoundedCornerShape(6.dp))
             .clickable { onClick() }
@@ -53,17 +53,16 @@ fun IngredientItem(
                 Modifier
                     .align(Alignment.TopStart)
             ) {
-                Row {
+                CoreText(
+                    text = name,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MeatInTypography.regularImportant,
+                    maxLines = 1
+                )
+                Row{
                     Row(
-                        Modifier.width(70.dp)
+                        Modifier.width(108.dp)
                     ) {
-                        CoreText(
-                            text = name,
-                            overflow = TextOverflow.Ellipsis,
-                            style = MeatInTypography.regularImportant,
-                            maxLines = 1
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
                         CoreText(
                             text = quantity.toString(),
                             overflow = TextOverflow.Ellipsis,
@@ -79,7 +78,7 @@ fun IngredientItem(
                     }
                     Column(
                         modifier = Modifier
-                            .width(80.dp),
+                            .width(26.dp),
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.End,
                     ) {
@@ -121,8 +120,8 @@ fun IngredientItemPreview() {
     IngredientItem(
         Modifier.padding(10.dp),
         onClick = {},
-        name = "두부",
-        quantity = 2,
+        name = "아스파라거스",
+        quantity = 10,
         unit = "모",
         isEssential = true,
         description = "메인재료래요. 간단한 설명을 넣어요."
