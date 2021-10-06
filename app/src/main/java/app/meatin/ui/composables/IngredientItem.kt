@@ -2,6 +2,7 @@ package app.meatin.ui.composables
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,11 +29,11 @@ import app.meatin.ui.theme.MeatInTypography
 fun IngredientItem(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    ingredientItem: String,
-    ingredientNumber: String,
-    essential: String,
-    content: String,
-
+    name: String,
+    quantity: Number,
+    unit: String,
+    isEssential: Boolean,
+    description: String,
 ) {
     Card(
         modifier
@@ -40,7 +41,7 @@ fun IngredientItem(
             .width(167.dp)
             .clip(RoundedCornerShape(6.dp))
             .clickable { onClick() }
-            .border(1.dp, Color.Gray),
+            .border(1.dp, Color.Gray, RoundedCornerShape(6.dp)),
         backgroundColor = Color.White,
     ) {
         Box(
@@ -48,33 +49,62 @@ fun IngredientItem(
                 .fillMaxSize()
                 .padding(horizontal = 16.dp, vertical = 12.dp)
         ) {
-            Column(Modifier.align(Alignment.TopStart)) {
+            Column(
+                Modifier
+                    .align(Alignment.TopStart)
+            ) {
                 Row {
-                    Text(
-                        text = ingredientItem,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MeatInTypography.regularImportant,
-                        maxLines = 1
-                    )
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = ingredientNumber,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MeatInTypography.regular,
-                        maxLines = 1
-                    )
-                    Spacer(modifier = Modifier.width(55.dp))
-                    Text(
-                        text = essential,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MeatInTypography.regularImportant,
-                        color = DarkFlamingo,
-                        maxLines = 1
-                    )
+                    Row(
+                        Modifier.width(50.dp)
+                    ) {
+                        Text(
+                            text = name,
+                            overflow = TextOverflow.Ellipsis,
+                            style = MeatInTypography.regularImportant,
+                            maxLines = 1
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = quantity.toString(),
+                            overflow = TextOverflow.Ellipsis,
+                            style = MeatInTypography.regular,
+                            maxLines = 1
+                        )
+                        Text(
+                            text = unit,
+                            overflow = TextOverflow.Ellipsis,
+                            style = MeatInTypography.regular,
+                            maxLines = 1
+                        )
+                    }
+                    Column(
+                        modifier = Modifier
+                            .width(90.dp),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.End,
+                    ) {
+                        val essentialText = if (isEssential) {
+                            "필수"
+                        } else {
+                            "선택"
+                        }
+                        val essentialColor = if (isEssential) {
+                            DarkFlamingo
+                        } else {
+                            Color.Gray
+                        }
+                        Text(
+                            text = essentialText,
+                            overflow = TextOverflow.Ellipsis,
+                            style = MeatInTypography.regularImportant,
+                            color = essentialColor,
+                            maxLines = 1
+                        )
+                    }
                 }
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(
-                    text = content,
+                    text = description,
                     overflow = TextOverflow.Ellipsis,
                     style = MeatInTypography.regular,
                     color = Color.Gray,
@@ -91,9 +121,10 @@ fun IngredientItemPreview() {
     IngredientItem(
         Modifier.padding(10.dp),
         onClick = {},
-        ingredientItem = "두부",
-        ingredientNumber = "2모",
-        essential = "필수",
-        content = "메인재료래요. 간단한 설명을 넣어요."
+        name = "두부",
+        quantity = 2,
+        unit = "모" ,
+        isEssential = true,
+        description = "메인재료래요. 간단한 설명을 넣어요."
     )
 }
