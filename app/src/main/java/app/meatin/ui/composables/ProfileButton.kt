@@ -18,9 +18,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import app.meatin.R
-import app.meatin.ui.theme.composefix.CoreText
 import app.meatin.ui.theme.DisableLightGray2
 import app.meatin.ui.theme.MeatInTypography
+import app.meatin.ui.theme.composefix.CoreText
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import java.net.URI
@@ -34,7 +34,7 @@ fun ProfileButton(
     onClick: () -> Unit,
     classes: String,
     classesColor: Color,
-    username: String
+    username: String,
 ) {
     ConstraintLayout(
         modifier
@@ -48,7 +48,7 @@ fun ProfileButton(
             profileImage,
             classesText,
             usernameText,
-            rightArrow
+            rightArrow,
         ) = createRefs()
         Image(
             modifier = Modifier
