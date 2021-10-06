@@ -123,7 +123,7 @@ fun IngredientItemPreview() {
         onClick = {},
         name = "두부",
         quantity = 2,
-        unit = "모" ,
+        unit = "모",
         isEssential = true,
         description = "메인재료래요. 간단한 설명을 넣어요."
     )
