@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import app.meatin.R
 import app.meatin.ui.theme.DisableLightGray2
-import app.meatin.ui.theme.Typography
+import app.meatin.ui.theme.MeatInTypography
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import java.net.URI
@@ -88,7 +88,7 @@ fun ProfileButton(
                     bottom.linkTo(parent.bottom)
                 },
             overflow = TextOverflow.Ellipsis,
-            style = Typography.body2,
+            style = MeatInTypography.regular,
             color = classesColor,
             text = classes,
             maxLines = 1
@@ -101,7 +101,7 @@ fun ProfileButton(
                     bottom.linkTo(parent.bottom)
                 },
             overflow = TextOverflow.Ellipsis,
-            style = Typography.body2,
+            style = MeatInTypography.regularImportant,
             text = username
         )
         Icon(
