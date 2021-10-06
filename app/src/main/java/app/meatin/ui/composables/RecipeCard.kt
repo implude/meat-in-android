@@ -3,18 +3,10 @@ package app.meatin.ui.composables
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -24,12 +16,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import app.meatin.ui.theme.CoreText
 import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.DisableLightGray2
-import app.meatin.ui.theme.Typography
+import app.meatin.ui.theme.MeatInTypography
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import java.net.URI
@@ -47,7 +42,7 @@ fun RecipeCard(
 ) {
     Card(
         modifier
-            .requiredSize(160.dp, 163.dp)
+            .requiredSize(160.dp, 177.dp)
             .clip(RoundedCornerShape(5.dp))
             .clickable { onClick() },
         backgroundColor = Color.White,
@@ -71,17 +66,19 @@ fun RecipeCard(
                     .padding(12.dp)
             ) {
                 Column(Modifier.align(Alignment.TopStart)) {
-                    Text(
+                    CoreText(
                         text = title,
                         overflow = TextOverflow.Ellipsis,
-                        style = Typography.body1,
+                        style = MeatInTypography.regular
+                            .copy(fontWeight = FontWeight.SemiBold),
                         maxLines = 1,
                     )
-                    Text(
+                    CoreText(
                         text = subtitle,
                         overflow = TextOverflow.Ellipsis,
-                        style = Typography.caption,
+                        style = MeatInTypography.regular,
                         maxLines = 2,
+                        color = Color.Black.copy(alpha = 0.3f)
                     )
                 }
 
@@ -103,9 +100,9 @@ fun RecipeCard(
                         contentDescription = null,
                         tint = DarkFlamingo,
                     )
-                    Text(
+                    CoreText(
                         text = hearts.toString(),
-                        style = Typography.body2,
+                        style = MeatInTypography.regularImportant.copy(fontSize = 12.sp),
                         color = DarkFlamingo,
                     )
                 }
