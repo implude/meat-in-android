@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -17,6 +18,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import app.meatin.R
 import app.meatin.ui.theme.DisableLightGray2
 import app.meatin.ui.theme.MeatInTypography
@@ -95,14 +97,18 @@ fun ProfileButton(
         )
         CoreText(
             modifier = Modifier
+                .widthIn()
                 .constrainAs(usernameText) {
                     start.linkTo(classesText.end, 4.dp)
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
+                    end.linkTo(rightArrow.start)
+                    width = Dimension.fillToConstraints
                 },
             overflow = TextOverflow.Ellipsis,
             style = MeatInTypography.regularImportant,
-            text = username
+            text = username,
+            maxLines = 1,
         )
         Icon(
             modifier = Modifier
