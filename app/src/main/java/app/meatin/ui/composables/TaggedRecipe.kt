@@ -25,11 +25,11 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import app.meatin.ui.theme.BoxTextDarkGray
-import app.meatin.ui.theme.CoreText
 import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.DisableLightGray2
 import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.MeatInTypography
+import app.meatin.ui.theme.composefix.CoreText
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import java.net.URI
