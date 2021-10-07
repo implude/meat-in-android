@@ -1,18 +1,18 @@
 package app.meatin.ui.composables
 
-import android.graphics.drawable.DrawableWrapper
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,13 +20,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import app.meatin.ui.theme.BoxTextDarkGray
 import app.meatin.ui.theme.CoreText
+import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.DisableLightGray2
 import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.MeatInTypography
@@ -35,7 +35,6 @@ import coil.compose.rememberImagePainter
 import java.net.URI
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 @ExperimentalCoilApi
 @Composable
@@ -46,20 +45,29 @@ fun TaggedRecipe(
     tags: List<String>,
     description: String,
     hearts: Int,
+    isHearted: Boolean,
     date: LocalDateTime,
 ) {
     ConstraintLayout(
         modifier
             .background(Color.White)
+            .widthIn()
     ) {
         val (
             previewImage,
             titleText,
             tagList,
             descriptionText,
+            heartIcon,
             heartsText,
             dateText,
         ) = createRefs()
+
+        val heart = if (isHearted) {
+            Icons.Default.Favorite
+        } else {
+            Icons.Default.FavoriteBorder
+        }
 
         Image(
             modifier = Modifier
@@ -112,7 +120,8 @@ fun TaggedRecipe(
                             bottom = 3.dp
                         ),
                     text = it,
-                    style = MeatInTypography.subHeader.copy(fontSize = 12.sp, lineHeight = (12*1.5).sp),
+                    style = MeatInTypography.subHeader.copy(fontSize = 12.sp,
+                        lineHeight = (12 * 1.5).sp),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
@@ -126,6 +135,8 @@ fun TaggedRecipe(
                     start.linkTo(previewImage.end, 16.dp)
                     top.linkTo(tagList.bottom, 4.dp)
                     bottom.linkTo(heartsText.top)
+                    end.linkTo(parent.end)
+                    width = Dimension.preferredWrapContent
                 },
             text = description,
             style = MeatInTypography.description,
@@ -133,15 +144,29 @@ fun TaggedRecipe(
             maxLines = 2
         )
 
+        Icon(
+            modifier = Modifier
+                .constrainAs(heartIcon) {
+                    top.linkTo(heartsText.bottom)
+                    bottom.linkTo(heartsText.top)
+                    start.linkTo(previewImage.end, 16.dp)
+                }
+                .padding(end = 2.dp)
+                .size(12.dp),
+            imageVector = heart,
+            contentDescription = null,
+            tint = DarkFlamingo,
+        )
+
         CoreText(
             modifier = Modifier
                 .constrainAs(heartsText) {
-                    start.linkTo(previewImage.end, 16.dp)
+                    start.linkTo(heartIcon.end, 4.dp)
                     top.linkTo(descriptionText.bottom, 4.dp)
                     bottom.linkTo(parent.bottom)
                 },
             text = hearts.toString(),
-            style = MeatInTypography.subHeader.copy(fontSize = 12.sp, lineHeight = (12*1.5).sp),
+            style = MeatInTypography.subHeader.copy(fontSize = 12.sp, lineHeight = (12 * 1.5).sp),
             color = Flamingo,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
@@ -155,7 +180,7 @@ fun TaggedRecipe(
                     bottom.linkTo(parent.bottom)
                 },
             text = DateTimeFormatter.ofPattern("yyyy. MM. dd").format(date),
-            style = MeatInTypography.subHeader.copy(fontSize = 12.sp, lineHeight = (12*1.5).sp),
+            style = MeatInTypography.subHeader.copy(fontSize = 12.sp, lineHeight = (12 * 1.5).sp),
             color = BoxTextDarkGray,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
@@ -175,5 +200,6 @@ fun TaggedRecipePreview() {
         tags = listOf("삼겹살", "쉬움", "30분 소요"),
         description = "집에서도 육즙 가득하게 삽겹 고기 전문점에서 먹는 맛을 낼 수 있을 거예요 아마도 아마도",
         hearts = 10,
-        date = LocalDateTime.of(2021, 9, 16 , 1, 0, 0))
+        isHearted = true,
+        date = LocalDateTime.of(2021, 9, 16, 1, 0, 0))
 }
