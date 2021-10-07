@@ -21,15 +21,13 @@ import androidx.compose.ui.unit.dp
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
 
-
 @Composable
 fun TitledLabel(
     modifier: Modifier = Modifier,
     title: String,
     subtitle: String,
     onClick: () -> Unit,
-
-    ) {
+) {
     Box(
         modifier
             .height(37.dp)
