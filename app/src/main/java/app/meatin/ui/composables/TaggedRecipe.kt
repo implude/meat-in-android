@@ -3,6 +3,8 @@ package app.meatin.ui.composables
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
@@ -14,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -55,12 +58,7 @@ fun TaggedRecipe(
     ) {
         val (
             previewImage,
-            titleText,
-            tagList,
-            descriptionText,
-            heartIcon,
-            heartsText,
-            dateText,
+            column,
         ) = createRefs()
 
         val heart = if (isHearted) {
@@ -86,108 +84,94 @@ fun TaggedRecipe(
             contentScale = ContentScale.Crop
         )
 
-        CoreText(
+        Column(
             modifier = Modifier
-                .constrainAs(titleText) {
+                .constrainAs(column) {
                     top.linkTo(parent.top)
                     start.linkTo(previewImage.end, 16.dp)
-                    bottom.linkTo(tagList.top)
+                    bottom.linkTo(parent.bottom)
                     end.linkTo(parent.end)
                     width = Dimension.preferredWrapContent
                 },
-            text = title,
-            style = MeatInTypography.regularImportant,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 1
-        )
-
-        LazyRow(
-            modifier = Modifier
-                .constrainAs(tagList) {
-                    top.linkTo(titleText.bottom, 4.dp)
-                    start.linkTo(previewImage.end, 16.dp)
-                    bottom.linkTo(descriptionText.top)
-                },
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            items(tags) {
+            CoreText(
+                modifier = Modifier,
+                text = title,
+                style = MeatInTypography.regularImportant,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
+            )
+
+            LazyRow(
+                modifier = Modifier,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                items(tags) {
+                    CoreText(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(30.dp))
+                            .background(DisableLightGray2)
+                            .padding(
+                                start = 10.dp,
+                                top = 3.dp,
+                                end = 10.dp,
+                                bottom = 3.dp
+                            ),
+                        text = it,
+                        style = MeatInTypography.subHeader.copy(
+                            fontSize = 12.sp,
+                            lineHeight = (12 * 1.5).sp
+                        ),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1
+                    )
+                }
+            }
+
+            CoreText(
+                modifier = Modifier,
+                text = description,
+                style = MeatInTypography.description,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 2
+            )
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .size(12.dp),
+                    imageVector = heart,
+                    contentDescription = null,
+                    tint = DarkFlamingo,
+                )
+
                 CoreText(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(30.dp))
-                        .background(DisableLightGray2)
-                        .padding(
-                            start = 10.dp,
-                            top = 3.dp,
-                            end = 10.dp,
-                            bottom = 3.dp
-                        ),
-                    text = it,
-                    style = MeatInTypography.subHeader.copy(
-                        fontSize = 12.sp,
-                        lineHeight = (12 * 1.5).sp
-                    ),
+                        .padding(start = 4.dp),
+                    text = hearts.toString(),
+                    style = MeatInTypography.subHeader.copy(fontSize = 12.sp,
+                        lineHeight = (12 * 1.5).sp),
+                    color = Flamingo,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1
+                )
+
+                CoreText(
+                    modifier = Modifier
+                        .padding(start = 10.dp),
+                    text = DateTimeFormatter.ofPattern("yyyy. MM. dd").format(date),
+                    style = MeatInTypography.subHeader.copy(fontSize = 12.sp,
+                        lineHeight = (12 * 1.5).sp),
+                    color = BoxTextDarkGray,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
             }
         }
 
-        CoreText(
-            modifier = Modifier
-                .constrainAs(descriptionText) {
-                    start.linkTo(previewImage.end, 16.dp)
-                    top.linkTo(tagList.bottom, 4.dp)
-                    bottom.linkTo(heartsText.top)
-                    end.linkTo(parent.end)
-                    width = Dimension.preferredWrapContent
-                },
-            text = description,
-            style = MeatInTypography.description,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 2
-        )
-
-        Icon(
-            modifier = Modifier
-                .constrainAs(heartIcon) {
-                    top.linkTo(heartsText.bottom)
-                    bottom.linkTo(heartsText.top)
-                    start.linkTo(previewImage.end, 16.dp)
-                }
-                .padding(end = 2.dp)
-                .size(12.dp),
-            imageVector = heart,
-            contentDescription = null,
-            tint = DarkFlamingo,
-        )
-
-        CoreText(
-            modifier = Modifier
-                .constrainAs(heartsText) {
-                    start.linkTo(heartIcon.end, 4.dp)
-                    top.linkTo(descriptionText.bottom, 4.dp)
-                    bottom.linkTo(parent.bottom)
-                },
-            text = hearts.toString(),
-            style = MeatInTypography.subHeader.copy(fontSize = 12.sp, lineHeight = (12 * 1.5).sp),
-            color = Flamingo,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 1
-        )
-
-        CoreText(
-            modifier = Modifier
-                .constrainAs(dateText) {
-                    start.linkTo(heartsText.end, 10.dp)
-                    top.linkTo(descriptionText.bottom, 4.dp)
-                    bottom.linkTo(parent.bottom)
-                },
-            text = DateTimeFormatter.ofPattern("yyyy. MM. dd").format(date),
-            style = MeatInTypography.subHeader.copy(fontSize = 12.sp, lineHeight = (12 * 1.5).sp),
-            color = BoxTextDarkGray,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 1
-        )
     }
 }
 
