@@ -7,20 +7,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import app.meatin.ui.theme.PretendardFontFamily
-import app.meatin.ui.theme.Typography
+import app.meatin.ui.theme.MeatInTypography
+import app.meatin.ui.theme.composefix.CoreText
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import java.time.LocalDateTime
@@ -44,7 +40,6 @@ fun CommentItem(
                 modifier = Modifier
                     .height(18.dp)
                     .width(18.dp)
-                    .padding(end = 4.dp)
                     .align(Alignment.CenterVertically),
                 painter = rememberImagePainter(
                     data = badgeUri
@@ -52,42 +47,39 @@ fun CommentItem(
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )
-            Text(
+            CoreText(
                 modifier = Modifier
-                    .padding(end = 4.dp)
+                    .padding(start = 4.dp, end = 4.dp)
                     .align(Alignment.CenterVertically),
                 text = classes,
                 overflow = TextOverflow.Ellipsis,
-                style = TextStyle(
-                    fontFamily = PretendardFontFamily,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 14.sp,
-                    color = classesColor
-                ),
+                style = MeatInTypography.regular,
+                color = classesColor,
                 maxLines = 1
             )
-            Text(
+            CoreText(
                 modifier = Modifier
                     .padding(end = 8.dp)
                     .align(Alignment.CenterVertically),
                 text = username,
                 overflow = TextOverflow.Ellipsis,
-                style = Typography.body1,
+                style = MeatInTypography.regularImportant,
                 maxLines = 1
             )
-            Text(
+            CoreText(
                 modifier = Modifier
                     .align(Alignment.CenterVertically),
                 text = date.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")),
                 overflow = TextOverflow.Ellipsis,
-                style = Typography.caption,
+                style = MeatInTypography.regular,
+                color = Color.Black.copy(alpha = 0.3f),
                 maxLines = 1
             )
         }
         Spacer(modifier = Modifier.height(2.dp))
-        Text(
+        CoreText(
             text = content,
-            style = Typography.body2
+            style = MeatInTypography.regular
         )
     }
 }

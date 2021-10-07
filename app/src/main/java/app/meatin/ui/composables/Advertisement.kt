@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,8 +16,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import app.meatin.ui.theme.DisableLightGray2
-import app.meatin.ui.theme.Typography
+import app.meatin.ui.theme.MeatInTypography
+import app.meatin.ui.theme.composefix.CoreText
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import java.net.URI
@@ -54,14 +55,15 @@ fun Advertisement(
                 .padding(16.dp)
                 .align(Alignment.BottomStart)
         ) {
-            Text(
+            CoreText(
                 text = title,
-                style = Typography.h1,
+                style = MeatInTypography.sectionHeader,
                 color = Color.White
             )
-            Text(
+            CoreText(
                 text = subtitle,
-                style = Typography.caption,
+                style = MeatInTypography.regularImportant
+                    .copy(fontSize = 12.sp),
                 color = Color.White
             )
         }
