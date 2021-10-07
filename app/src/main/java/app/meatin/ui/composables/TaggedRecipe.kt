@@ -120,8 +120,10 @@ fun TaggedRecipe(
                             bottom = 3.dp
                         ),
                     text = it,
-                    style = MeatInTypography.subHeader.copy(fontSize = 12.sp,
-                        lineHeight = (12 * 1.5).sp),
+                    style = MeatInTypography.subHeader.copy(
+                        fontSize = 12.sp,
+                        lineHeight = (12 * 1.5).sp
+                    ),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
@@ -201,5 +203,6 @@ fun TaggedRecipePreview() {
         description = "집에서도 육즙 가득하게 삽겹 고기 전문점에서 먹는 맛을 낼 수 있을 거예요 아마도 아마도",
         hearts = 10,
         isHearted = true,
-        date = LocalDateTime.of(2021, 9, 16, 1, 0, 0))
+        date = LocalDateTime.of(2021, 9, 16, 1, 0, 0)
+    )
 }
