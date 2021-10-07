@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -97,7 +96,6 @@ fun ProfileButton(
         )
         CoreText(
             modifier = Modifier
-                .widthIn()
                 .constrainAs(usernameText) {
                     start.linkTo(classesText.end, 4.dp)
                     top.linkTo(parent.top)
