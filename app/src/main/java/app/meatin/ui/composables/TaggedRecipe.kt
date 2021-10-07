@@ -92,6 +92,8 @@ fun TaggedRecipe(
                     top.linkTo(parent.top)
                     start.linkTo(previewImage.end, 16.dp)
                     bottom.linkTo(tagList.top)
+                    end.linkTo(parent.end)
+                    width = Dimension.preferredWrapContent
                 },
             text = title,
             style = MeatInTypography.regularImportant,
@@ -197,11 +199,11 @@ fun TaggedRecipePreview() {
         modifier = Modifier
             .size(width = 343.dp, height = 120.dp),
         previewUri = URI("https://naver.com"),
-        title = "육즙 가득한 삼겹살",
+        title = "육즙 가득한 삼겹살은 너무 맛있어서 천국으로 가버릴 것 같아요",
         tags = listOf("삼겹살", "쉬움", "30분 소요"),
         description = "집에서도 육즙 가득하게 삽겹 고기 전문점에서 먹는 맛을 낼 수 있을 거예요 아마도 아마도",
         hearts = 10,
-        isHearted = true,
+        isHearted = false,
         date = LocalDateTime.of(2021, 9, 16, 1, 0, 0)
     )
 }
