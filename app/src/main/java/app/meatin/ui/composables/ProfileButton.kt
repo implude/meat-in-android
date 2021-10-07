@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,6 +20,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import app.meatin.R
 import app.meatin.ui.theme.DisableLightGray2
 import app.meatin.ui.theme.MeatInTypography
+import app.meatin.ui.theme.composefix.CoreText
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import java.net.URI
@@ -34,7 +34,7 @@ fun ProfileButton(
     onClick: () -> Unit,
     classes: String,
     classesColor: Color,
-    username: String
+    username: String,
 ) {
     ConstraintLayout(
         modifier
@@ -48,7 +48,7 @@ fun ProfileButton(
             profileImage,
             classesText,
             usernameText,
-            rightArrow
+            rightArrow,
         ) = createRefs()
         Image(
             modifier = Modifier
@@ -80,7 +80,7 @@ fun ProfileButton(
             contentDescription = null,
             contentScale = ContentScale.Crop
         )
-        Text(
+        CoreText(
             modifier = Modifier
                 .constrainAs(classesText) {
                     start.linkTo(badgeImage.end, 4.dp)
@@ -93,7 +93,7 @@ fun ProfileButton(
             text = classes,
             maxLines = 1
         )
-        Text(
+        CoreText(
             modifier = Modifier
                 .constrainAs(usernameText) {
                     start.linkTo(classesText.end, 4.dp)
