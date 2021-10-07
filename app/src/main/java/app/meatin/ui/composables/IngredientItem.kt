@@ -75,7 +75,7 @@ fun IngredientItem(
                     start.linkTo(parent.start, 16.dp)
                     top.linkTo(nameText.bottom, 1.dp)
                 },
-        ){
+        ) {
             CoreText(
                 text = quantity.toString(),
                 overflow = TextOverflow.Ellipsis,
@@ -120,69 +120,6 @@ fun IngredientItem(
         )
     }
 }
-//        Box(
-//            Modifier
-//                .fillMaxSize()
-//                .padding(horizontal = 16.dp, vertical = 12.dp)
-//        ) {
-//            Column(
-//                Modifier
-//                    .align(Alignment.TopStart)
-//            ) {
-//                CoreText(
-//                    text = name,
-//                    overflow = TextOverflow.Ellipsis,
-//                    style = MeatInTypography.regularImportant,
-//                    maxLines = 1
-//                )
-//                Row{
-//                    Row(
-//                    ) {
-//                        CoreText(
-//                            text = quantity.toString(),
-//                            overflow = TextOverflow.Ellipsis,
-//                            style = MeatInTypography.regular,
-//                            maxLines = 1
-//                        )
-//                        CoreText(
-//                            text = unit,
-//                            overflow = TextOverflow.Ellipsis,
-//                            style = MeatInTypography.regular,
-//                            maxLines = 1
-//                        )
-//                    }
-//                    Column(
-//                        horizontalAlignment = Alignment.End,
-//                    ) {
-//                        val essentialText = if (isEssential) {
-//                            "필수"
-//                        } else {
-//                            "선택"
-//                        }
-//                        val essentialColor = if (isEssential) {
-//                            DarkFlamingo
-//                        } else {
-//                            Color.Gray
-//                        }
-//                        CoreText(
-//                            text = essentialText,
-//                            overflow = TextOverflow.Ellipsis,
-//                            style = MeatInTypography.regularImportant,
-//                            color = essentialColor,
-//                            maxLines = 1
-//                        )
-//                    }
-//                }
-//                Spacer(modifier = Modifier.height(6.dp))
-//                CoreText(
-//                    text = description,
-//                    overflow = TextOverflow.Ellipsis,
-//                    style = MeatInTypography.regular,
-//                    color = Color.Gray,
-//                    maxLines = 2
-//                )
-//            }
-//        }
 
 @Preview
 @Composable
