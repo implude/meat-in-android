@@ -30,9 +30,7 @@ fun TitledLabel(
 ) {
     Box(
         modifier
-            .height(37.dp)
-            .widthIn(max = 303.dp)
-            .clip(RoundedCornerShape(5.dp))
+            .clip(RoundedCornerShape(12.dp))
             .clickable { onClick() }
             .background(Color(0xFFF9F9F9))
 
@@ -69,5 +67,8 @@ fun TitledLabelPreview() {
         title = "부위",
         subtitle = "머릿고기",
         onClick = {},
+        modifier = Modifier
+            .height(37.dp)
+            .widthIn(max = 303.dp)
     )
 }
