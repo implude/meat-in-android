@@ -152,8 +152,10 @@ fun TaggedRecipe(
                     modifier = Modifier
                         .padding(start = 4.dp),
                     text = hearts.toString(),
-                    style = MeatInTypography.subHeader.copy(fontSize = 12.sp,
-                        lineHeight = (12 * 1.5).sp),
+                    style = MeatInTypography.subHeader.copy(
+                        fontSize = 12.sp,
+                        lineHeight = (12 * 1.5).sp
+                    ),
                     color = Flamingo,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
@@ -163,15 +165,16 @@ fun TaggedRecipe(
                     modifier = Modifier
                         .padding(start = 10.dp),
                     text = DateTimeFormatter.ofPattern("yyyy. MM. dd").format(date),
-                    style = MeatInTypography.subHeader.copy(fontSize = 12.sp,
-                        lineHeight = (12 * 1.5).sp),
+                    style = MeatInTypography.subHeader.copy(
+                        fontSize = 12.sp,
+                        lineHeight = (12 * 1.5).sp
+                    ),
                     color = BoxTextDarkGray,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
             }
         }
-
     }
 }
 
