@@ -1,4 +1,4 @@
-package app.meatin.ui.theme
+package app.meatin.ui.theme.composefix
 
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.updatePadding
 import app.meatin.R
+import app.meatin.ui.theme.MeatInTypography
 import kotlin.math.roundToInt
 
 @Composable
