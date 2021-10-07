@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
@@ -61,9 +62,10 @@ fun IngredientItem(
             modifier = Modifier
                 .constrainAs(nameText) {
                     start.linkTo(parent.start, 16.dp)
+                    end.linkTo(parent.end, 16.dp)
                     top.linkTo(parent.top, 12.dp)
-                }
-                .width(134.dp),
+                    width = Dimension.fillToConstraints
+                },
             text = name,
             overflow = TextOverflow.Ellipsis,
             style = MeatInTypography.regularImportant,
@@ -108,6 +110,8 @@ fun IngredientItem(
                 .constrainAs(descriptionText) {
                     top.linkTo(quantityRow.bottom, 6.dp)
                     start.linkTo(parent.start, 16.dp)
+                    end.linkTo(parent.end, 16.dp)
+                    width = Dimension.fillToConstraints
                 }
                 .width(134.dp)
                 .height(38.dp),
