@@ -45,7 +45,7 @@ fun IngredientItem(
 
     ConstraintLayout(
         modifier
-            .size(167.dp, 130.dp)
+            .height(130.dp)
             .clip(RoundedCornerShape(6.dp))
             .clickable { onClick() }
             .background(Color.White)
@@ -63,18 +63,19 @@ fun IngredientItem(
                 .constrainAs(nameText) {
                     start.linkTo(parent.start, 16.dp)
                     top.linkTo(parent.top, 12.dp)
-                },
+                }
+                .width(134.dp),
             text = name,
             overflow = TextOverflow.Ellipsis,
             style = MeatInTypography.regularImportant,
-            maxLines = 1
+            maxLines = 2
         )
         Row(
             modifier = Modifier
                 .constrainAs(quantityRow) {
                     start.linkTo(parent.start, 16.dp)
                     top.linkTo(nameText.bottom, 1.dp)
-                },
+                }
         ) {
             CoreText(
                 text = quantity.toString(),
@@ -125,7 +126,7 @@ fun IngredientItem(
 @Composable
 fun IngredientItemPreview() {
     IngredientItem(
-        Modifier.padding(10.dp),
+        Modifier.padding(10.dp).width(167.dp),
         onClick = {},
         name = "아스파라거스",
         quantity = 10,
