@@ -128,7 +128,6 @@ fun TaggedRecipe(
                     maxLines = 1
                 )
             }
-
         }
 
         CoreText(
