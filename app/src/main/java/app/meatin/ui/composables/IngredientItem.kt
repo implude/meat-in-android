@@ -121,7 +121,7 @@ fun IngredientItem(
             overflow = TextOverflow.Ellipsis,
             style = MeatInTypography.regular,
             color = Color.Gray,
-            maxLines = 3
+            maxLines = 2
         )
     }
 }
