@@ -113,7 +113,6 @@ fun IngredientItem(
                     end.linkTo(parent.end, 16.dp)
                     width = Dimension.fillToConstraints
                 }
-                .width(134.dp)
                 .height(38.dp),
 
             text = description,
