@@ -76,6 +76,8 @@ fun IngredientItem(
                 .constrainAs(quantityRow) {
                     start.linkTo(parent.start, 16.dp)
                     top.linkTo(nameText.bottom, 1.dp)
+                    end.linkTo(essentialsText.start)
+                    width = Dimension.fillToConstraints
                 }
         ) {
             CoreText(
