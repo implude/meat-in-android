@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import app.meatin.R
 import app.meatin.ui.theme.DisableLightGray2
 import app.meatin.ui.theme.MeatInTypography
@@ -99,10 +100,13 @@ fun ProfileButton(
                     start.linkTo(classesText.end, 4.dp)
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
+                    end.linkTo(rightArrow.start)
+                    width = Dimension.fillToConstraints
                 },
             overflow = TextOverflow.Ellipsis,
             style = MeatInTypography.regularImportant,
-            text = username
+            text = username,
+            maxLines = 1,
         )
         Icon(
             modifier = Modifier
