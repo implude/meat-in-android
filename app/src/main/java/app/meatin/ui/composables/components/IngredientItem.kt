@@ -1,4 +1,4 @@
-package app.meatin.ui.composables
+package app.meatin.ui.composables.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
