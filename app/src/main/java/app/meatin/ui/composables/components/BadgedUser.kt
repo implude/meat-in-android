@@ -15,7 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.meatin.domain.model.BriefBadge
 import app.meatin.domain.model.BriefCommunityUser
-import app.meatin.domain.model.CommunityUser
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
 import coil.annotation.ExperimentalCoilApi

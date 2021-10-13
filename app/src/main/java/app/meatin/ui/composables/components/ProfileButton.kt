@@ -13,7 +13,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -22,8 +21,6 @@ import app.meatin.R
 import app.meatin.domain.model.BriefBadge
 import app.meatin.domain.model.BriefCommunityUser
 import app.meatin.ui.theme.DisableLightGray2
-import app.meatin.ui.theme.MeatInTypography
-import app.meatin.ui.theme.composefix.CoreText
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import java.net.URI
