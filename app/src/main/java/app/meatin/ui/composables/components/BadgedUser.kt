@@ -29,7 +29,7 @@ fun BadgedUser(
     labelColor: Color = Color(0xFFFFA318), // TODO temporary hard-coded color
     nameColor: Color = Color.Black,
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         Image(
             modifier = Modifier
                 .height(18.dp)
