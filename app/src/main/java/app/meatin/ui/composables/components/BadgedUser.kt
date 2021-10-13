@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -22,8 +23,13 @@ import coil.compose.rememberImagePainter
 
 @ExperimentalCoilApi
 @Composable
-fun BadgedUser(user: BriefCommunityUser) {
-    Row {
+fun BadgedUser(
+    modifier: Modifier = Modifier,
+    user: BriefCommunityUser,
+    labelColor: Color = Color(0xFFFFA318), // TODO temporary hard-coded color
+    nameColor: Color = Color.Black,
+) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
         Image(
             modifier = Modifier
                 .height(18.dp)
@@ -38,7 +44,7 @@ fun BadgedUser(user: BriefCommunityUser) {
             text = user.repBadge.label,
             overflow = TextOverflow.Ellipsis,
             style = MeatInTypography.regular,
-            color = Color(0xFFFFA318), // TODO temporary hard-coded color
+            color = labelColor,
             maxLines = 1
         )
         Spacer(modifier = Modifier.width(4.dp))
@@ -46,17 +52,18 @@ fun BadgedUser(user: BriefCommunityUser) {
             text = user.name,
             overflow = TextOverflow.Ellipsis,
             style = MeatInTypography.regularImportant,
+            color = nameColor,
             maxLines = 1
         )
     }
 }
 
 @ExperimentalCoilApi
-@Preview
+@Preview(backgroundColor = 0xFFFFFFFF, showBackground = true)
 @Composable
 fun BadgedUserPreview() {
     BadgedUser(
-        BriefCommunityUser(
+        user = BriefCommunityUser(
             name = "김응애", profileImage = "sample uri",
             repBadge = BriefBadge("sample uri", "유사 백선생")
         )
