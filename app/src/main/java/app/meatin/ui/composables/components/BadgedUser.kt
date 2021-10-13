@@ -40,6 +40,8 @@ fun BadgedUser(
             contentScale = ContentScale.Crop
         )
         CoreText(
+            modifier = Modifier
+                .padding(start = 4.dp),
             text = user.repBadge.label,
             overflow = TextOverflow.Ellipsis,
             style = MeatInTypography.regular,
