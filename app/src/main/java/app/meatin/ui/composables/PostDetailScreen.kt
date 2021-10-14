@@ -244,19 +244,18 @@ fun PostDetailScreen(
                 colors = TextFieldDefaults.textFieldColors(
                     backgroundColor = Color(0xfff8f8f8),
                     focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent),
+                    unfocusedIndicatorColor = Color.Transparent
+                ),
                 placeholder = {
                     Box {
-                        CoreText("Search Destination",
+                        CoreText(
+                            text = "Search Destination",
                             style = MeatInTypography.regular,
                             modifier = Modifier.align(Alignment.CenterStart)
                         )
                     }
                 }
             )
-
-
-
 
 //            LazyColumn(
 //                modifier = Modifier
@@ -279,7 +278,6 @@ fun PostDetailScreen(
 //                }
 //            }
         }
-
     }
 
     Scaffold() {
