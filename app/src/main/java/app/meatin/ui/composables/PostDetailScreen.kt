@@ -1,8 +1,11 @@
 package app.meatin.ui.composables
 
+import android.content.Context
 import android.widget.EditText
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,22 +14,37 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Scaffold
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.RelocationRequester
+import androidx.compose.ui.layout.relocationRequester
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -34,7 +52,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.core.content.ContextCompat.getSystemService
 import app.meatin.domain.model.Comment
+import app.meatin.ui.composables.components.CommentItem
+import app.meatin.ui.composables.components.ProfileButton
+import app.meatin.ui.composables.components.TaggedRecipe
 import app.meatin.ui.theme.BoxTextDarkGray
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
@@ -45,6 +67,7 @@ import java.time.LocalDateTime
 import java.time.Month
 import java.time.format.DateTimeFormatter
 
+@ExperimentalComposeUiApi
 @ExperimentalCoilApi
 @Composable
 fun PostDetailScreen(
@@ -53,7 +76,7 @@ fun PostDetailScreen(
     title: String,
     date: LocalDateTime,
     description: String,
-    comments: List<Comment>
+    comments: List<Comment>,
 ) {
     Column(
         modifier
@@ -193,6 +216,8 @@ fun PostDetailScreen(
                 commentItems,
             ) = createRefs()
 
+            val relocationRequestor = remember { RelocationRequester() }
+
             CoreText(
                 modifier = Modifier
                     .constrainAs(commentText) {
@@ -207,41 +232,62 @@ fun PostDetailScreen(
                 modifier = Modifier
                     .constrainAs(inputCommentTextField) {
                         top.linkTo(commentText.bottom, 20.dp)
-                        start.linkTo(parent.start, 16.dp)
-                        end.linkTo(parent.end, 16.dp)
-                        bottom.linkTo(parent.bottom, 20.dp)
-                        width = Dimension.fillToConstraints
                     }
-                    .padding(10.dp),
-                value = "value",
-                onValueChange = { it }
+                    .fillMaxWidth()
+                    .requiredHeight(51.dp)
+                    .relocationRequester(relocationRequestor),
+                value = "",
+                onValueChange = {
+                    relocationRequestor.bringIntoView()
+                },
+                shape = RoundedCornerShape(25.dp),
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor = Color(0xfff8f8f8),
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent),
+                placeholder = {
+                    Box {
+                        CoreText("Search Destination",
+                            style = MeatInTypography.regular,
+                            modifier = Modifier.align(Alignment.CenterStart)
+                        )
+                    }
+                }
             )
 
-            LazyColumn(
-                modifier = Modifier
-                    .constrainAs(commentItems) {
-                        start.linkTo(parent.start, 16.dp)
-                        end.linkTo(parent.end, 16.dp)
-                        top.linkTo(inputCommentTextField.bottom, 20.dp)
-                    },
-                verticalArrangement = Arrangement.spacedBy(20.dp)
-            ) {
-                items(comments) {
-                    CommentItem(
-                        badgeUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
-                        classes = "유사 백선생",
-                        classesColor = Color(0xffFFA318),
-                        username = "박정한",
-                        date = LocalDateTime.of(2022, Month.FEBRUARY, 22, 22, 22, 22),
-                        content = "정말 맛있어보이네요,,^^ 저도  .. 아가들한테 해주야겠어요..^^,,"
-                    )
-                }
-            }
+
+
+
+//            LazyColumn(
+//                modifier = Modifier
+//                    .constrainAs(commentItems) {
+//                        start.linkTo(parent.start, 16.dp)
+//                        end.linkTo(parent.end, 16.dp)
+//                        top.linkTo(inputCommentTextField.bottom, 20.dp)
+//                    },
+//                verticalArrangement = Arrangement.spacedBy(20.dp)
+//            ) {
+//                items(comments) {
+//                    CommentItem(
+//                        badgeUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
+//                        classes = "유사 백선생",
+//                        classesColor = Color(0xffFFA318),
+//                        username = "박정한",
+//                        date = LocalDateTime.of(2022, Month.FEBRUARY, 22, 22, 22, 22),
+//                        content = "정말 맛있어보이네요,,^^ 저도  .. 아가들한테 해주야겠어요..^^,,"
+//                    )
+//                }
+//            }
         }
 
     }
+
+    Scaffold() {
+        // TODO - Code after build PostBottomAppBar component finish.
+    }
 }
 
+@ExperimentalComposeUiApi
 @Preview(heightDp = 10000)
 @ExperimentalCoilApi
 @Composable
@@ -256,6 +302,6 @@ fun PostDetailScreenPreview() {
                 "보고싶다 매일밤 전화하던게\n" +
                 "넘너무 그리워 내 목숨을 가져가도 좋아\n" +
                 "제발 연락해줘",
-        comments = listOf(Comment())
+        comments = listOf()
     )
 }
