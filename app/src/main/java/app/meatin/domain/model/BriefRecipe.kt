@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class BriefRecipe(
     val name: String,
+    val description: String,
     val thumbnail: String,
     @SerializedName("meat_type") val meatType: MeatType,
     val duration: Int,
