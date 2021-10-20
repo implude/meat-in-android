@@ -20,9 +20,6 @@ import app.meatin.ui.theme.composefix.CoreText
 import app.meatin.util.defaultDateFormatter
 import app.meatin.util.toDate
 import coil.annotation.ExperimentalCoilApi
-import java.time.LocalDateTime
-import java.time.Month
-import java.time.format.DateTimeFormatter
 
 @ExperimentalCoilApi
 @Composable
@@ -36,7 +33,7 @@ fun CommentItem(
             CoreText(
                 modifier = Modifier
                     .align(Alignment.CenterVertically),
-                text =  defaultDateFormatter.format(comment.createdAt.toDate()),
+                text = defaultDateFormatter.format(comment.createdAt.toDate()),
                 overflow = TextOverflow.Ellipsis,
                 style = MeatInTypography.regular,
                 color = Color.Black.copy(alpha = 0.3f),
