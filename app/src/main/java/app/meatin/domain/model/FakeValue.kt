@@ -14,32 +14,32 @@ object FakeValue {
         "유사 백선생",
         "백선생급의 어마어마한 요리사"
     )
-    val BRIEFBADGE = BriefBadge(
+    val BRIEF_BADGE = BriefBadge(
         "https://media.discordapp.net/attachments/880049130813132842/900366666486132786/gold_class.png",
         "유사 백선생"
     )
-    val BRIEFCOMMUNITYUSER = BriefCommunityUser(
+    val BRIEF_COMMUNITY_USER = BriefCommunityUser(
         "김응애",
         "https://i.picsum.photos/id/839/200/200.jpg?hmac=IKyeqXa3iOwFkcM24B_X_Qjf9643wuDTCsTiM3T6AZg",
-        BRIEFBADGE
+        BRIEF_BADGE
     )
-    val BRIEFPOST = BriefPost(
-        BRIEFCOMMUNITYUSER,
+    val BRIEF_POST = BriefPost(
+        BRIEF_COMMUNITY_USER,
         1634734699,
         HEARTED_TRUE,
         1
     )
-    val MEATTYPE = MeatType(
+    val MEAT_TYPE = MeatType(
         "문어고기"
     )
     val DIFFICULTY = Difficulty(
         "어려움",
         8
     )
-    val BRIEFRECIPE = BriefRecipe(
+    val BRIEF_RECIPE = BriefRecipe(
         "맛있는 문어고기",
         "https://media.discordapp.net/attachments/880049130813132842/900371003039948830/IMG_2593.png",
-        MEATTYPE,
+        MEAT_TYPE,
         10,
         DIFFICULTY,
         1634734699,
@@ -48,16 +48,16 @@ object FakeValue {
     val COMMENT = Comment(
         "사장님이 맛있고 음식이 친절해요",
         1634734699,
-        BRIEFCOMMUNITYUSER,
+        BRIEF_COMMUNITY_USER,
         "사장님이 너무 맛있고 음식이 완전 친절해요~ 또 오고 싶네요^^"
     )
-    val COMMUNITYUSER = CommunityUser(
+    val COMMUNITY_USER = CommunityUser(
         "김응애",
         "https://i.picsum.photos/id/839/200/200.jpg?hmac=IKyeqXa3iOwFkcM24B_X_Qjf9643wuDTCsTiM3T6AZg",
-        BRIEFBADGE,
+        BRIEF_BADGE,
         listOf(BADGE, BADGE),
-        listOf(BRIEFPOST, BRIEFPOST),
-        listOf(BRIEFRECIPE, BRIEFRECIPE)
+        listOf(BRIEF_POST, BRIEF_POST),
+        listOf(BRIEF_RECIPE, BRIEF_RECIPE)
     )
     val INGREDIENT = Ingredient(
         "문어",
@@ -72,9 +72,9 @@ object FakeValue {
         ),
         "주말엔 역시 문어고기",
         1634734699,
-        BRIEFCOMMUNITYUSER,
+        BRIEF_COMMUNITY_USER,
         "오늘은 회사 쉬는 날이라 오랜만에 맥북 켜고 문어를 익혀 먹어봤어요!!",
-        BRIEFRECIPE,
+        BRIEF_RECIPE,
         listOf(COMMENT, COMMENT, COMMENT, COMMENT),
         HEARTED_TRUE,
         true
@@ -83,12 +83,12 @@ object FakeValue {
         "맛있는 문어고기",
         "문어고기는 역시 맛있죠",
         "https://media.discordapp.net/attachments/880049130813132842/900371003039948830/IMG_2593.png",
-        BRIEFCOMMUNITYUSER,
+        BRIEF_COMMUNITY_USER,
         "https://www.youtube.com/watch?v=LBmB3DGxnNk",
         listOf(INGREDIENT, INGREDIENT),
         listOf("1. 문어 다리를 잘라줍니다.", "2. 문어 다리를 먹으면서 진행합니다.", "3. 문어 머리만 남겨서 맥북 위에 올립니다."),
-        listOf(BRIEFPOST, BRIEFPOST, BRIEFPOST),
-        MEATTYPE,
+        listOf(BRIEF_POST, BRIEF_POST, BRIEF_POST),
+        MEAT_TYPE,
         10,
         DIFFICULTY,
         1634734699,
