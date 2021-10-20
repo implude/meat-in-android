@@ -25,7 +25,7 @@ object FakeValue {
     )
     val BRIEF_POST = BriefPost(
         BRIEF_COMMUNITY_USER,
-        1634734699,
+        1634734699000,
         HEARTED_TRUE,
         1
     )
@@ -42,12 +42,12 @@ object FakeValue {
         MEAT_TYPE,
         10,
         DIFFICULTY,
-        1634734699,
+        1634734699000,
         HEARTED_FALSE
     )
     val COMMENT = Comment(
         "사장님이 맛있고 음식이 친절해요",
-        1634734699,
+        1634734699000,
         BRIEF_COMMUNITY_USER,
         "사장님이 너무 맛있고 음식이 완전 친절해요~ 또 오고 싶네요^^"
     )
@@ -71,7 +71,7 @@ object FakeValue {
             "https://media.discordapp.net/attachments/880049130813132842/900371003039948830/IMG_2593.png"
         ),
         "주말엔 역시 문어고기",
-        1634734699,
+        1634734699000,
         BRIEF_COMMUNITY_USER,
         "오늘은 회사 쉬는 날이라 오랜만에 맥북 켜고 문어를 익혀 먹어봤어요!!",
         BRIEF_RECIPE,
@@ -91,7 +91,7 @@ object FakeValue {
         MEAT_TYPE,
         10,
         DIFFICULTY,
-        1634734699,
+        1634734699000,
         HEARTED_FALSE
     )
 }
