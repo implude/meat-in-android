@@ -86,7 +86,7 @@ object FakeValue {
         BRIEF_COMMUNITY_USER,
         "https://www.youtube.com/watch?v=LBmB3DGxnNk",
         listOf(INGREDIENT, INGREDIENT),
-        listOf("1. 문어 다리를 잘라줍니다.", "2. 문어 다리를 먹으면서 진행합니다.", "3. 문어 머리만 남겨서 맥북 위에 올립니다."),
+        listOf("문어 다리를 잘라줍니다.", "문어 다리를 먹으면서 진행합니다.", "문어 머리만 남겨서 맥북 위에 올립니다."),
         listOf(BRIEF_POST, BRIEF_POST, BRIEF_POST),
         MEAT_TYPE,
         10,
