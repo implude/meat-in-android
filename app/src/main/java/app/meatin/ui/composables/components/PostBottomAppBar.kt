@@ -62,7 +62,8 @@ fun PostBottomAppBar(
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
                         start.linkTo(parent.start, 16.dp)
-                    }, verticalAlignment = Alignment.CenterVertically
+                    },
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
                     modifier = Modifier,
@@ -150,9 +151,7 @@ fun PostBottomAppBar(
             )
         }
     }
-
 }
-
 
 @Preview
 @Composable
@@ -168,5 +167,6 @@ fun PostBottomAppBarPreview() {
         onBookmartClick = { checkedBookmark = it },
         onHeartClick = { checkedHeart = it },
         onToPostClick = {},
-        onShareClick = {})
+        onShareClick = {}
+    )
 }
