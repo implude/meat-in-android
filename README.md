@@ -1,6 +1,6 @@
 # Meat in
 <p align="center">
-<image width="500px" src="/images/preview.png"/>
+<image width="400px" src="/images/preview.png"/>
 </p>
 
 ![image-1](images/image-1.png)
