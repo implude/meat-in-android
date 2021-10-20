@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import app.meatin.domain.model.FakeValues
 import app.meatin.domain.model.Ingredient
 import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.MeatInTypography
@@ -120,12 +121,7 @@ fun IngredientItem(
 fun IngredientItemPreview() {
     IngredientItem(
         modifier = Modifier.width(150.dp),
-        ingredient = Ingredient(
-            label = "필라델피아 크림치즈",
-            amount = "10모",
-            required = true,
-            content = "메인재료래요. 간단한 설명을 넣어요."
-        ),
-        onClick = {},
+        ingredient = FakeValues.INGREDIENT,
+        onClick = { },
     )
 }

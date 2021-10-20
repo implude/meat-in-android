@@ -29,6 +29,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import app.meatin.domain.model.BriefRecipe
 import app.meatin.domain.model.Difficulty
+import app.meatin.domain.model.FakeValues
 import app.meatin.domain.model.Heart
 import app.meatin.domain.model.MeatType
 import app.meatin.ui.theme.BoxTextDarkGray
@@ -183,15 +184,6 @@ fun TaggedRecipePreview() {
     TaggedRecipe(
         modifier = Modifier
             .size(width = 343.dp, height = 120.dp),
-        recipe = BriefRecipe(
-            name = "육즙 가득한 삼겹살은 너무 맛있어서 천국으로 가버릴 것 같아요",
-            description = "집에서도 육즙 가득하게 삽겹 고기 전문점에서 먹는 맛을 낼 수 있을 거예요 아마도 아마도",
-            thumbnail = "https://ychef.files.bbci.co.uk/976x549/p04kt0s1.jpg",
-            heart = Heart(777, true),
-            duration = 1800,
-            meatType = MeatType("삼겹살"),
-            difficulty = Difficulty("쉬움", 0),
-            createdAt = 0,
-        ),
+        recipe = FakeValues.BRIEF_RECIPE,
     )
 }

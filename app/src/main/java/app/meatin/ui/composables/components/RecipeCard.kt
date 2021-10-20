@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.meatin.domain.model.BriefRecipe
 import app.meatin.domain.model.Difficulty
+import app.meatin.domain.model.FakeValues
 import app.meatin.domain.model.Heart
 import app.meatin.domain.model.MeatType
 import app.meatin.ui.theme.DarkFlamingo
@@ -128,16 +129,7 @@ fun RecipeCard(
 fun RecipeCardPreview() {
     RecipeCard(
         modifier = Modifier.padding(10.dp),
-        recipe = BriefRecipe(
-            name = "나이아가라 폭포",
-            description = "집에서도 시원한 나이아가라 폭포를 즐겨보세요.",
-            thumbnail = "https://ychef.files.bbci.co.uk/976x549/p04kt0s1.jpg",
-            heart = Heart(777, true),
-            duration = 0,
-            meatType = MeatType(""),
-            difficulty = Difficulty("", 0),
-            createdAt = 0,
-        ),
+        recipe = FakeValues.BRIEF_RECIPE,
         onClick = { },
     )
 }
