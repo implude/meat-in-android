@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import app.meatin.domain.model.Ingredient
 import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
@@ -25,19 +26,15 @@ import app.meatin.ui.theme.composefix.CoreText
 fun IngredientItem(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    name: String,
-    quantity: Number,
-    unit: String,
-    isEssential: Boolean,
-    description: String,
+    ingredient: Ingredient,
 ) {
-    val essentialText = if (isEssential) {
+    val essentialText = if (ingredient.required) {
         "필수"
     } else {
         "선택"
     }
 
-    val essentialColor = if (isEssential) {
+    val essentialColor = if (ingredient.required) {
         DarkFlamingo
     } else {
         Color.Gray
@@ -66,7 +63,7 @@ fun IngredientItem(
                     top.linkTo(parent.top, 12.dp)
                     width = Dimension.fillToConstraints
                 },
-            text = name,
+            text = ingredient.label,
             overflow = TextOverflow.Ellipsis,
             style = MeatInTypography.regularImportant,
             maxLines = 2
@@ -81,14 +78,7 @@ fun IngredientItem(
                 }
         ) {
             CoreText(
-                text = quantity.toString(),
-                overflow = TextOverflow.Ellipsis,
-                style = MeatInTypography.regular,
-                maxLines = 1
-            )
-
-            CoreText(
-                text = unit,
+                text = ingredient.amount,
                 overflow = TextOverflow.Ellipsis,
                 style = MeatInTypography.regular,
                 maxLines = 1
@@ -117,7 +107,7 @@ fun IngredientItem(
                 }
                 .height(38.dp),
 
-            text = description,
+            text = ingredient.content,
             overflow = TextOverflow.Ellipsis,
             style = MeatInTypography.regular,
             color = Color.Gray,
@@ -130,12 +120,13 @@ fun IngredientItem(
 @Composable
 fun IngredientItemPreview() {
     IngredientItem(
-        Modifier.padding(10.dp).width(167.dp),
+        modifier = Modifier.width(150.dp),
+        ingredient = Ingredient(
+            label = "필라델피아 크림치즈",
+            amount = "10모",
+            required = true,
+            content = "메인재료래요. 간단한 설명을 넣어요."
+        ),
         onClick = {},
-        name = "아스파라거스",
-        quantity = 10,
-        unit = "모",
-        isEssential = true,
-        description = "메인재료래요. 간단한 설명을 넣어요."
     )
 }
