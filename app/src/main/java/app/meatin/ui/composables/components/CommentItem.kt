@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import app.meatin.domain.model.BriefBadge
 import app.meatin.domain.model.BriefCommunityUser
 import app.meatin.domain.model.Comment
+import app.meatin.domain.model.FakeValues
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
 import app.meatin.util.defaultDateFormatter
@@ -53,14 +54,6 @@ fun CommentItem(
 @Composable
 fun CommentItemPreview() {
     CommentItem(
-        comment = Comment(
-            title = "",
-            createdAt = 0,
-            author = BriefCommunityUser(
-                name = "김응애", profileImage = "sample uri",
-                repBadge = BriefBadge("sample uri", "유사 백선생")
-            ),
-            content = "정말 맛있어보이네요,,^^ 저도  .. 아가들한테 해주야겠어요..^^,,"
-        )
+        comment = FakeValues.COMMENT
     )
 }

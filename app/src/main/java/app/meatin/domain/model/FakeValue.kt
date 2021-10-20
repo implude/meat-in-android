@@ -1,6 +1,6 @@
 package app.meatin.domain.model
 
-object FakeValue {
+object FakeValues {
     val HEARTED_TRUE = Heart(
         1,
         true
@@ -38,6 +38,7 @@ object FakeValue {
     )
     val BRIEF_RECIPE = BriefRecipe(
         "맛있는 문어고기",
+        "문어고기는 역시 맛있죠",
         "https://media.discordapp.net/attachments/880049130813132842/900371003039948830/IMG_2593.png",
         MEAT_TYPE,
         10,

@@ -36,6 +36,7 @@ import app.meatin.domain.model.BriefCommunityUser
 import app.meatin.domain.model.BriefRecipe
 import app.meatin.domain.model.Comment
 import app.meatin.domain.model.Difficulty
+import app.meatin.domain.model.FakeValues
 import app.meatin.domain.model.Heart
 import app.meatin.domain.model.MeatType
 import app.meatin.domain.model.Post
@@ -157,20 +158,7 @@ fun PostCard(
 fun PostCardPreview() {
     PostCard(
         modifier = Modifier.padding(10.dp),
-        post = Post(
-            photos = listOf("https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg"),
-            author = BriefCommunityUser(
-                name = "김응애", profileImage = "sample uri",
-                repBadge = BriefBadge("sample uri", "유사 백선생")
-            ),
-            heart = Heart(40, true),
-            comments = List(50) { Comment("", 0, BriefCommunityUser("", "", BriefBadge("", "")), "") },
-            content = "응애",
-            title = "응애",
-            createdAt = 0,
-            linkedRecipe = BriefRecipe("", "", MeatType(""), 0, Difficulty("", 0), 0, Heart(0, false)),
-            bookmarked = true,
-        ),
+        post = FakeValues.POST,
         onClick = { },
     )
 }

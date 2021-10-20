@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.meatin.domain.model.BriefBadge
 import app.meatin.domain.model.BriefCommunityUser
+import app.meatin.domain.model.FakeValues
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
 import coil.annotation.ExperimentalCoilApi
@@ -65,9 +66,6 @@ fun BadgedUser(
 @Composable
 fun BadgedUserPreview() {
     BadgedUser(
-        user = BriefCommunityUser(
-            name = "김응애", profileImage = "sample uri",
-            repBadge = BriefBadge("sample uri", "유사 백선생")
-        )
+        user = FakeValues.BRIEF_COMMUNITY_USER
     )
 }
