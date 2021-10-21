@@ -18,19 +18,18 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import app.meatin.R
-import app.meatin.domain.model.BriefBadge
 import app.meatin.domain.model.BriefCommunityUser
+import app.meatin.domain.model.FakeValues
 import app.meatin.ui.theme.DisableLightGray2
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import java.net.URI
 
 @ExperimentalCoilApi
 @Composable
 fun ProfileButton(
     modifier: Modifier = Modifier,
     user: BriefCommunityUser,
-    profileUri: URI,
+    profileUri: String,
     onClick: () -> Unit,
 ) {
     ConstraintLayout(
@@ -56,7 +55,7 @@ fun ProfileButton(
                     start.linkTo(parent.start, 16.dp)
                 },
             painter = rememberImagePainter(
-                data = profileUri.toASCIIString()
+                data = profileUri,
             ),
             contentDescription = null,
             contentScale = ContentScale.Crop
@@ -90,11 +89,8 @@ fun ProfileButton(
 @Composable
 fun ProfileButtonPreview() {
     ProfileButton(
-        profileUri = URI("https://ychef.files.bbci.co.uk/976x549/p04kt0s1.jpg"),
+        profileUri = "https://ychef.files.bbci.co.uk/976x549/p04kt0s1.jpg",
         onClick = {},
-        user = BriefCommunityUser(
-            name = "김응애", profileImage = "sample uri",
-            repBadge = BriefBadge("sample uri", "유사 백선생")
-        ),
+        user = FakeValues.BRIEF_COMMUNITY_USER,
     )
 }
