@@ -28,10 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import app.meatin.domain.model.BriefRecipe
-import app.meatin.domain.model.Difficulty
 import app.meatin.domain.model.FakeValues
-import app.meatin.domain.model.Heart
-import app.meatin.domain.model.MeatType
 import app.meatin.ui.theme.BoxTextDarkGray
 import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.DisableLightGray2

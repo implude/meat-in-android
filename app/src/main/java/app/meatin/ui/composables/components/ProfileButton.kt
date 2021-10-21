@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import app.meatin.R
-import app.meatin.domain.model.BriefBadge
 import app.meatin.domain.model.BriefCommunityUser
 import app.meatin.domain.model.FakeValues
 import app.meatin.ui.theme.DisableLightGray2

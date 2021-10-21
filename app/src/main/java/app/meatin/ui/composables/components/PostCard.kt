@@ -31,14 +31,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.meatin.domain.model.BriefBadge
-import app.meatin.domain.model.BriefCommunityUser
-import app.meatin.domain.model.BriefRecipe
-import app.meatin.domain.model.Comment
-import app.meatin.domain.model.Difficulty
 import app.meatin.domain.model.FakeValues
-import app.meatin.domain.model.Heart
-import app.meatin.domain.model.MeatType
 import app.meatin.domain.model.Post
 import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.MeatInTypography
