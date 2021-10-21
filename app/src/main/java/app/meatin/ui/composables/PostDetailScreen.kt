@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Scaffold
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -258,12 +257,7 @@ fun PostDetailScreenPreview() {
         titleImageURI = URI("https://naver.com"),
         title = "육즙 가득 삼겹살 굽기!!",
         date = LocalDateTime.of(2021, 9, 16, 1, 0, 0),
-        description = "고백받았는데 내가 거절했어\n" +
-                "한순간에 남같이 돌변하더라\n" +
-                "너무힘들어 지금도 울고있어\n" +
-                "보고싶다 매일밤 전화하던게\n" +
-                "넘너무 그리워 내 목숨을 가져가도 좋아\n" +
-                "제발 연락해줘",
+        description = "고백받았는데 내가 거절했어\n한순간에 남같이 돌변하더라\n너무힘들어 지금도 울고있어\n보고싶다 매일밤 전화하던게\n넘너무 그리워 내 목숨을 가져가도 좋아\n제발 연락해줘",
         comments = listOf()
     )
 }
