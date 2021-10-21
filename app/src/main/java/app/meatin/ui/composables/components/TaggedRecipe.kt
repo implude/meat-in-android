@@ -27,29 +27,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import app.meatin.domain.model.BriefRecipe
+import app.meatin.domain.model.FakeValues
 import app.meatin.ui.theme.BoxTextDarkGray
 import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.DisableLightGray2
 import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
+import app.meatin.util.defaultDateFormatter
+import app.meatin.util.toDate
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import java.net.URI
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @ExperimentalCoilApi
 @Composable
 fun TaggedRecipe(
     modifier: Modifier = Modifier,
-    previewUri: URI,
-    title: String,
-    tags: List<String>,
-    description: String,
-    hearts: Int,
-    isHearted: Boolean,
-    date: LocalDateTime,
+    recipe: BriefRecipe,
 ) {
     ConstraintLayout(
         modifier
@@ -61,7 +56,7 @@ fun TaggedRecipe(
             column,
         ) = createRefs()
 
-        val heart = if (isHearted) {
+        val heart = if (recipe.heart.hearted) {
             Icons.Default.Favorite
         } else {
             Icons.Default.FavoriteBorder
@@ -78,7 +73,7 @@ fun TaggedRecipe(
                     bottom.linkTo(parent.bottom)
                 },
             painter = rememberImagePainter(
-                data = previewUri.toASCIIString()
+                data = recipe.thumbnail,
             ),
             contentDescription = null,
             contentScale = ContentScale.Crop
@@ -97,7 +92,7 @@ fun TaggedRecipe(
         ) {
             CoreText(
                 modifier = Modifier,
-                text = title,
+                text = recipe.name,
                 style = MeatInTypography.regularImportant,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1
@@ -107,6 +102,7 @@ fun TaggedRecipe(
                 modifier = Modifier,
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
+                val tags = listOf(recipe.meatType.label, recipe.difficulty.label, "${recipe.duration}초 소요")
                 items(tags) {
                     CoreText(
                         modifier = Modifier
@@ -131,7 +127,7 @@ fun TaggedRecipe(
 
             CoreText(
                 modifier = Modifier,
-                text = description,
+                text = recipe.description,
                 style = MeatInTypography.description,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 2
@@ -151,7 +147,7 @@ fun TaggedRecipe(
                 CoreText(
                     modifier = Modifier
                         .padding(start = 4.dp),
-                    text = hearts.toString(),
+                    text = recipe.heart.count.toString(),
                     style = MeatInTypography.subHeader.copy(
                         fontSize = 12.sp,
                         lineHeight = (12 * 1.5).sp
@@ -164,7 +160,7 @@ fun TaggedRecipe(
                 CoreText(
                     modifier = Modifier
                         .padding(start = 10.dp),
-                    text = DateTimeFormatter.ofPattern("yyyy. MM. dd").format(date),
+                    text = defaultDateFormatter.format(recipe.createdAt.toDate()),
                     style = MeatInTypography.subHeader.copy(
                         fontSize = 12.sp,
                         lineHeight = (12 * 1.5).sp
@@ -185,12 +181,6 @@ fun TaggedRecipePreview() {
     TaggedRecipe(
         modifier = Modifier
             .size(width = 343.dp, height = 120.dp),
-        previewUri = URI("https://naver.com"),
-        title = "육즙 가득한 삼겹살은 너무 맛있어서 천국으로 가버릴 것 같아요",
-        tags = listOf("삼겹살", "쉬움", "30분 소요"),
-        description = "집에서도 육즙 가득하게 삽겹 고기 전문점에서 먹는 맛을 낼 수 있을 거예요 아마도 아마도",
-        hearts = 10,
-        isHearted = false,
-        date = LocalDateTime.of(2021, 9, 16, 1, 0, 0)
+        recipe = FakeValues.BRIEF_RECIPE,
     )
 }
