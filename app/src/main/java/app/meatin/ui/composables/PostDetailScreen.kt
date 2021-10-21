@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import app.meatin.domain.model.Comment
-import app.meatin.domain.model.FakeValue
+import app.meatin.domain.model.FakeValues
 import app.meatin.ui.composables.components.ProfileButton
 import app.meatin.ui.composables.components.TaggedRecipe
 import app.meatin.ui.theme.MeatInTypography
@@ -122,8 +122,8 @@ fun PostDetailScreen(
                         end.linkTo(parent.end)
                     }
                     .shadow(4.dp),
-                user = FakeValue.BRIEF_COMMUNITY_USER,
-                profileUri = URI(FakeValue.BRIEF_COMMUNITY_USER.profileImage),
+                user = FakeValues.BRIEF_COMMUNITY_USER,
+                profileUri = FakeValues.BRIEF_COMMUNITY_USER.profileImage,
                 onClick = { /*TODO*/ },
             )
 
@@ -167,13 +167,7 @@ fun PostDetailScreen(
                         top.linkTo(taggedRecipeText.bottom, 12.dp)
                     }
                     .padding(start = 16.dp, end = 16.dp, bottom = 10.dp),
-                previewUri = URI("https://naver.com"),
-                title = "육즙 가득한 삼겹살은 너무 맛있어서 천국으로 가버릴 것 같아요",
-                tags = listOf("삼겹살", "쉬움", "30분 소요"),
-                description = "집에서도 육즙 가득하게 삽겹 고기 전문점에서 먹는 맛을 낼 수 있을 거예요 아마도 아마도",
-                hearts = 10,
-                isHearted = true,
-                date = LocalDateTime.of(2021, 9, 16, 1, 0, 0)
+                recipe = FakeValues.BRIEF_RECIPE
             )
         }
 
