@@ -1,12 +1,7 @@
 package app.meatin.ui.composables
 
-import android.content.Context
-import android.widget.EditText
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,55 +11,37 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.RelocationRequester
 import androidx.compose.ui.layout.relocationRequester
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
-import androidx.core.content.ContextCompat.getSystemService
 import app.meatin.domain.model.Comment
-import app.meatin.ui.composables.components.CommentItem
+import app.meatin.domain.model.FakeValue
 import app.meatin.ui.composables.components.ProfileButton
 import app.meatin.ui.composables.components.TaggedRecipe
-import app.meatin.ui.theme.BoxTextDarkGray
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import java.net.URI
 import java.time.LocalDateTime
-import java.time.Month
 import java.time.format.DateTimeFormatter
 
 @ExperimentalComposeUiApi
@@ -145,12 +122,9 @@ fun PostDetailScreen(
                         end.linkTo(parent.end)
                     }
                     .shadow(4.dp),
-                profileUri = URI("https://naver.com"),
-                badgeUri = URI("https://naver.com"),
+                user = FakeValue.BRIEF_COMMUNITY_USER,
+                profileUri = URI(FakeValue.BRIEF_COMMUNITY_USER.profileImage),
                 onClick = { /*TODO*/ },
-                classes = "유사 백선생",
-                classesColor = Color(0xFFFFA318),
-                username = "김응애"
             )
 
             CoreText(
@@ -278,10 +252,6 @@ fun PostDetailScreen(
 //                }
 //            }
         }
-    }
-
-    Scaffold() {
-        // TODO - Code after build PostBottomAppBar component finish.
     }
 }
 
