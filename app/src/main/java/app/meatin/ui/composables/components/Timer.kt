@@ -15,14 +15,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,12 +30,10 @@ import app.meatin.R
 import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
-import com.airbnb.lottie.LottieComposition
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
 import kotlin.math.PI
 import kotlin.math.cos
@@ -49,7 +45,7 @@ fun Timer(
     second: Int,
 ) {
     val compositionSpec by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loadinground))
-    val progress by animateLottieCompositionAsState(compositionSpec,iterations = LottieConstants.IterateForever,)
+    val progress by animateLottieCompositionAsState(compositionSpec,iterations = LottieConstants.IterateForever)
 
     Box(modifier) {
         for (i in 0 until 60) {
@@ -63,7 +59,7 @@ fun Timer(
             ) {
                 Surface(
                     elevation = 8.dp,
-                ){
+                ) {
                 }
                 Column(
                     modifier = Modifier
@@ -167,12 +163,11 @@ fun TimerPreview() {
 }
 
 fun getTimerLabel(value: Int): String {
-    return if((value / 60) == 0) {
+    return if ((value / 60) == 0) {
         "${padding(value % 60)}초"
     } else {
         "${padding(value / 60)}분 ${padding(value % 60)}초"
     }
 }
-
 
 fun padding(value: Int) = if (value < 10) ("0$value") else "" + value
