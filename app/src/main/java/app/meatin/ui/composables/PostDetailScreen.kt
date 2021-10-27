@@ -12,23 +12,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.BottomAppBar
-import androidx.compose.material.DrawerValue
-import androidx.compose.material.FabPosition
-import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.rememberDrawerState
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -48,6 +37,7 @@ import androidx.constraintlayout.compose.Dimension
 import app.meatin.domain.model.Comment
 import app.meatin.domain.model.FakeValues
 import app.meatin.ui.composables.components.CommentItem
+import app.meatin.ui.composables.components.PostBottomAppBar
 import app.meatin.ui.composables.components.ProfileButton
 import app.meatin.ui.composables.components.TaggedRecipe
 import app.meatin.ui.theme.MeatInTypography
@@ -68,6 +58,9 @@ fun PostDetailScreen(
     date: LocalDateTime,
     description: String,
     comments: List<Comment>,
+    isHearted: Boolean,
+    isBookmarked: Boolean,
+    hearts: Int,
 ) {
     Scaffold(
         content = {
@@ -263,15 +256,15 @@ fun PostDetailScreen(
             }
         },
         bottomBar = {
-            BottomAppBar(backgroundColor = Color.White) {
-                ConstraintLayout(
-                    modifier
-                        .background(Color.Gray)
-                        .fillMaxWidth()
-                ) {
-
-                }
-            }
+            PostBottomAppBar(
+                isHearted = isHearted,
+                onToPostClick = {},
+                onHeartClick = {},
+                onBookmarkClick = {},
+                onShareClick = {},
+                isBookmarked = isBookmarked,
+                hearts = hearts
+            )
         }
     )
 }
@@ -286,6 +279,9 @@ fun PostDetailScreenPreview() {
         title = "육즙 가득 삼겹살 굽기!!",
         date = LocalDateTime.of(2021, 9, 16, 1, 0, 0),
         description = "고백받았는데 내가 거절했어\n한순간에 남같이 돌변하더라\n너무힘들어 지금도 울고있어\n보고싶다 매일밤 전화하던게\n넘너무 그리워 내 목숨을 가져가도 좋아\n제발 연락해줘",
-        comments = listOf(FakeValues.COMMENT, FakeValues.COMMENT, FakeValues.COMMENT)
+        comments = listOf(FakeValues.COMMENT, FakeValues.COMMENT, FakeValues.COMMENT),
+        isHearted = true,
+        isBookmarked = false,
+        hearts = 11
     )
 }
