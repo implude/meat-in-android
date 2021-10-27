@@ -1,6 +1,5 @@
 package app.meatin.ui.composables.components
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -45,7 +44,7 @@ fun Timer(
     second: Int,
 ) {
     val compositionSpec by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loadinground))
-    val progress by animateLottieCompositionAsState(compositionSpec,iterations = LottieConstants.IterateForever)
+    val progress by animateLottieCompositionAsState(compositionSpec, iterations = LottieConstants.IterateForever)
 
     Box(modifier) {
         for (i in 0 until 60) {
