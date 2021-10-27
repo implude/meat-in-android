@@ -13,6 +13,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,6 +32,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
+import kotlinx.coroutines.delay
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -34,10 +40,33 @@ import kotlin.math.sin
 @Composable
 fun Timer(
     modifier: Modifier = Modifier,
-    second: Int,
+    second: Long,
+    initialValue: Float =1f,
 ) {
+    var currentTime by remember {
+        mutableStateOf(second)
+    }
+    var isTimerRunning by remember {
+        mutableStateOf(false)
+    }
+    var value by remember {
+        mutableStateOf(initialValue)
+    }
+
+    LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
+        isTimerRunning = if(currentTime >= 0L) {
+            true
+        } else {
+            !isTimerRunning
+        }
+        if(currentTime > 0L && isTimerRunning) {
+            delay(100L)
+            currentTime -= 100L
+            value = currentTime / second.toFloat()
+        }
+    }
     Box(modifier) {
-        for (i in 0 until 60) {
+        for (i in 60 - (value * 60).toInt() until 60) {
             Marker(
                 angle = i * 6,
             )
@@ -84,7 +113,7 @@ fun Timer(
                                 ConstraintLayout {
                                     val (text) = createRefs()
                                     CoreText(
-                                        text = getTimerLabel(second),
+                                        text = getTimerLabel(currentTime/1000L),
                                         overflow = TextOverflow.Ellipsis,
                                         style = MeatInTypography.pageTitle,
                                         color = Flamingo,
@@ -135,15 +164,15 @@ fun TimerPreview() {
     Timer(
         modifier = Modifier
             .size(width = 400.dp, height = 400.dp),
-        second = 15,
+        second = 100L * 1000L,
     )
 }
 
-fun getTimerLabel(value: Int): String {
-    return if ((value / 60) == 0) {
-        "${padding(value % 60)}초"
+fun getTimerLabel(value: Long): String {
+    return if ((value.toInt() / 60) == 0) {
+        "${padding(value.toInt() % 60)}초"
     } else {
-        "${padding(value / 60)}분 ${padding(value % 60)}초"
+        "${padding(value.toInt() / 60)}분 ${padding(value.toInt() % 60)}초"
     }
 }
 
