@@ -34,7 +34,7 @@ fun PostBottomAppBar(
     isHearted: Boolean,
     onToPostClick: () -> Unit,
     onHeartClick: ((Boolean) -> Unit)?,
-    onBookmartClick: ((Boolean) -> Unit)?,
+    onBookmarkClick: ((Boolean) -> Unit)?,
     onShareClick: () -> Unit,
     isBookmarked: Boolean,
     hearts: Int,
@@ -114,10 +114,10 @@ fun PostBottomAppBar(
                 style = MeatInTypography.regular,
             )
             val bookmarkToggleable =
-                if (onBookmartClick != null) {
+                if (onBookmarkClick != null) {
                     Modifier.toggleable(
                         value = isBookmarked,
-                        onValueChange = onBookmartClick,
+                        onValueChange = onBookmarkClick,
                     )
                 } else {
                     Modifier
@@ -164,7 +164,7 @@ fun PostBottomAppBarPreview() {
         isHearted = checkedHeart,
         hearts = 11,
         isBookmarked = checkedBookmark,
-        onBookmartClick = { checkedBookmark = it },
+        onBookmarkClick = { checkedBookmark = it },
         onHeartClick = { checkedHeart = it },
         onToPostClick = {},
         onShareClick = {}
