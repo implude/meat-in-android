@@ -13,7 +13,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,15 +24,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import app.meatin.R
 import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieComposition
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -43,9 +36,6 @@ fun Timer(
     modifier: Modifier = Modifier,
     second: Int,
 ) {
-    val compositionSpec by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loadinground))
-    val progress by animateLottieCompositionAsState(compositionSpec, iterations = LottieConstants.IterateForever)
-
     Box(modifier) {
         for (i in 0 until 60) {
             Marker(
@@ -92,19 +82,7 @@ fun Timer(
                                     .background(Color.White)
                             ) {
                                 ConstraintLayout {
-                                    val (animation, text) = createRefs()
-                                    LottieAnimation(
-                                        compositionSpec,
-                                        progress,
-                                        modifier = Modifier
-                                            .size(200.dp)
-                                            .constrainAs(animation) {
-                                                top.linkTo(parent.top)
-                                                bottom.linkTo(parent.bottom)
-                                                start.linkTo(parent.start)
-                                                end.linkTo(parent.end)
-                                            },
-                                    )
+                                    val (text) = createRefs()
                                     CoreText(
                                         text = getTimerLabel(second),
                                         overflow = TextOverflow.Ellipsis,
