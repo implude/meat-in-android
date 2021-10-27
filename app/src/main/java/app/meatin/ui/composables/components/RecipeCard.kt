@@ -28,23 +28,25 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.meatin.domain.model.BriefRecipe
+import app.meatin.domain.model.FakeValues
 import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.DisableLightGray2
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import java.net.URI
 
 @ExperimentalCoilApi
 @Composable
 fun RecipeCard(
     modifier: Modifier = Modifier,
-    title: String,
-    subtitle: String,
-    imageUri: URI,
-    hearts: Int,
-    isHearted: Boolean,
+    recipe: BriefRecipe,
+//    title: String,
+//    subtitle: String,
+//    imageUri: URI,
+//    hearts: Int,
+//    isHearted: Boolean,
     onClick: () -> Unit,
 ) {
     Card(
@@ -61,7 +63,7 @@ fun RecipeCard(
                     .height(72.dp)
                     .background(DisableLightGray2),
                 painter = rememberImagePainter(
-                    data = imageUri.toASCIIString()
+                    data = recipe.thumbnail,
                 ),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
@@ -74,14 +76,14 @@ fun RecipeCard(
             ) {
                 Column(Modifier.align(Alignment.TopStart)) {
                     CoreText(
-                        text = title,
+                        text = recipe.name,
                         overflow = TextOverflow.Ellipsis,
                         style = MeatInTypography.regular
                             .copy(fontWeight = FontWeight.SemiBold),
                         maxLines = 1,
                     )
                     CoreText(
-                        text = subtitle,
+                        text = recipe.description,
                         overflow = TextOverflow.Ellipsis,
                         style = MeatInTypography.regular,
                         maxLines = 2,
@@ -93,7 +95,7 @@ fun RecipeCard(
                     Modifier.align(Alignment.BottomStart),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    val heartIcon = if (isHearted) {
+                    val heartIcon = if (recipe.heart.hearted) {
                         Icons.Default.Favorite
                     } else {
                         Icons.Default.FavoriteBorder
@@ -108,7 +110,7 @@ fun RecipeCard(
                         tint = DarkFlamingo,
                     )
                     CoreText(
-                        text = hearts.toString(),
+                        text = recipe.heart.count.toString(),
                         style = MeatInTypography.regularImportant.copy(fontSize = 12.sp),
                         color = DarkFlamingo,
                     )
@@ -123,42 +125,8 @@ fun RecipeCard(
 @Composable
 fun RecipeCardPreview() {
     RecipeCard(
-        Modifier.padding(10.dp),
-        title = "나이아가라 폭포",
-        subtitle = "집에서도 시원한 나이아가라 폭포를 즐겨보세요.",
-        imageUri = URI("https://ychef.files.bbci.co.uk/976x549/p04kt0s1.jpg"),
-        hearts = 777,
-        isHearted = true,
-        onClick = {},
-    )
-}
-
-@ExperimentalCoilApi
-@Preview
-@Composable
-fun RecipeCardPreviewSingleLine() {
-    RecipeCard(
-        Modifier.padding(10.dp),
-        title = "나이아가라 폭포",
-        subtitle = "집에서도 시원한",
-        imageUri = URI("https://ychef.files.bbci.co.uk/976x549/p04kt0s1.jpg"),
-        hearts = 777,
-        isHearted = false,
-        onClick = {},
-    )
-}
-
-@ExperimentalCoilApi
-@Preview
-@Composable
-fun RecipeCardPreviewOverTwoLines() {
-    RecipeCard(
-        Modifier.padding(10.dp),
-        title = "나이아가라 폭포",
-        subtitle = "집에서도 시원한 나이아가라 폭포를 즐겨보세요. 여름을 이겨내는 최고의 방법을 알려드립니다.",
-        imageUri = URI("https://ychef.files.bbci.co.uk/976x549/p04kt0s1.jpg"),
-        hearts = 777,
-        isHearted = false,
-        onClick = {},
+        modifier = Modifier.padding(10.dp),
+        recipe = FakeValues.BRIEF_RECIPE,
+        onClick = { },
     )
 }

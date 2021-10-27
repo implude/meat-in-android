@@ -31,30 +31,22 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.meatin.domain.model.FakeValues
+import app.meatin.domain.model.Post
 import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
+import app.meatin.util.defaultDateFormatter
+import app.meatin.util.toDate
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @ExperimentalCoilApi
 @Composable
 fun PostCard(
     modifier: Modifier = Modifier,
-    classesColor: Color,
-    badgeUri: String,
-    profileUri: String,
-    mainImageUri: String,
-    classes: String,
-    hearts: Int,
-    chats: Int,
-    isHearted: Boolean,
+    post: Post,
     onClick: () -> Unit,
-    username: String,
-    date: LocalDateTime,
-    content: String,
 ) {
     Card(
         modifier
@@ -69,8 +61,7 @@ fun PostCard(
                 .fillMaxSize()
                 .padding(12.dp)
         ) {
-            val format = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            val str: String = format.format(date)
+            val dateStr: String = defaultDateFormatter.format(post.createdAt.toDate())
             Column(Modifier.align(Alignment.TopStart)) {
                 Row {
                     Image(
@@ -79,40 +70,15 @@ fun PostCard(
                             .width(40.dp)
                             .clip(CircleShape),
                         painter = rememberImagePainter(
-                            data = profileUri
+                            data = post.author.profileImage
                         ),
                         contentDescription = null
                     )
                     Column {
-                        Row {
-                            Image(
-                                modifier = Modifier
-                                    .height(18.dp)
-                                    .width(18.dp),
-                                painter = rememberImagePainter(
-                                    data = badgeUri
-                                ),
-                                contentDescription = null,
-                                contentScale = ContentScale.Crop
-                            )
-                            CoreText(
-                                text = classes,
-                                overflow = TextOverflow.Ellipsis,
-                                style = MeatInTypography.regular,
-                                color = classesColor,
-                                maxLines = 1
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            CoreText(
-                                text = username,
-                                overflow = TextOverflow.Ellipsis,
-                                style = MeatInTypography.regularImportant,
-                                maxLines = 1
-                            )
-                        }
+                        BadgedUser(user = post.author)
                         Spacer(modifier = Modifier.height(4.dp))
                         CoreText(
-                            text = str,
+                            text = dateStr,
                             overflow = TextOverflow.Ellipsis,
                             style = MeatInTypography.regular,
                             maxLines = 1,
@@ -121,7 +87,7 @@ fun PostCard(
                 }
                 Spacer(modifier = Modifier.height(12.dp))
                 CoreText(
-                    text = content,
+                    text = post.content,
                     overflow = TextOverflow.Ellipsis,
                     style = MeatInTypography.regular,
                     maxLines = 1,
@@ -132,14 +98,14 @@ fun PostCard(
                         .height(170.dp)
                         .width(343.dp),
                     painter = rememberImagePainter(
-                        data = mainImageUri
+                        data = post.photos.first()
                     ),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    val heartIcon = if (isHearted) {
+                    val heartIcon = if (post.heart.hearted) {
                         Icons.Default.Favorite
                     } else {
                         Icons.Default.FavoriteBorder
@@ -153,7 +119,7 @@ fun PostCard(
                         tint = DarkFlamingo,
                     )
                     CoreText(
-                        text = hearts.toString(),
+                        text = post.heart.count.toString(),
                         style = MeatInTypography.regularImportant
                             .copy(fontSize = 12.sp),
                         color = DarkFlamingo,
@@ -168,7 +134,7 @@ fun PostCard(
                         tint = Color.Gray,
                     )
                     CoreText(
-                        text = chats.toString(),
+                        text = post.comments.size.toString(),
                         style = MeatInTypography.regularImportant
                             .copy(fontSize = 12.sp),
                         color = Color.Gray,
@@ -185,17 +151,7 @@ fun PostCard(
 fun PostCardPreview() {
     PostCard(
         modifier = Modifier.padding(10.dp),
-        badgeUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
-        profileUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
-        mainImageUri = "https://www.nemopan.com/files/attach/images/166591/207/339/014/e96e99e30becc3f29b8b6a4e1e20c1f8.jpg",
-        classes = "유사 백선생",
-        classesColor = Color(0xffFFA318),
-        hearts = 40,
-        chats = 50,
-        isHearted = true,
-        onClick = {},
-        username = "김응애",
-        date = LocalDateTime.of(1900, 1, 2, 1, 0, 0),
-        content = "응애",
+        post = FakeValues.POST,
+        onClick = { },
     )
 }

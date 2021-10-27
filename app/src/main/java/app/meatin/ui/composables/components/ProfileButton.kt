@@ -13,29 +13,24 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import app.meatin.R
+import app.meatin.domain.model.BriefCommunityUser
+import app.meatin.domain.model.FakeValues
 import app.meatin.ui.theme.DisableLightGray2
-import app.meatin.ui.theme.MeatInTypography
-import app.meatin.ui.theme.composefix.CoreText
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import java.net.URI
 
 @ExperimentalCoilApi
 @Composable
 fun ProfileButton(
     modifier: Modifier = Modifier,
-    profileUri: URI,
-    badgeUri: URI,
+    user: BriefCommunityUser,
+    profileUri: String,
     onClick: () -> Unit,
-    classes: String,
-    classesColor: Color,
-    username: String,
 ) {
     ConstraintLayout(
         modifier
@@ -45,10 +40,8 @@ fun ProfileButton(
             .background(Color.White)
     ) {
         val (
-            badgeImage,
             profileImage,
-            classesText,
-            usernameText,
+            badgedUser,
             rightArrow,
         ) = createRefs()
         Image(
@@ -62,51 +55,20 @@ fun ProfileButton(
                     start.linkTo(parent.start, 16.dp)
                 },
             painter = rememberImagePainter(
-                data = profileUri.toASCIIString()
+                data = profileUri,
             ),
             contentDescription = null,
             contentScale = ContentScale.Crop
         )
-        Image(
-            modifier = Modifier
-                .size(18.dp, 15.dp)
-                .constrainAs(badgeImage) {
-                    start.linkTo(profileImage.end, 12.dp)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                },
-            painter = rememberImagePainter(
-                data = badgeUri.toASCIIString()
-            ),
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
-        CoreText(
-            modifier = Modifier
-                .constrainAs(classesText) {
-                    start.linkTo(badgeImage.end, 4.dp)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                },
-            overflow = TextOverflow.Ellipsis,
-            style = MeatInTypography.regular,
-            color = classesColor,
-            text = classes,
-            maxLines = 1
-        )
-        CoreText(
-            modifier = Modifier
-                .constrainAs(usernameText) {
-                    start.linkTo(classesText.end, 4.dp)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    end.linkTo(rightArrow.start)
-                    width = Dimension.fillToConstraints
-                },
-            overflow = TextOverflow.Ellipsis,
-            style = MeatInTypography.regularImportant,
-            text = username,
-            maxLines = 1,
+        BadgedUser(
+            modifier = Modifier.constrainAs(badgedUser) {
+                top.linkTo(parent.top)
+                start.linkTo(profileImage.end, 16.dp)
+                bottom.linkTo(parent.bottom)
+                end.linkTo(rightArrow.start)
+                width = Dimension.fillToConstraints
+            },
+            user = user
         )
         Icon(
             modifier = Modifier
@@ -127,11 +89,8 @@ fun ProfileButton(
 @Composable
 fun ProfileButtonPreview() {
     ProfileButton(
-        profileUri = URI("https://ychef.files.bbci.co.uk/976x549/p04kt0s1.jpg"),
-        badgeUri = URI("https://ychef.files.bbci.co.uk/976x549/p04kt0s1.jpg"),
+        profileUri = "https://ychef.files.bbci.co.uk/976x549/p04kt0s1.jpg",
         onClick = {},
-        classes = "유사 백선생",
-        classesColor = Color(0xFFFFA318),
-        username = "김응애"
+        user = FakeValues.BRIEF_COMMUNITY_USER,
     )
 }
