@@ -113,7 +113,8 @@ fun Timer(
                                 } else {
                                     isTimerRunning = !isTimerRunning
                                 }
-                                })
+                                }
+                            )
 
                     ) {
                         Column(
