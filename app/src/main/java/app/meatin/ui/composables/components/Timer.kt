@@ -2,6 +2,7 @@ package app.meatin.ui.composables.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,11 +25,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import app.meatin.ui.theme.BackgroundFullBrightGray
+import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
@@ -47,17 +52,16 @@ fun Timer(
         mutableStateOf(second)
     }
     var isTimerRunning by remember {
-        mutableStateOf(false)
+        mutableStateOf(true)
     }
     var value by remember {
         mutableStateOf(initialValue)
     }
 
+
     LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
-        isTimerRunning = if (currentTime >= 0L) {
-            true
-        } else {
-            !isTimerRunning
+        if (currentTime == 0L) {
+            isTimerRunning = false
         }
         if (currentTime > 0L && isTimerRunning) {
             delay(100L)
@@ -65,66 +69,79 @@ fun Timer(
             value = currentTime / second.toFloat()
         }
     }
-    Box(modifier) {
+    Box(modifier.drawBehind {
         for (i in 60 - (value * 60).toInt() until 60) {
-            Marker(
-                angle = i * 6,
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center
+            mark(angle = i * 6)
+        }
+    }
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Surface(
+                elevation = 8.dp,
             ) {
-                Surface(
-                    elevation = 8.dp,
-                ) {
-                }
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentSize(Alignment.Center)
+                    .clip(CircleShape)
+                    .border(
+                        8.dp, Color.White.copy(alpha = 0.3f), RoundedCornerShape(100.dp)
+                    ),
+            ) {
                 Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentSize(Alignment.Center)
-                        .clip(CircleShape)
-                        .border(
-                            6.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(100.dp)
-                        ),
+                        .size(200.dp)
+
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier
-                            .size(200.dp)
-
+                            .fillMaxWidth()
+                            .wrapContentSize(Alignment.Center)
+                            .clip(CircleShape)
+                            .clickable(onClick = {
+                                if (currentTime <= 0L) {
+                                    currentTime = second
+                                    isTimerRunning = true
+                                } else {
+                                    isTimerRunning = !isTimerRunning
+                                }
+                            } )
                     ) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentSize(Alignment.Center)
-                                .clip(CircleShape)
+                                .size(150.dp)
+                                .background(Color.White)
                         ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center,
-                                modifier = Modifier
-                                    .size(150.dp)
-                                    .background(Color.White)
-                            ) {
-                                ConstraintLayout {
-                                    val (text) = createRefs()
-                                    CoreText(
-                                        text = getTimerLabel(currentTime / 1000L),
-                                        overflow = TextOverflow.Ellipsis,
-                                        style = MeatInTypography.pageTitle,
-                                        color = Flamingo,
-                                        modifier = Modifier.constrainAs(text) {
-                                            top.linkTo(parent.top)
-                                            bottom.linkTo(parent.bottom)
-                                            start.linkTo(parent.start)
-                                            end.linkTo(parent.end)
-                                        }
-                                    )
+                            ConstraintLayout {
+                                val (text) = createRefs()
+                                val timeColor = if (isTimerRunning) {
+                                    DarkFlamingo
+                                } else {
+                                    Gray
                                 }
+                                CoreText(
+                                    text = getTimerLabel(currentTime / 1000L),
+                                    overflow = TextOverflow.Ellipsis,
+                                    style = MeatInTypography.pageTitle,
+                                    color = timeColor,
+                                    modifier = Modifier.constrainAs(text) {
+                                        top.linkTo(parent.top)
+                                        bottom.linkTo(parent.bottom)
+                                        start.linkTo(parent.start)
+                                        end.linkTo(parent.end)
+                                    }
+                                )
                             }
                         }
                     }
@@ -134,30 +151,24 @@ fun Timer(
     }
 }
 
-@Composable
-internal fun Marker(
+
+internal fun DrawScope.mark(
     angle: Int,
-    modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier
-            .fillMaxSize()
-            .drawBehind {
-                val theta = (angle - 90) * PI.toFloat() / 180f
-                val startRadius = size.width / 2 * .69f
-                val endRadius = size.width / 2 * .6f
-                val startPos = Offset(cos(theta) * startRadius, sin(theta) * startRadius)
-                val endPos = Offset(cos(theta) * endRadius, sin(theta) * endRadius)
-                drawLine(
-                    color = Color.White,
-                    start = center + startPos,
-                    end = center + endPos,
-                    strokeWidth = 5f,
-                    cap = StrokeCap.Round
-                )
-            }
+    val theta = (angle - 90) * PI.toFloat() / 180f
+    val startRadius = size.width / 2 * .69f
+    val endRadius = size.width / 2 * .6f
+    val startPos = Offset(cos(theta) * startRadius, sin(theta) * startRadius)
+    val endPos = Offset(cos(theta) * endRadius, sin(theta) * endRadius)
+    drawLine(
+        color = Color.White,
+        start = center + startPos,
+        end = center + endPos,
+        strokeWidth = 5f,
+        cap = StrokeCap.Round
     )
 }
+
 @Preview
 @Composable
 fun TimerPreview() {
