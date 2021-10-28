@@ -19,7 +19,10 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -256,13 +259,16 @@ fun PostDetailScreen(
             }
         },
         bottomBar = {
+            var checkedBookmark by remember { mutableStateOf(false) }
+            var checkedHeart by remember { mutableStateOf(false) }
+
             PostBottomAppBar(
-                isHearted = isHearted,
-                onToPostClick = {},
-                onHeartClick = {},
-                onBookmarkClick = {},
+                isHearted = checkedHeart,
+                onToPostClick = {  },
+                onHeartClick = { checkedHeart = it },
+                onBookmarkClick = { checkedBookmark = it },
                 onShareClick = {},
-                isBookmarked = isBookmarked,
+                isBookmarked = checkedBookmark,
                 hearts = hearts
             )
         }
