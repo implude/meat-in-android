@@ -32,9 +32,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import app.meatin.ui.theme.BackgroundFullBrightGray
 import app.meatin.ui.theme.DarkFlamingo
-import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
 import kotlinx.coroutines.delay
@@ -58,7 +56,6 @@ fun Timer(
         mutableStateOf(initialValue)
     }
 
-
     LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
         if (currentTime == 0L) {
             isTimerRunning = false
@@ -69,7 +66,8 @@ fun Timer(
             value = currentTime / second.toFloat()
         }
     }
-    Box(modifier.drawBehind {
+    Box(
+        modifier.drawBehind {
         for (i in 60 - (value * 60).toInt() until 60) {
             mark(angle = i * 6)
         }
@@ -107,14 +105,16 @@ fun Timer(
                             .fillMaxWidth()
                             .wrapContentSize(Alignment.Center)
                             .clip(CircleShape)
-                            .clickable(onClick = {
+                            .clickable(
+                                onClick = {
                                 if (currentTime <= 0L) {
                                     currentTime = second
                                     isTimerRunning = true
                                 } else {
                                     isTimerRunning = !isTimerRunning
                                 }
-                            } )
+                                })
+
                     ) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -150,7 +150,6 @@ fun Timer(
         }
     }
 }
-
 
 internal fun DrawScope.mark(
     angle: Int,
