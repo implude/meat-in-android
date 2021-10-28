@@ -41,7 +41,7 @@ import kotlin.math.sin
 fun Timer(
     modifier: Modifier = Modifier,
     second: Long,
-    initialValue: Float =1f,
+    initialValue: Float = 1f,
 ) {
     var currentTime by remember {
         mutableStateOf(second)
@@ -54,12 +54,12 @@ fun Timer(
     }
 
     LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
-        isTimerRunning = if(currentTime >= 0L) {
+        isTimerRunning = if (currentTime >= 0L) {
             true
         } else {
             !isTimerRunning
         }
-        if(currentTime > 0L && isTimerRunning) {
+        if (currentTime > 0L && isTimerRunning) {
             delay(100L)
             currentTime -= 100L
             value = currentTime / second.toFloat()
@@ -113,7 +113,7 @@ fun Timer(
                                 ConstraintLayout {
                                     val (text) = createRefs()
                                     CoreText(
-                                        text = getTimerLabel(currentTime/1000L),
+                                        text = getTimerLabel(currentTime / 1000L),
                                         overflow = TextOverflow.Ellipsis,
                                         style = MeatInTypography.pageTitle,
                                         color = Flamingo,
