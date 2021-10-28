@@ -68,10 +68,10 @@ fun Timer(
     }
     Box(
         modifier.drawBehind {
-        for (i in 60 - (value * 60).toInt() until 60) {
-            mark(angle = i * 6)
+            for (i in 60 - (value * 60).toInt() until 60) {
+                mark(angle = i * 6)
+            }
         }
-    }
     ) {
         Box(
             modifier = Modifier
@@ -107,12 +107,12 @@ fun Timer(
                             .clip(CircleShape)
                             .clickable(
                                 onClick = {
-                                if (currentTime <= 0L) {
-                                    currentTime = second
-                                    isTimerRunning = true
-                                } else {
-                                    isTimerRunning = !isTimerRunning
-                                }
+                                    if (currentTime <= 0L) {
+                                        currentTime = second
+                                        isTimerRunning = true
+                                    } else {
+                                        isTimerRunning = !isTimerRunning
+                                    }
                                 }
                             )
 
