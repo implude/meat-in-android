@@ -39,7 +39,7 @@ fun MeatTypeNavigation(
 ) {
     BoxWithConstraints(modifier) {
         val maxSize by remember { mutableStateOf(this.maxWidth) }
-        Column{
+        Column {
             val selectMeatType = remember { mutableStateOf(meatTypeList[0]) }
             Row(
                 Modifier.fillMaxWidth(),
