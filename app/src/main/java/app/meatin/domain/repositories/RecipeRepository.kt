@@ -8,7 +8,7 @@ import app.meatin.domain.model.RecipeStep
 
 interface RecipeRepository {
 
-    fun getCuratedRecipe(): Result<List<BriefRecipe>>
+    fun getCuratedRecipes(): Result<List<BriefRecipe>>
 
     fun getRecipe(recipeId: String): Result<Recipe>
 
@@ -27,7 +27,7 @@ interface RecipeRepository {
         thumbnail: String,
     ): Result<Recipe>
 
-    fun getDifficulties(): Result<Difficulty>
+    fun getDifficulties(): Result<List<Difficulty>>
 
     fun heartRecipe(recipeId: String): Result<Unit>
 

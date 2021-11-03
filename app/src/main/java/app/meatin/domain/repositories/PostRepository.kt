@@ -5,7 +5,7 @@ import app.meatin.domain.model.Comment
 import app.meatin.domain.model.Post
 
 interface PostRepository {
-    fun getCuratedPost(): Result<List<BriefPost>>
+    fun getCuratedPosts(): Result<List<BriefPost>>
     fun getPost(id: String): Result<Post>
 
     /**

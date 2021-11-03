@@ -18,6 +18,7 @@ import app.meatin.domain.model.Recipe
 import app.meatin.domain.model.RecipeStep
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -40,6 +41,18 @@ interface MeatInService {
         @Body createCommentRequestModel: CreateCommentRequestModel,
     ): Call<Comment>
 
+    @POST("post/{id}/heart")
+    fun heartPost(@Path("id") id: String): Call<Unit>
+
+    @DELETE("post/{id}/heart")
+    fun unheartPost(@Path("id") id: String): Call<Unit>
+
+    @POST("post/{id}/bookmark")
+    fun bookmarkPost(@Path("id") id: String): Call<Unit>
+
+    @DELETE("post/{id}/bookmark")
+    fun unbookmarkPost(@Path("id") id: String): Call<Unit>
+
     @GET("recipe/curated")
     fun getCuratedRecipes(): Call<List<BriefRecipe>>
 
@@ -47,7 +60,7 @@ interface MeatInService {
     fun getRecipeById(@Path("id") id: String): Call<Recipe>
 
     @GET("recipe/{id}/step")
-    fun getRecipeSteps(): Call<List<RecipeStep>>
+    fun getRecipeSteps(@Path("id") id: String): Call<List<RecipeStep>>
 
     @POST("recipe")
     fun createRecipe(@Body createRecipeRequestModel: CreateRecipeRequestModel): Call<Recipe>
@@ -60,6 +73,18 @@ interface MeatInService {
 
     @PATCH("user/me")
     fun modifyMyInfo(@Body modifyMyInfoRequestModel: ModifyMyInfoRequestModel): Call<BriefCommunityUser>
+
+    @POST("recipe/{id}/heart")
+    fun heartRecipe(@Path("id") id: String): Call<Unit>
+
+    @DELETE("recipe/{id}/heart")
+    fun unheartRecipe(@Path("id") id: String): Call<Unit>
+
+    @POST("recipe/{id}/bookmark")
+    fun bookmarkRecipe(@Path("id") id: String): Call<Unit>
+
+    @DELETE("recipe/{id}/bookmark")
+    fun unbookmarkRecipe(@Path("id") id: String): Call<Unit>
 
     @GET("user/{id}")
     fun getCommunityUser(@Path("id") id: String): Call<CommunityUser>
