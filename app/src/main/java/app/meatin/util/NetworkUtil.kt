@@ -1,6 +1,5 @@
 package app.meatin.util
 
-import java.lang.IllegalStateException
 import retrofit2.Call
 
 fun <T> launch(call: Call<T>): Result<T> = try {

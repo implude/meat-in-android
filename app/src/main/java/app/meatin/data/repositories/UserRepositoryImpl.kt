@@ -9,7 +9,7 @@ import app.meatin.util.launch
 
 class UserRepositoryImpl(
     private val service: MeatInService,
-): UserRepository {
+) : UserRepository {
     override fun getMyInfo(): Result<BriefCommunityUser> = launch(service.getMyInfo())
 
     override fun modifyMyInfo(
