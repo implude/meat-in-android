@@ -1,12 +1,12 @@
 package app.meatin.ui.viewmodel
 
-import SingleLiveEvent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.meatin.domain.model.Post
 import app.meatin.domain.repositories.PostRepository
+import app.meatin.util.SingleLiveEvent
 import kotlinx.coroutines.launch
 
 class PostViewModel(

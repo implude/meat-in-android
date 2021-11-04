@@ -1,6 +1,5 @@
 package app.meatin.ui.viewmodel
 
-import SingleLiveEvent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +8,7 @@ import app.meatin.domain.model.BriefPost
 import app.meatin.domain.model.BriefRecipe
 import app.meatin.domain.repositories.PostRepository
 import app.meatin.domain.repositories.RecipeRepository
+import app.meatin.util.SingleLiveEvent
 import kotlinx.coroutines.launch
 
 class MainViewModel(
