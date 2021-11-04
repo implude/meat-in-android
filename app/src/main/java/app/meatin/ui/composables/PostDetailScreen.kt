@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import app.meatin.domain.model.BriefCommunityUser
 import app.meatin.domain.model.FakeValues
 import app.meatin.domain.model.Post
 import app.meatin.ui.composables.components.CommentItem
@@ -56,6 +57,7 @@ import java.net.URI
 fun PostDetailScreen(
     modifier: Modifier = Modifier,
     post: Post,
+    profile: BriefCommunityUser
 ) {
     Scaffold(
         content = {
@@ -128,8 +130,8 @@ fun PostDetailScreen(
                                 width = Dimension.fillToConstraints
                             }
                             .shadow(1.dp),
-                        user = FakeValues.BRIEF_COMMUNITY_USER,
-                        profileUri = FakeValues.BRIEF_COMMUNITY_USER.profileImage,
+                        user = profile,
+                        profileUri = profile.profileImage,
                         onClick = { /*TODO*/ },
                     )
 
@@ -284,6 +286,7 @@ fun PostDetailScreen(
 @Composable
 fun PostDetailScreenPreview() {
     PostDetailScreen(
-        post = FakeValues.POST
+        post = FakeValues.POST,
+        profile = FakeValues.BRIEF_COMMUNITY_USER
     )
 }
