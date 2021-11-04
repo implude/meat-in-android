@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,30 +38,29 @@ import app.meatin.ui.theme.composefix.CoreText
 fun MeatTypeNavigation(
     modifier: Modifier = Modifier,
     meatTypeList: List<String>,
-    onClick: () -> Unit,
+    onClick: (Int) -> Unit,
+    meatTypeIndex: Int,
 ) {
     BoxWithConstraints(modifier) {
         val maxSize by remember { mutableStateOf(this.maxWidth) }
         Column {
-            val selectMeatType = remember { mutableStateOf(meatTypeList[0]) }
             Row(
                 Modifier.fillMaxWidth(),
             ) {
-                for (meatType in meatTypeList) {
+                meatTypeList.forEachIndexed { index, meatType ->
                     CoreText(
                         text = meatType,
                         Modifier
                             .selectable(
-                                selected = selectMeatType.value == meatType,
+                                selected = meatTypeList[meatTypeIndex] == meatType,
                                 role = Role.RadioButton,
                                 enabled = true,
                                 onClick = {
-                                    selectMeatType.value = meatType
-                                    onClick()
+                                    onClick(index)
                                 }
                             )
                             .weight(1f),
-                        color = if (selectMeatType.value == meatType) {
+                        color = if (meatTypeList[meatTypeIndex] == meatType) {
                             Color(0xFF333333)
                         } else {
                             Color(0xFFD4D4D4)
@@ -71,7 +71,7 @@ fun MeatTypeNavigation(
                 }
             }
             val barAnimation: Dp by animateDpAsState(
-                targetValue = maxSize * meatTypeList.indexOf(selectMeatType.value) / meatTypeList.size,
+                targetValue = maxSize * meatTypeIndex / meatTypeList.size,
                 spring(
                     dampingRatio = Spring.DampingRatioNoBouncy,
                     stiffness = Spring.StiffnessLow
@@ -98,8 +98,10 @@ fun MeatTypeNavigation(
 @Composable
 @Preview
 fun MeatTypeNavigationPreview() {
+    var meatTypeIndex by remember { mutableStateOf(0) }
     MeatTypeNavigation(
+        meatTypeIndex = meatTypeIndex,
         meatTypeList = listOf("모든고기", "소고기", "돼지고기", "닭고기", "간편식"),
-        onClick = {}
+        onClick = { meatTypeIndex = it }
     )
 }
