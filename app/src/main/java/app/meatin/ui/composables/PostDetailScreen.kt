@@ -189,11 +189,10 @@ fun PostDetailScreen(
                     val (
                         commentText,
                         inputCommentTextField,
-                        postCommentButton,
                         commentItems,
                     ) = createRefs()
 
-                    val relocationRequestor = remember { RelocationRequester() }
+                    val relocationRequester = remember { RelocationRequester() }
                     val text = remember { mutableStateOf("") }
 
                     CoreText(
@@ -214,10 +213,10 @@ fun PostDetailScreen(
                                 width = Dimension.fillToConstraints
                             }
                             .requiredHeight(51.dp)
-                            .relocationRequester(relocationRequestor),
+                            .relocationRequester(relocationRequester),
                         value = text.value,
                         onValueChange = {
-                            relocationRequestor.bringIntoView()
+                            relocationRequester.bringIntoView()
                             text.value = it
                         },
                         shape = RoundedCornerShape(5.dp, 0.dp, 0.dp, 5.dp),
