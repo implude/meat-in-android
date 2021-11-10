@@ -8,5 +8,5 @@ data class BriefPost(
     val heart: Heart,
     @SerializedName("comment_count") val nComments: Int,
     val content: String,
-    val photo: String,
+    val image: String,
 )

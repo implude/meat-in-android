@@ -98,7 +98,7 @@ fun PostCard(
                         .height(170.dp)
                         .width(343.dp),
                     painter = rememberImagePainter(
-                        data = post.photo
+                        data = post.image
                     ),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
