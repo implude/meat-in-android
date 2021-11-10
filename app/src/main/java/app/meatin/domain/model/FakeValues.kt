@@ -1,5 +1,7 @@
 package app.meatin.domain.model
 
+import app.meatin.ui.composables.components.Advertisement
+
 object FakeValues {
     val HEARTED_TRUE = Heart(
         1,
@@ -94,5 +96,10 @@ object FakeValues {
         DIFFICULTY,
         1634734699000,
         HEARTED_FALSE
+    )
+    val ADVERTISEMENT = AdvertisementModel(
+        "무한리필로 최고의 맛을 즐기세요 응애",
+        "15,900원이라는 합리적인 가격으로!",
+        "https://ychef.files.bbci.co.uk/976x549/p04kt0s1.jpg"
     )
 }
