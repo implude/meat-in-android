@@ -2,6 +2,9 @@ package app.meatin.ui.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -57,7 +60,8 @@ import java.net.URI
 fun PostDetailScreen(
     modifier: Modifier = Modifier,
     post: Post,
-    profile: BriefCommunityUser
+    profile: BriefCommunityUser,
+    onClick: () -> Unit
 ) {
     Scaffold(
         content = {
@@ -207,7 +211,7 @@ fun PostDetailScreen(
                     TextField(
                         modifier = Modifier
                             .constrainAs(inputCommentTextField) {
-                                top.linkTo(commentText.bottom, 20.dp)
+                                top.linkTo(commentText.bottom, 12.dp)
                                 start.linkTo(parent.start, 16.dp)
                                 end.linkTo(parent.end, 16.dp)
                                 width = Dimension.fillToConstraints
@@ -235,12 +239,14 @@ fun PostDetailScreen(
                         trailingIcon = {
                             CoreText(
                                 modifier = modifier
-                                    .padding(start = 16.dp, end = 16.dp)
-                                    .background(Color(0xfff8f8f8))
-                                    .clip(RoundedCornerShape(0.dp, 5.dp, 5.dp, 0.dp)),
+                                    .clickable(
+                                        indication = null,
+                                        interactionSource = MutableInteractionSource()
+                                    ) { onClick() }
+                                    .padding(start = 16.dp, end = 16.dp),
                                 text = "게시",
                                 color = Flamingo,
-                                style = MeatInTypography.subHeader,
+                                style = MeatInTypography.subHeader
                             )
                         },
                     )
@@ -287,6 +293,7 @@ fun PostDetailScreen(
 fun PostDetailScreenPreview() {
     PostDetailScreen(
         post = FakeValues.POST,
-        profile = FakeValues.BRIEF_COMMUNITY_USER
+        profile = FakeValues.BRIEF_COMMUNITY_USER,
+        onClick = {}
     )
 }
