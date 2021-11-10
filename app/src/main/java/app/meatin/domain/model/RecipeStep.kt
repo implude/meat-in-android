@@ -1,7 +1,8 @@
 package app.meatin.domain.model
 
-data class BriefBadge(
+data class RecipeStep(
     val image: String,
-    val label: String,
+    val title: String,
+    val content: String,
     override val id: String,
 ) : DocumentedModel

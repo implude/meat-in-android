@@ -107,7 +107,7 @@ fun IngredientItem(
                 }
                 .height(38.dp),
 
-            text = ingredient.content,
+            text = ingredient.content ?: "",
             overflow = TextOverflow.Ellipsis,
             style = MeatInTypography.regular,
             color = Color.Gray,
