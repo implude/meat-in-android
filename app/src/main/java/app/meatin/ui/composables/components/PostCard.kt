@@ -31,8 +31,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.meatin.domain.model.BriefPost
 import app.meatin.domain.model.FakeValues
-import app.meatin.domain.model.Post
 import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
@@ -41,11 +41,11 @@ import app.meatin.util.toDate
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 
-@ExperimentalCoilApi
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun PostCard(
     modifier: Modifier = Modifier,
-    post: Post,
+    post: BriefPost,
     onClick: () -> Unit,
 ) {
     Card(
@@ -98,7 +98,7 @@ fun PostCard(
                         .height(170.dp)
                         .width(343.dp),
                     painter = rememberImagePainter(
-                        data = post.photos.first()
+                        data = post.photo
                     ),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
@@ -134,7 +134,7 @@ fun PostCard(
                         tint = Color.Gray,
                     )
                     CoreText(
-                        text = post.comments.size.toString(),
+                        text = post.nComments.toString(),
                         style = MeatInTypography.regularImportant
                             .copy(fontSize = 12.sp),
                         color = Color.Gray,
@@ -151,7 +151,7 @@ fun PostCard(
 fun PostCardPreview() {
     PostCard(
         modifier = Modifier.padding(10.dp),
-        post = FakeValues.POST,
+        post = FakeValues.BRIEF_POST,
         onClick = { },
     )
 }
