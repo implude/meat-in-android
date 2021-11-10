@@ -12,4 +12,5 @@ data class Post(
     @SerializedName("comment") val comments: List<Comment>,
     val heart: Heart,
     val bookmarked: Boolean,
-)
+    override val id: String,
+) : DocumentedModel
