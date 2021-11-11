@@ -55,10 +55,12 @@ fun RecipeOverviewScreen(
                 contentScale = ContentScale.Crop,
             )
 
-            ConstraintLayout(Modifier
-                .background(Color.White)
-                .padding(16.dp)
-                .fillMaxWidth()) {
+            ConstraintLayout(
+                Modifier
+                    .background(Color.White)
+                    .padding(16.dp)
+                    .fillMaxWidth()
+            ) {
                 val (
                     titleText,
                     dateText,
