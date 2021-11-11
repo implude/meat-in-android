@@ -11,4 +11,5 @@ data class BriefRecipe(
     val difficulty: Difficulty,
     @SerializedName("created_at") val createdAt: Long,
     val heart: Heart,
-)
+    override val id: String,
+) : DocumentedModel
