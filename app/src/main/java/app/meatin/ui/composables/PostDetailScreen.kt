@@ -131,12 +131,11 @@ fun PostDetailScreen(
                                 top.linkTo(dateText.bottom, 10.dp)
                                 start.linkTo(parent.start, 16.dp)
                                 end.linkTo(parent.end, 16.dp)
-                                width = Dimension.fillToConstraints
                             }
                             .shadow(1.dp),
                         user = profile,
                         profileUri = profile.profileImage,
-                        onClick = { /*TODO*/ },
+                        onClick = { },
                     )
 
                     CoreText(
@@ -177,9 +176,12 @@ fun PostDetailScreen(
                         modifier = Modifier
                             .constrainAs(taggedRecipe) {
                                 top.linkTo(taggedRecipeText.bottom, 12.dp)
+                                width = Dimension.fillToConstraints
                             }
+                            .fillMaxWidth()
                             .padding(start = 16.dp, end = 16.dp, bottom = 10.dp),
-                        recipe = FakeValues.BRIEF_RECIPE
+                        recipe = FakeValues.BRIEF_RECIPE,
+                        onClick = { }
                     )
                 }
 

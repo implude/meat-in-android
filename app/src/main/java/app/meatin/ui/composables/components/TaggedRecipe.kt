@@ -88,7 +88,6 @@ fun TaggedRecipe(
                     top.linkTo(parent.top)
                     start.linkTo(previewImage.end, 16.dp)
                     bottom.linkTo(parent.bottom)
-                    end.linkTo(parent.end)
                     width = Dimension.preferredWrapContent
                 },
             verticalArrangement = Arrangement.spacedBy(4.dp)
