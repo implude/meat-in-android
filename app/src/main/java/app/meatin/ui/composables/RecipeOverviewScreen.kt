@@ -1,9 +1,16 @@
 package app.meatin.ui.composables
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
@@ -21,8 +29,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import app.meatin.domain.model.FakeValues
@@ -39,6 +49,7 @@ import app.meatin.util.toDate
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 
+@SuppressLint("SetJavaScriptEnabled")
 @OptIn(ExperimentalFoundationApi::class, ExperimentalCoilApi::class)
 @Composable
 fun RecipeOverviewScreen(
@@ -129,7 +140,47 @@ fun RecipeOverviewScreen(
                 }
             }
             SectionDivider()
-            // todo add youtube webview
+
+            BoxWithConstraints(
+                Modifier
+                    .background(Color.White)
+                    .padding(16.dp)
+                    .wrapContentSize()
+            ) {
+                val width = with(LocalDensity.current) {
+                    maxWidth.value
+                }
+                val height = width * 9 / 16
+
+                AndroidView(
+                    factory = { context ->
+                        val frameVideo =
+                            "<html><style>body {margin: 0}</style><body><iframe width=\"$width\" height=\"$height\" src=\"https://www.youtube.com/embed/${recipe.youtube}\" frameborder=\"0\" allowfullscreen></iframe></body></html>"
+
+                        WebView(context).apply {
+                            this.webViewClient = object : WebViewClient() {
+                                override fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
+                                    return if (url != null && (url.startsWith("http://") || url.startsWith("https://"))) {
+                                        view.context.startActivity(
+                                            Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                                        true
+                                    } else {
+                                        false
+                                    }
+                                }
+                            }
+                            this.webChromeClient = WebChromeClient()
+                            val webSettings = this.settings
+                            webSettings.javaScriptEnabled = true
+                            this.loadData(frameVideo, "text/html", "utf-8")
+                            this.minimumWidth = width.toInt()
+                            this.minimumHeight = height.toInt()
+                            this.loadUrl(frameVideo)
+                        }
+                    }
+                )
+            }
+
             SectionDivider()
             Column(
                 Modifier
