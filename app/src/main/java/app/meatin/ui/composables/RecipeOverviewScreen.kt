@@ -36,9 +36,10 @@ import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
 import app.meatin.util.defaultDateFormatter
 import app.meatin.util.toDate
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalCoilApi::class)
 @Composable
 fun RecipeOverviewScreen(
     recipe: Recipe,
