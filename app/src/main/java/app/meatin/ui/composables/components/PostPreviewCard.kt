@@ -43,7 +43,7 @@ import coil.compose.rememberImagePainter
 
 @ExperimentalCoilApi
 @Composable
-fun PostCard(
+fun PostPreviewCard(
     modifier: Modifier = Modifier,
     post: Post,
     onClick: () -> Unit,
@@ -149,7 +149,7 @@ fun PostCard(
 @Preview
 @Composable
 fun PostCardPreview() {
-    PostCard(
+    PostPreviewCard(
         modifier = Modifier.padding(10.dp),
         post = FakeValues.POST,
         onClick = { },
