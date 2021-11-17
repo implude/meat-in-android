@@ -88,8 +88,10 @@ private fun ExtraInfo(heart: Heart, nComments: Int) =
 
 @Composable
 fun IconText(
-    painter: Painter, iconSize: Dp,
-    text: String, fontSize: TextUnit,
+    painter: Painter,
+    iconSize: Dp,
+    text: String,
+    fontSize: TextUnit,
     color: Color,
     contentDescription: String,
 ) = Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
