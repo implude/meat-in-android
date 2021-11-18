@@ -7,6 +7,8 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -16,29 +18,40 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import app.meatin.R
 import app.meatin.domain.model.BriefPost
 import app.meatin.domain.model.FakeValues
+import app.meatin.domain.model.Heart
 import app.meatin.domain.model.Ingredient
 import app.meatin.domain.model.Recipe
 import app.meatin.ui.composables.components.IngredientItem
@@ -46,6 +59,7 @@ import app.meatin.ui.composables.components.PostCard
 import app.meatin.ui.composables.components.ProfileButton
 import app.meatin.ui.composables.components.RecipeBriefItem
 import app.meatin.ui.theme.DisableLightGray2
+import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
 import app.meatin.util.defaultDateFormatter
@@ -55,6 +69,90 @@ import coil.compose.rememberImagePainter
 
 @Composable
 fun RecipeOverviewScreen(
+    recipe: Recipe,
+    onProfileButtonClick: () -> Unit,
+    onCookButtonClicked: () -> Unit,
+    onHeartChanged: (Heart) -> Unit,
+) {
+    Scaffold(
+        content = { Content(recipe, onProfileButtonClick) },
+        bottomBar = {
+            BottomBar(
+                heart = recipe.heart,
+                onHeartChanged = onHeartChanged,
+                onCookButtonClicked = onCookButtonClicked
+            )
+        }
+    )
+}
+
+private fun Heart.toggle() = Heart(if (hearted) count - 1 else count + 1, !hearted)
+
+@Composable
+private fun BottomBar(
+    heart: Heart,
+    onHeartChanged: (Heart) -> Unit,
+    onCookButtonClicked: () -> Unit,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+) = Row(
+    Modifier
+        .clickable(interactionSource = interactionSource, indication = null) { /* Prevent click pass-through */ }
+        .background(Color.White)
+        .padding(horizontal = 22.dp, vertical = 12.dp)
+        .fillMaxWidth(),
+    horizontalArrangement = Arrangement.spacedBy(22.dp),
+    verticalAlignment = Alignment.CenterVertically
+) {
+    val interactionSource1 = remember { MutableInteractionSource() }
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.clickable(
+            interactionSource = interactionSource1,
+            indication = null,
+        ) { onHeartChanged(heart.toggle()) },
+    ) {
+        val heartIcon = if (heart.hearted) {
+            painterResource(id = R.drawable.ic_heart2_filled)
+        } else {
+            painterResource(id = R.drawable.ic_heart2)
+        }
+
+        Icon(
+            modifier = Modifier.size(24.dp),
+            painter = heartIcon, contentDescription = if (heart.hearted) "Hearted" else "Not hearted",
+            tint = Flamingo,
+        )
+        CoreText(
+            text = heart.count.toString(),
+            style = MeatInTypography.regular.copy(fontSize = 14.sp),
+            color = Flamingo
+        )
+    }
+    Button(
+        modifier = Modifier
+            .weight(1f)
+            .height(56.dp),
+        onClick = onCookButtonClicked,
+        colors = ButtonDefaults.buttonColors(backgroundColor = Flamingo, contentColor = Color.White),
+    ) {
+        Icon(
+            modifier = Modifier.size(22.dp),
+            painter = painterResource(id = R.drawable.ic_cook), contentDescription = "Cook",
+        )
+        Spacer(Modifier.width(8.dp))
+        CoreText(
+            text = "이 레시피로 고기 굽기",
+            style = MeatInTypography.regularImportant.copy(
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+            ),
+            color = Color.White,
+        )
+    }
+}
+
+@Composable
+private fun Content(
     recipe: Recipe,
     onProfileButtonClick: () -> Unit,
 ) {
@@ -81,6 +179,9 @@ fun RecipeOverviewScreen(
             PostHeader()
         }
         listPosts(recipe.linkedPosts)
+        item {
+            Spacer(Modifier.height(80.dp))
+        }
     }
 }
 
@@ -340,5 +441,18 @@ private fun VerticalLabel(title: String, content: String) {
 @Preview(showBackground = true, backgroundColor = 0xffffffff, heightDp = 1300)
 @Composable
 fun RecipeOverviewScreenPreview() {
-    RecipeOverviewScreen(recipe = FakeValues.RECIPE, onProfileButtonClick = {})
+    val (heart, setHeart) = remember { mutableStateOf(Heart(124, false)) }
+    RecipeOverviewScreen(
+        recipe = FakeValues.RECIPE.copy(heart = heart),
+        onProfileButtonClick = {},
+        onHeartChanged = setHeart,
+        onCookButtonClicked = {},
+    )
+}
+
+@Preview
+@Composable
+fun BottomBarPreview() {
+    val (heart, setHeart) = remember { mutableStateOf(Heart(124, false)) }
+    BottomBar(heart, setHeart, {})
 }
