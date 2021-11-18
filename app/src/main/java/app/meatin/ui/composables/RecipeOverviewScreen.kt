@@ -196,7 +196,6 @@ private fun ThumbnailImage(thumbnailUri: String) {
         contentDescription = "Recipe overview image",
         contentScale = ContentScale.Crop,
     )
-
 }
 
 private fun LazyListScope.listPosts(linkedPosts: List<BriefPost>) {
@@ -209,7 +208,6 @@ private fun LazyListScope.listPosts(linkedPosts: List<BriefPost>) {
         )
         SectionDivider()
     }
-
 }
 
 @Composable
@@ -308,8 +306,8 @@ private fun YoutubeDisplay(youtubeUri: String) {
         AndroidView(
             factory = { context ->
                 val frameVideo = "<html><style>body {margin: 0}</style><body><iframe width=\"$width\" " +
-                        "height=\"$height\" src=\"https://www.youtube.com/embed/$youtubeUri\" frameborder=\"0\" " +
-                        "allowfullscreen></iframe></body></html>"
+                    "height=\"$height\" src=\"https://www.youtube.com/embed/$youtubeUri\" frameborder=\"0\" " +
+                    "allowfullscreen></iframe></body></html>"
 
                 WebView(context).apply {
                     this.webViewClient = object : WebViewClient() {
