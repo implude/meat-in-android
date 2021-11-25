@@ -56,8 +56,7 @@ fun LoginScreen(
     val (nickname, setNickname) = remember { mutableStateOf("") }
     val (password, setPassword) = remember { mutableStateOf("") }
 
-    val nicknameField = remember { FocusRequester() }
-    val passwordField = remember { FocusRequester() }
+    val (nicknameField, passwordField) = remember { FocusRequester.createRefs() }
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
