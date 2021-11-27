@@ -7,4 +7,5 @@ data class Comment(
     @SerializedName("created_at") val createdAt: Long,
     val author: BriefCommunityUser,
     val content: String,
-)
+    override val id: String,
+) : DocumentedModel
