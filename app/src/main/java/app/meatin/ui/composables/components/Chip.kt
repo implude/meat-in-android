@@ -54,7 +54,8 @@ fun Chip(
         shape = MaterialTheme.shapes.medium,
         color = if (isSelected) Flamingo else DisableLightGray2
     ) {
-        Row(modifier = Modifier
+        Row(
+            modifier = Modifier
             .toggleable(
                 value = isSelected,
                 onValueChange = {
@@ -71,7 +72,6 @@ fun Chip(
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
@@ -95,21 +95,21 @@ fun ChipGroup(
     }
 }
 
-enum class MeatType(val value: String){
+enum class MeatType(val value: String) {
     Pork("돼지고기"),
     Beef("소고기"),
     Chicken("닭고기"),
     Processed("가공육류")
 }
 
-enum class Env(val value: String){
+enum class Env(val value: String) {
     Pan("후라이펜"),
     Direct("직화"),
     Charcoal("숯불"),
     AirFri("에어프라이기")
 }
 
-fun getAllMeatTypes(): List<MeatType>{
+fun getAllMeatTypes(): List<MeatType> {
     return listOf(MeatType.Pork, MeatType.Beef, MeatType.Chicken, MeatType.Processed)
 }
 
@@ -117,4 +117,3 @@ fun getMeatType(value: String): MeatType? {
     val map = MeatType.values().associateBy(MeatType::value)
     return map[value]
 }
-
