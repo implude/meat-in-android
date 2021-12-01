@@ -140,9 +140,8 @@ fun PostDetailScreen(
                         modifier = Modifier
                             .constrainAs(descriptionText) {
                                 top.linkTo(profileButton.bottom, 16.dp)
-                                start.linkTo(parent.start, 16.dp)
                             }
-                            .padding(bottom = 16.dp),
+                            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
                         text = post.content,
                         style = MeatInTypography.regular,
                         overflow = TextOverflow.Clip
