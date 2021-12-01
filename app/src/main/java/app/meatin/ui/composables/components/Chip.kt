@@ -55,8 +55,7 @@ fun Chip(
         color = if (isSelected) Flamingo else DisableLightGray2
     ) {
         Row(
-            modifier = Modifier
-            .toggleable(
+            modifier = Modifier.toggleable(
                 value = isSelected,
                 onValueChange = {
                     onSelectionChanged(name)
