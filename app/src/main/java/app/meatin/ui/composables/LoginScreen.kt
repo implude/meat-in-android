@@ -105,9 +105,11 @@ fun LoginScreen(
                         setPassword(it.replace("""[^\u0021-\u007e]""".toRegex(), ""))
                     },
                     placeholder = {
-                        CoreText("${minPasswordThreshold}글자 이상 입력해주세요",
+                        CoreText(
+                            "${minPasswordThreshold}글자 이상 입력해주세요",
                             color = BorderGray,
-                            style = MeatInTypography.regularImportant)
+                            style = MeatInTypography.regularImportant
+                        )
                     },
                     keyboardActions = KeyboardActions {
                         onCredentialConfirm(nickname, password)
