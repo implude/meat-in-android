@@ -8,15 +8,20 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -40,6 +45,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.meatin.ui.theme.BorderGray
+import app.meatin.ui.theme.ErrorRed
 import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.LightFlamingo
 import app.meatin.ui.theme.MeatInTypography
@@ -51,7 +57,7 @@ fun LoginScreen(
     loginState: LoginState,
     onNicknameConfirm: (String) -> Unit,
     onBackPressedInPassword: () -> Unit,
-    onPasswordConfirm: (String) -> Unit,
+    onCredentialConfirm: (nickname: String, password: String) -> Unit,
 ) {
     val (nickname, setNickname) = remember { mutableStateOf("") }
     val (password, setPassword) = remember { mutableStateOf("") }
@@ -59,6 +65,9 @@ fun LoginScreen(
     val (nicknameField, passwordField) = remember { FocusRequester.createRefs() }
 
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    val minNicknameThreshold = 2
+    val minPasswordThreshold = 8
 
     Column(
         Modifier
@@ -87,26 +96,30 @@ fun LoginScreen(
                 visible = loginState == LoginState.PASSWORD,
             ) {
                 CustomTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(36.dp)
+                        .focusRequester(passwordField),
                     value = password,
                     onValueChange = {
                         setPassword(it.replace("""[^\u0021-\u007e]""".toRegex(), ""))
                     },
                     placeholder = {
-                        CoreText("8글자 이상 입력해주세요", color = BorderGray, style = MeatInTypography.regularImportant)
+                        CoreText("${minPasswordThreshold}글자 이상 입력해주세요",
+                            color = BorderGray,
+                            style = MeatInTypography.regularImportant)
+                    },
+                    keyboardActions = KeyboardActions {
+                        onCredentialConfirm(nickname, password)
+                        keyboardController?.hide()
                     },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Done,
                     ),
-                    keyboardActions = KeyboardActions {
-                        onPasswordConfirm(password)
-                        keyboardController?.hide()
-                    },
                     visualTransformation = PasswordVisualTransformation(),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(36.dp)
-                        .focusRequester(passwordField)
+                    isError = password.length < minPasswordThreshold && password.isNotEmpty(),
+                    errorMessage = "${minPasswordThreshold}글자 이상 입력해주세요"
                 )
                 DisposableEffect(Unit) {
                     setPassword("")
@@ -119,6 +132,10 @@ fun LoginScreen(
             }
 
             CustomTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(36.dp)
+                    .focusRequester(nicknameField),
                 value = nickname,
                 onValueChange = {
                     setNickname(it.replace("""[\r\n\t]""".toRegex(), ""))
@@ -126,18 +143,16 @@ fun LoginScreen(
                 placeholder = {
                     CoreText("2글자 이상 입력해주세요", color = BorderGray, style = MeatInTypography.regularImportant)
                 },
-                enabled = loginState == LoginState.NICKNAME,
+                keyboardActions = KeyboardActions {
+                    onNicknameConfirm(nickname)
+                },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
                 ),
-                keyboardActions = KeyboardActions {
-                    onNicknameConfirm(nickname)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(36.dp)
-                    .focusRequester(nicknameField)
+                isError = nickname.length < minNicknameThreshold &&
+                    (loginState == LoginState.PASSWORD || nickname.isNotEmpty()),
+                errorMessage = "${minNicknameThreshold}글자 이상 입력해주세요"
             )
 
             DisposableEffect(Unit) {
@@ -147,7 +162,8 @@ fun LoginScreen(
         }
 
         val isConfirmButtonEnabled =
-            (loginState == LoginState.NICKNAME && nickname.length >= 2) || (loginState == LoginState.PASSWORD && password.length >= 8)
+            nickname.length >= minNicknameThreshold &&
+                (loginState == LoginState.NICKNAME || password.length >= minPasswordThreshold)
 
         Button(
             modifier = Modifier
@@ -156,7 +172,7 @@ fun LoginScreen(
             onClick = {
                 when (loginState) {
                     LoginState.NICKNAME -> onNicknameConfirm(nickname)
-                    LoginState.PASSWORD -> onPasswordConfirm(password)
+                    LoginState.PASSWORD -> onCredentialConfirm(nickname, password)
                 }
             },
             shape = RectangleShape,
@@ -174,45 +190,67 @@ fun CustomTextField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: @Composable () -> Unit,
-    enabled: Boolean = true,
     keyboardActions: KeyboardActions,
     keyboardOptions: KeyboardOptions,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    isError: Boolean = false,
+    errorMessage: String = "",
 ) {
     val (isFocused, setFocused) = remember { mutableStateOf(false) }
 
-    BasicTextField(
-        modifier = modifier.then(
-            Modifier
-                .onFocusChanged { setFocused(it.isFocused) }
-                .fillMaxWidth()
-        ),
-        value = value, onValueChange = onValueChange,
-        enabled = enabled,
-        singleLine = true,
-        keyboardActions = keyboardActions,
-        keyboardOptions = keyboardOptions,
-        visualTransformation = visualTransformation,
-        decorationBox = { innerTextField ->
-            Box(
-                Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.CenterStart,
-            ) {
-                if (value.isEmpty()) {
-                    placeholder()
+    Column {
+        BasicTextField(
+            modifier = modifier.then(
+                Modifier
+                    .onFocusChanged { setFocused(it.isFocused) }
+                    .fillMaxWidth()
+            ),
+            value = value, onValueChange = onValueChange,
+            singleLine = true,
+            keyboardActions = keyboardActions,
+            keyboardOptions = keyboardOptions,
+            visualTransformation = visualTransformation,
+            decorationBox = { innerTextField ->
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        contentAlignment = Alignment.CenterStart,
+                    ) {
+                        if (value.isEmpty()) {
+                            placeholder()
+                        }
+                        innerTextField()
+                    }
+
+                    if (isError) {
+                        Icon(
+                            imageVector = Icons.Default.Warning, contentDescription = null,
+                            tint = ErrorRed,
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
                 }
-                innerTextField()
+                Canvas(modifier = Modifier.fillMaxSize()) {
+                    val (width, height) = this.size
+                    drawLine(
+                        color = if (isError) ErrorRed else if (isFocused) Flamingo else BorderGray,
+                        start = Offset(0f, height - 1.dp.toPx()), end = Offset(width, height - 1.dp.toPx()),
+                        strokeWidth = 2.dp.toPx()
+                    )
+                }
             }
-            Canvas(modifier = Modifier.fillMaxSize()) {
-                val (width, height) = this.size
-                drawLine(
-                    color = if (isFocused) Flamingo else BorderGray,
-                    start = Offset(0f, height - 1.dp.toPx()), end = Offset(width, height - 1.dp.toPx()),
-                    strokeWidth = 2.dp.toPx()
-                )
-            }
+        )
+
+        if (isError) {
+            CoreText(
+                text = errorMessage,
+                style = MeatInTypography.description, color = ErrorRed
+            )
         }
-    )
+    }
 }
 
 enum class LoginState {
@@ -229,6 +267,6 @@ fun LoginScreenPreview() {
         loginState,
         onNicknameConfirm = { loginState = LoginState.PASSWORD },
         onBackPressedInPassword = { loginState = LoginState.NICKNAME },
-        onPasswordConfirm = {}
+        onCredentialConfirm = { _, _ -> }
     )
 }
