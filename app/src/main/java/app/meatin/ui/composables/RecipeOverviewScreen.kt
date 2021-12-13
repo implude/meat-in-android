@@ -161,7 +161,7 @@ private fun Content(
             ThumbnailImage(recipe.thumbnail)
             Header(recipe, onProfileButtonClick)
             SectionDivider()
-            YoutubeDisplay(recipe.youtube)
+//            YoutubeDisplay(recipe.youtube)
             SectionDivider()
             IngredientHeader()
         }
@@ -266,8 +266,12 @@ private fun LazyListScope.listIngredients(ingredients: List<Ingredient>) {
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            IngredientItem(onClick = { /*TODO*/ }, ingredient = item[0], modifier = Modifier.weight(1f))
-            IngredientItem(onClick = { /*TODO*/ }, ingredient = item[1], modifier = Modifier.weight(1f))
+            item.forEach {
+                IngredientItem(onClick = { /*TODO*/ }, ingredient = it, modifier = Modifier.weight(0.5f))
+            }
+            if (item.size < 2) {
+                Spacer(modifier = Modifier.fillMaxWidth().weight(0.5f))
+            }
         }
     }
 }
