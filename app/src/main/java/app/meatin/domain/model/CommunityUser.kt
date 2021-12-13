@@ -9,4 +9,5 @@ data class CommunityUser(
     @SerializedName("badge_list") val badges: List<Badge>,
     @SerializedName("uploaded_post") val uploadedPosts: List<BriefPost>,
     @SerializedName("uploaded_recipe") val uploadedRecipes: List<BriefRecipe>,
-)
+    override val id: String,
+) : DocumentedModel

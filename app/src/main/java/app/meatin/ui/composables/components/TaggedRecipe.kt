@@ -2,6 +2,7 @@ package app.meatin.ui.composables.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,9 +46,11 @@ import coil.compose.rememberImagePainter
 fun TaggedRecipe(
     modifier: Modifier = Modifier,
     recipe: BriefRecipe,
+    onClick: () -> Unit,
 ) {
     ConstraintLayout(
         modifier
+            .clickable { onClick() }
             .background(Color.White)
             .widthIn()
     ) {
@@ -182,5 +185,6 @@ fun TaggedRecipePreview() {
         modifier = Modifier
             .size(width = 343.dp, height = 120.dp),
         recipe = FakeValues.BRIEF_RECIPE,
+        onClick = {}
     )
 }
