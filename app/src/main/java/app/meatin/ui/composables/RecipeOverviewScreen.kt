@@ -55,7 +55,7 @@ import app.meatin.domain.model.Heart
 import app.meatin.domain.model.Ingredient
 import app.meatin.domain.model.Recipe
 import app.meatin.ui.composables.components.IngredientItem
-import app.meatin.ui.composables.components.PostCard
+import app.meatin.ui.composables.components.PostPreviewCard
 import app.meatin.ui.composables.components.ProfileButton
 import app.meatin.ui.composables.components.RecipeBriefItem
 import app.meatin.ui.theme.DisableLightGray2
@@ -200,11 +200,13 @@ private fun ThumbnailImage(thumbnailUri: String) {
 
 private fun LazyListScope.listPosts(linkedPosts: List<BriefPost>) {
     items(linkedPosts) { post ->
-        PostCard(
-            post = post, onClick = { /* TODO */ },
+        PostPreviewCard(
+            post = post,
             modifier = Modifier
                 .background(Color.White)
                 .fillMaxWidth()
+                .clickable { /* TODO */ }
+                .padding(16.dp)
         )
         SectionDivider()
     }
