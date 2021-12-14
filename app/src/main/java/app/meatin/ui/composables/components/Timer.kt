@@ -19,6 +19,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.withFrameMillis
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,6 +38,7 @@ import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -46,6 +49,7 @@ fun Timer(
     second: Long,
     initialValue: Float = 1f,
 ) {
+
     var currentTime by remember {
         mutableStateOf(second)
     }
@@ -56,17 +60,18 @@ fun Timer(
         mutableStateOf(initialValue)
     }
 
+
     LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
         if (currentTime == 0L) {
             isTimerRunning = false
         }
         if (currentTime > 0L && isTimerRunning) {
-            delay(100L)
+           delay(100L)
             currentTime -= 100L
             value = currentTime / second.toFloat()
         }
     }
-    Box(
+        Box(
         modifier.drawBehind {
             for (i in 60 - (value * 60).toInt() until 60) {
                 mark(angle = i * 6)
@@ -111,6 +116,7 @@ fun Timer(
                                         currentTime = second
                                         isTimerRunning = true
                                     } else {
+
                                         isTimerRunning = !isTimerRunning
                                     }
                                 }
@@ -169,6 +175,16 @@ internal fun DrawScope.mark(
     )
 }
 
+fun getTimerLabel(value: Long): String {
+    return if ((value.toInt() / 60) == 0) {
+        "${padding(value.toInt() % 60)}초"
+    } else {
+        "${padding(value.toInt() / 60)}분 ${padding(value.toInt() % 60)}초"
+    }
+}
+
+fun padding(value: Int) = if (value < 10) ("0$value") else "" + value
+
 @Preview
 @Composable
 fun TimerPreview() {
@@ -179,12 +195,3 @@ fun TimerPreview() {
     )
 }
 
-fun getTimerLabel(value: Long): String {
-    return if ((value.toInt() / 60) == 0) {
-        "${padding(value.toInt() % 60)}초"
-    } else {
-        "${padding(value.toInt() / 60)}분 ${padding(value.toInt() % 60)}초"
-    }
-}
-
-fun padding(value: Int) = if (value < 10) ("0$value") else "" + value
