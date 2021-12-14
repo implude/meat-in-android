@@ -19,7 +19,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -147,7 +146,6 @@ fun MainScreen(
                             if (count == recipes.size - 1) {
                                 Spacer(modifier = Modifier.width(16.dp))
                             }
-
                         }
                     }
                 }

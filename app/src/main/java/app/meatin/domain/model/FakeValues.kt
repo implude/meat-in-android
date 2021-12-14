@@ -1,7 +1,5 @@
 package app.meatin.domain.model
 
-import app.meatin.ui.composables.components.Advertisement
-
 object FakeValues {
     val HEARTED_TRUE = Heart(
         1,
