@@ -97,5 +97,4 @@ fun ChipGroup(
 val allMeatType: List<String> = listOf("돼지고기", "소고기", "닭고기", "가공육류")
 val allEnvType: List<String> = listOf("후라이펜", "직화", "연탄", "가공육")
 val allPartType: List<String> = listOf("머리", "가슴", "배", "다리")
-val allRoastType: List<String> = listOf("생", "레어", "미디움", "딱딱해", "거의 탐")
-
+val allRoastType: List<String> = listOf("생", "레어", "미디움", "딱딱해", "거의 ")
