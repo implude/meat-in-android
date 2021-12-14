@@ -57,7 +57,6 @@ fun Timer(
         mutableStateOf(initialValue)
     }
 
-
     LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
         if (currentTime == 0L) {
             isTimerRunning = false
@@ -68,7 +67,7 @@ fun Timer(
             value = currentTime / second.toFloat()
         }
     }
-        Box(
+    Box(
         modifier.drawBehind {
             for (i in 60 - (value * 60).toInt() until 60) {
                 mark(angle = i * 6)
