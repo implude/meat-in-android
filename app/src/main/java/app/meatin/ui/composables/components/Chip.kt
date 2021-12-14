@@ -31,13 +31,13 @@ import coil.annotation.ExperimentalCoilApi
 @Preview(showBackground = true)
 @Composable
 fun View() {
-    var selectedMeatType: MeatType? by remember { mutableStateOf(MeatType.values()[0]) }
+    var selectedMeatType: String? by remember { mutableStateOf(allMeatType[0]) }
     ChipGroup(
-        value = getAllMeatTypes(),
+        value = allEnvType,
         selectedValue = selectedMeatType,
         onSelectedChanged = {
             Log.d("select", it)
-            selectedMeatType = getMeatType(it)
+            selectedMeatType = it
         }
     )
 }
@@ -75,15 +75,15 @@ fun Chip(
 @Preview(showBackground = true)
 @Composable
 fun ChipGroup(
-    value: List<MeatType> = getAllMeatTypes(),
-    selectedValue: MeatType? = null,
+    value: List<String> = allMeatType,
+    selectedValue: String? = null,
     onSelectedChanged: (String) -> Unit = {},
 ) {
     Column(modifier = Modifier.padding(8.dp)) {
         LazyRow {
             items(value) {
                 Chip(
-                    name = it.value,
+                    name = it,
                     isSelected = selectedValue == it,
                     onSelectionChanged = { it1 ->
                         onSelectedChanged(it1)
@@ -94,25 +94,8 @@ fun ChipGroup(
     }
 }
 
-enum class MeatType(val value: String) {
-    Pork("돼지고기"),
-    Beef("소고기"),
-    Chicken("닭고기"),
-    Processed("가공육류")
-}
+val allMeatType: List<String> = listOf("돼지고기", "소고기", "닭고기", "가공육류")
+val allEnvType: List<String> = listOf("후라이펜", "직화", "연탄", "가공육")
+val allPartType: List<String> = listOf("머리", "가슴", "배", "다리")
+val allRoastType: List<String> = listOf("생", "레어", "미디움", "딱딱해", "거의 탐")
 
-enum class Env(val value: String) {
-    Pan("후라이펜"),
-    Direct("직화"),
-    Charcoal("숯불"),
-    AirFri("에어프라이기")
-}
-
-fun getAllMeatTypes(): List<MeatType> {
-    return listOf(MeatType.Pork, MeatType.Beef, MeatType.Chicken, MeatType.Processed)
-}
-
-fun getMeatType(value: String): MeatType? {
-    val map = MeatType.values().associateBy(MeatType::value)
-    return map[value]
-}
