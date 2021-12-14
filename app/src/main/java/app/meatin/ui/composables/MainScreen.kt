@@ -66,7 +66,6 @@ fun MainScreen(
                     .background(color = Color(0xFFE5E5E5))
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
-                    .padding(bottom = 50.dp)
             ) {
                 ConstraintLayout(
                     modifier
