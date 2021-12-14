@@ -19,8 +19,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
-import androidx.compose.runtime.withFrameMillis
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,7 +36,6 @@ import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
@@ -66,7 +63,7 @@ fun Timer(
             isTimerRunning = false
         }
         if (currentTime > 0L && isTimerRunning) {
-           delay(100L)
+            delay(100L)
             currentTime -= 100L
             value = currentTime / second.toFloat()
         }
@@ -194,4 +191,3 @@ fun TimerPreview() {
         second = 100L * 1000L,
     )
 }
-
