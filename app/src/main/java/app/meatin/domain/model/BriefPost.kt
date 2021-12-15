@@ -9,5 +9,5 @@ data class BriefPost(
     @SerializedName("created_at") val createdAt: Long,
     val heart: Heart,
     @SerializedName("comment_count") val nComments: Int,
-    override val id: String,
-) : DocumentedModel
+    val image: String,
+)
