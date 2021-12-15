@@ -4,7 +4,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,8 +32,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import app.meatin.ui.composables.components.CustomTextField
 import app.meatin.ui.theme.BorderGray
 import app.meatin.ui.theme.Flamingo
@@ -44,17 +41,19 @@ import app.meatin.ui.theme.composefix.CoreText
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 @Composable
-fun LoginScreen(
-    navController: NavController,
-    loginState: LoginState,
+fun RegisterScreen(
+    registerState: RegisterState,
     onEmailConfirm: (String) -> Unit,
+    onPasswordConfirm: (String) -> Unit,
     onBackPressedInPassword: () -> Unit,
+    onBackPressedInPasswordVerify: () -> Unit,
     onCredentialConfirm: (email: String, password: String) -> Unit,
 ) {
     val (email, setEmail) = remember { mutableStateOf("") }
     val (password, setPassword) = remember { mutableStateOf("") }
+    val (passwordVerify, setPasswordVerify) = remember { mutableStateOf("") }
 
-    val (nicknameField, passwordField) = remember { FocusRequester.createRefs() }
+    val (nicknameField, passwordField, passwordVerifyField) = remember { FocusRequester.createRefs() }
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -76,16 +75,58 @@ fun LoginScreen(
         ) {
 
             CoreText(
-                text = when (loginState) {
-                    LoginState.EMAIL -> "이메일을 입력해주세요"
-                    LoginState.PASSWORD -> "비밀번호를 입력해주세요"
+                text = when (registerState) {
+                    RegisterState.EMAIL -> "이메일을 입력해주세요"
+                    RegisterState.PASSWORD -> "비밀번호를 입력해주세요"
+                    RegisterState.PASSWORD_VERIFY -> "비밀번호를 다시 입력해주세요"
                 },
                 style = MeatInTypography.sectionHeader,
                 modifier = Modifier.fillMaxWidth()
             )
 
             AnimatedVisibility(
-                visible = loginState == LoginState.PASSWORD,
+                visible = registerState == RegisterState.PASSWORD_VERIFY,
+            ) {
+                CustomTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(36.dp)
+                        .focusRequester(passwordVerifyField),
+                    value = passwordVerify,
+                    onValueChange = {
+                        setPasswordVerify(it.replace("""[^\u0021-\u007e]""".toRegex(), ""))
+                    },
+                    placeholder = {
+                        CoreText(
+                            "비밀번호를 다시 입력해주세요",
+                            color = BorderGray,
+                            style = MeatInTypography.regularImportant
+                        )
+                    },
+                    keyboardActions = KeyboardActions {
+                        onCredentialConfirm(email, password)
+                        keyboardController?.hide()
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done,
+                    ),
+                    visualTransformation = PasswordVisualTransformation(),
+                    isError = password != passwordVerify && password.isNotEmpty(),
+                    errorMessage = "비밀번호가 일치하지 않습니다"
+                )
+                DisposableEffect(Unit) {
+                    setPasswordVerify("")
+                    passwordVerifyField.requestFocus()
+                    onDispose { }
+                }
+                BackHandler {
+                    onBackPressedInPasswordVerify()
+                }
+            }
+
+            AnimatedVisibility(
+                visible = registerState == RegisterState.PASSWORD || registerState == RegisterState.PASSWORD_VERIFY,
             ) {
                 CustomTextField(
                     modifier = Modifier
@@ -104,7 +145,7 @@ fun LoginScreen(
                         )
                     },
                     keyboardActions = KeyboardActions {
-                        onCredentialConfirm(email, password)
+                        onPasswordConfirm(password)
                         keyboardController?.hide()
                     },
                     keyboardOptions = KeyboardOptions(
@@ -145,17 +186,8 @@ fun LoginScreen(
                     imeAction = ImeAction.Next,
                 ),
                 isError = email.length < minNicknameThreshold &&
-                    (loginState == LoginState.PASSWORD || email.isNotEmpty()),
+                    (registerState == RegisterState.PASSWORD || email.isNotEmpty()),
                 errorMessage = "${minNicknameThreshold}글자 이상 입력해주세요"
-            )
-
-            CoreText(
-                text = "계정이 없으신가요? 회원가입하세요.",
-                style = MeatInTypography.regularImportant,
-                color = Flamingo,
-                modifier = Modifier.clickable {
-                    navController.navigate("register")
-                }
             )
 
             DisposableEffect(Unit) {
@@ -166,16 +198,17 @@ fun LoginScreen(
 
         val isConfirmButtonEnabled =
             email.length >= minNicknameThreshold &&
-                (loginState == LoginState.EMAIL || password.length >= minPasswordThreshold)
+                (registerState == RegisterState.EMAIL || password.length >= minPasswordThreshold)
 
         Button(
             modifier = Modifier
                 .height(60.dp)
                 .fillMaxWidth(),
             onClick = {
-                when (loginState) {
-                    LoginState.EMAIL -> onEmailConfirm(email)
-                    LoginState.PASSWORD -> onCredentialConfirm(email, password)
+                when (registerState) {
+                    RegisterState.EMAIL -> onEmailConfirm(email)
+                    RegisterState.PASSWORD -> onPasswordConfirm(password)
+                    RegisterState.PASSWORD_VERIFY -> onCredentialConfirm(email, password)
                 }
             },
             shape = RectangleShape,
@@ -187,21 +220,23 @@ fun LoginScreen(
     }
 }
 
-enum class LoginState {
+enum class RegisterState {
     EMAIL,
     PASSWORD,
+    PASSWORD_VERIFY,
 }
 
 @Preview
 @Composable
-fun LoginScreenPreview() {
-    var loginState by remember { mutableStateOf(LoginState.EMAIL) }
+fun RegisterScreenPreview() {
+    var registerState by remember { mutableStateOf(RegisterState.EMAIL) }
 
-    LoginScreen(
-        rememberNavController(),
-        loginState,
-        onEmailConfirm = { loginState = LoginState.PASSWORD },
-        onBackPressedInPassword = { loginState = LoginState.EMAIL },
-        onCredentialConfirm = { _, _ -> }
+    RegisterScreen(
+        registerState,
+        onEmailConfirm = { registerState = RegisterState.PASSWORD },
+        onPasswordConfirm = { registerState = RegisterState.PASSWORD_VERIFY },
+        onCredentialConfirm = { _, _ -> },
+        onBackPressedInPassword = { registerState = RegisterState.EMAIL },
+        onBackPressedInPasswordVerify = { registerState = RegisterState.PASSWORD },
     )
 }
