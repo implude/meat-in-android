@@ -55,11 +55,14 @@ fun PostPreviewCard(
     ) {
         PostHeader(post.author, post.createdAt)
         CoreText(post.content)
-        Image(
-            contentScale = ContentScale.FillWidth,
-            painter = rememberImagePainter(data = post.photo), contentDescription = "Preview image"
-        )
-        ExtraInfo(post.heart, post.nComments)
+
+        if (post.photo != null) {
+            Image(
+                contentScale = ContentScale.FillWidth,
+                painter = rememberImagePainter(data = post.photo), contentDescription = "Preview image"
+            )
+        }
+        ExtraInfo(post.heart ?: FakeValues.HEARTED_FALSE, post.nComments)
     }
 }
 

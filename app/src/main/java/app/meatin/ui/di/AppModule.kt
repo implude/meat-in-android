@@ -1,23 +1,19 @@
 package app.meatin.ui.di
 
-import app.meatin.data.network.AuthInterceptor
-import okhttp3.OkHttpClient
+import app.meatin.ui.viewmodel.AuthViewModel
+import app.meatin.ui.viewmodel.MainViewModel
+import app.meatin.ui.viewmodel.PostViewModel
+import app.meatin.ui.viewmodel.RecipeViewModel
+import app.meatin.util.SharedPreferencesManager
+import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 val appModule = module {
-    single<OkHttpClient> {
-        OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor())
-            .build()
-    }
+    viewModel { AuthViewModel(get()) }
+    viewModel { MainViewModel(get(), get()) }
+    viewModel { PostViewModel(get()) }
+    viewModel { RecipeViewModel(get()) }
 
-    single<Retrofit> {
-        Retrofit.Builder()
-            .client(get())
-            .baseUrl("http://34.64.200.191:3000/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
+    single { SharedPreferencesManager(androidContext()) }
 }

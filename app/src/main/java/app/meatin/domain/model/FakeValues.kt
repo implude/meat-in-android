@@ -27,13 +27,14 @@ object FakeValues {
         ""
     )
     val BRIEF_POST = BriefPost(
+        "",
         BRIEF_COMMUNITY_USER,
         "주말엔 역시 문어고기",
         "https://media.discordapp.net/attachments/880049130813132842/900371003039948830/IMG_2593.png",
         1634734699000,
         HEARTED_TRUE,
         1,
-        "짜잔 맛있는 감자랍니다~",
+        "짜잔 맛있는 감자랍니다~"
     )
     val MEAT_TYPE = MeatType(
         "문어고기",
@@ -109,7 +110,7 @@ object FakeValues {
         ""
     )
     val ADVERTISEMENT = AdvertisementModel(
-        "무한리필로 최고의 맛을 즐기세요 응애",
+        "무한리필로 최고의 맛을 즐기세요",
         "15,900원이라는 합리적인 가격으로!",
         "https://ychef.files.bbci.co.uk/976x549/p04kt0s1.jpg"
     )

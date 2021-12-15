@@ -1,5 +1,6 @@
 package app.meatin.ui.composables
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.webkit.WebChromeClient
@@ -28,11 +29,9 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,12 +41,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.navigation.NavController
 import app.meatin.R
 import app.meatin.domain.model.BriefPost
 import app.meatin.domain.model.FakeValues
@@ -67,18 +66,20 @@ import app.meatin.util.toDate
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 
+@ExperimentalCoilApi
 @Composable
 fun RecipeOverviewScreen(
     recipe: Recipe,
+    navController: NavController,
     onProfileButtonClick: () -> Unit,
     onCookButtonClicked: () -> Unit,
     onHeartChanged: (Heart) -> Unit,
 ) {
     Scaffold(
-        content = { Content(recipe, onProfileButtonClick) },
+        content = { Content(recipe, navController, onProfileButtonClick) },
         bottomBar = {
             BottomBar(
-                heart = recipe.heart,
+                heart = recipe.heart ?: FakeValues.HEARTED_FALSE,
                 onHeartChanged = onHeartChanged,
                 onCookButtonClicked = onCookButtonClicked
             )
@@ -151,9 +152,11 @@ private fun BottomBar(
     }
 }
 
+@ExperimentalCoilApi
 @Composable
 private fun Content(
     recipe: Recipe,
+    navController: NavController,
     onProfileButtonClick: () -> Unit,
 ) {
     LazyColumn(Modifier.background(DisableLightGray2)) {
@@ -161,7 +164,7 @@ private fun Content(
             ThumbnailImage(recipe.thumbnail)
             Header(recipe, onProfileButtonClick)
             SectionDivider()
-//            YoutubeDisplay(recipe.youtube)
+            YoutubeDisplay(recipe.youtube)
             SectionDivider()
             IngredientHeader()
         }
@@ -178,7 +181,7 @@ private fun Content(
             SectionDivider()
             PostHeader()
         }
-        listPosts(recipe.linkedPosts)
+        listPosts(navController, recipe.linkedPosts)
         item {
             Spacer(Modifier.height(80.dp))
         }
@@ -198,14 +201,14 @@ private fun ThumbnailImage(thumbnailUri: String) {
     )
 }
 
-private fun LazyListScope.listPosts(linkedPosts: List<BriefPost>) {
+private fun LazyListScope.listPosts(navController: NavController, linkedPosts: List<BriefPost>) {
     items(linkedPosts) { post ->
         PostPreviewCard(
             post = post,
             modifier = Modifier
                 .background(Color.White)
                 .fillMaxWidth()
-                .clickable { /* TODO */ }
+                .clickable { navController.navigate("post_detail/${post.id}") }
                 .padding(16.dp)
         )
         SectionDivider()
@@ -272,7 +275,11 @@ private fun LazyListScope.listIngredients(ingredients: List<Ingredient>) {
                 IngredientItem(onClick = { /*TODO*/ }, ingredient = it, modifier = Modifier.weight(0.5f))
             }
             if (item.size < 2) {
-                Spacer(modifier = Modifier.fillMaxWidth().weight(0.5f))
+                Spacer(
+                    Modifier
+                        .fillMaxWidth()
+                        .weight(0.5f)
+                )
             }
         }
     }
@@ -290,6 +297,7 @@ private fun IngredientHeader() {
     }
 }
 
+@SuppressLint("SetJavaScriptEnabled")
 @Composable
 private fun YoutubeDisplay(youtubeUri: String) {
     BoxWithConstraints(
@@ -300,7 +308,7 @@ private fun YoutubeDisplay(youtubeUri: String) {
             .fillMaxWidth()
     ) {
         if (!youtubeUri.matches("""^[0-9A-Za-z_-]{11}$""".toRegex())) {
-            Text(text = "유튜브 링크가 손상되어 영상을 표시할 수 없습니다.")
+            CoreText(text = "유튜브 링크가 손상되어 영상을 표시할 수 없습니다.")
             return@BoxWithConstraints
         }
 
@@ -339,6 +347,7 @@ private fun YoutubeDisplay(youtubeUri: String) {
     }
 }
 
+@ExperimentalCoilApi
 @Composable
 private fun Header(recipe: Recipe, onProfileButtonClick: () -> Unit) {
     ConstraintLayout(
@@ -399,7 +408,7 @@ private fun Header(recipe: Recipe, onProfileButtonClick: () -> Unit) {
                     end.linkTo(parent.end)
                 }
                 .fillMaxWidth(),
-            user = recipe.author, profileUri = recipe.author.profileImage,
+            user = recipe.author, profileUri = recipe.author.profileImage ?: "",
             onClick = onProfileButtonClick,
         )
         Row(
@@ -442,21 +451,21 @@ private fun VerticalLabel(title: String, content: String) {
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xffffffff, heightDp = 1300)
-@Composable
-fun RecipeOverviewScreenPreview() {
-    val (heart, setHeart) = remember { mutableStateOf(Heart(124, false)) }
-    RecipeOverviewScreen(
-        recipe = FakeValues.RECIPE.copy(heart = heart),
-        onProfileButtonClick = {},
-        onHeartChanged = setHeart,
-        onCookButtonClicked = {},
-    )
-}
+// @Preview(showBackground = true, backgroundColor = 0xffffffff, heightDp = 1300)
+// @Composable
+// fun RecipeOverviewScreenPreview() {
+//     val (heart, setHeart) = remember { mutableStateOf(Heart(124, false)) }
+//     RecipeOverviewScreen(
+//         recipe = FakeValues.RECIPE.copy(heart = heart),
+//         onProfileButtonClick = {},
+//         onHeartChanged = setHeart,
+//         onCookButtonClicked = {},
+//     )
+// }
 
-@Preview
-@Composable
-fun BottomBarPreview() {
-    val (heart, setHeart) = remember { mutableStateOf(Heart(124, false)) }
-    BottomBar(heart, setHeart, {})
-}
+// @Preview
+// @Composable
+// fun BottomBarPreview() {
+//     val (heart, setHeart) = remember { mutableStateOf(Heart(124, false)) }
+//     BottomBar(heart, setHeart, {})
+// }
