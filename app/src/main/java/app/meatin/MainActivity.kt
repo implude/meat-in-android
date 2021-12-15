@@ -150,7 +150,6 @@ class MainActivity : ComponentActivity() {
                                 post = post ?: return@composable,
                                 navController = navController,
                                 onCommentAdd = {
-
                                 }
                             )
                         }

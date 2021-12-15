@@ -275,9 +275,11 @@ private fun LazyListScope.listIngredients(ingredients: List<Ingredient>) {
                 IngredientItem(onClick = { /*TODO*/ }, ingredient = it, modifier = Modifier.weight(0.5f))
             }
             if (item.size < 2) {
-                Spacer(modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.5f))
+                Spacer(
+                    Modifier
+                        .fillMaxWidth()
+                        .weight(0.5f)
+                )
             }
         }
     }
@@ -449,21 +451,21 @@ private fun VerticalLabel(title: String, content: String) {
     }
 }
 
-//@Preview(showBackground = true, backgroundColor = 0xffffffff, heightDp = 1300)
-//@Composable
-//fun RecipeOverviewScreenPreview() {
-//    val (heart, setHeart) = remember { mutableStateOf(Heart(124, false)) }
-//    RecipeOverviewScreen(
-//        recipe = FakeValues.RECIPE.copy(heart = heart),
-//        onProfileButtonClick = {},
-//        onHeartChanged = setHeart,
-//        onCookButtonClicked = {},
-//    )
-//}
+// @Preview(showBackground = true, backgroundColor = 0xffffffff, heightDp = 1300)
+// @Composable
+// fun RecipeOverviewScreenPreview() {
+//     val (heart, setHeart) = remember { mutableStateOf(Heart(124, false)) }
+//     RecipeOverviewScreen(
+//         recipe = FakeValues.RECIPE.copy(heart = heart),
+//         onProfileButtonClick = {},
+//         onHeartChanged = setHeart,
+//         onCookButtonClicked = {},
+//     )
+// }
 
-//@Preview
-//@Composable
-//fun BottomBarPreview() {
-//    val (heart, setHeart) = remember { mutableStateOf(Heart(124, false)) }
-//    BottomBar(heart, setHeart, {})
-//}
+// @Preview
+// @Composable
+// fun BottomBarPreview() {
+//     val (heart, setHeart) = remember { mutableStateOf(Heart(124, false)) }
+//     BottomBar(heart, setHeart, {})
+// }

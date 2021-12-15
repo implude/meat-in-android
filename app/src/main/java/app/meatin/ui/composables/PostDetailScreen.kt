@@ -287,13 +287,13 @@ fun PostDetailScreen(
     )
 }
 
-//@ExperimentalComposeUiApi
-//@Preview(heightDp = 10000)
-//@ExperimentalCoilApi
-//@Composable
-//fun PostDetailScreenPreview() {
-//    PostDetailScreen(
-//        post = FakeValues.POST,
-//        onCommentAdd = {}
-//    )
-//}
+// @ExperimentalComposeUiApi
+// @Preview(heightDp = 10000)
+// @ExperimentalCoilApi
+// @Composable
+// fun PostDetailScreenPreview() {
+//     PostDetailScreen(
+//         post = FakeValues.POST,
+//         onCommentAdd = {}
+//     )
+// }

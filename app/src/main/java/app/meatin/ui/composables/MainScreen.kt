@@ -212,23 +212,23 @@ fun MainScreen(
     )
 }
 
-//@ExperimentalCoilApi
-//@Preview
-//@Composable
-//fun MainScreenPreview() {
-//    MainScreen(
-//        navIndex = 0,
-//        advertisementModel = FakeValues.ADVERTISEMENT,
-//        recipes = listOf(
-//            FakeValues.BRIEF_RECIPE,
-//            FakeValues.BRIEF_RECIPE,
-//            FakeValues.BRIEF_RECIPE,
-//            FakeValues.BRIEF_RECIPE,
-//        ),
-//        posts = listOf(
-//            FakeValues.BRIEF_POST,
-//            FakeValues.BRIEF_POST,
-//            FakeValues.BRIEF_POST,
-//        )
-//    )
-//}
+// @ExperimentalCoilApi
+// @Preview
+// @Composable
+// fun MainScreenPreview() {
+//     MainScreen(
+//         navIndex = 0,
+//         advertisementModel = FakeValues.ADVERTISEMENT,
+//         recipes = listOf(
+//             FakeValues.BRIEF_RECIPE,
+//             FakeValues.BRIEF_RECIPE,
+//             FakeValues.BRIEF_RECIPE,
+//             FakeValues.BRIEF_RECIPE,
+//         ),
+//         posts = listOf(
+//             FakeValues.BRIEF_POST,
+//             FakeValues.BRIEF_POST,
+//             FakeValues.BRIEF_POST,
+//         )
+//     )
+// }
