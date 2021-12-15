@@ -1,6 +1,7 @@
 package app.meatin.ui
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,6 +53,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
         setContent {
             MeatInTheme {
                 val navController = rememberNavController()
@@ -66,11 +70,19 @@ class MainActivity : ComponentActivity() {
 
                                 if (email == null || password == null) {
                                     delay(1_000L)
-                                    navController.navigate("login")
+                                    navController.navigate("login") {
+                                        popUpTo("splash") {
+                                            inclusive = true
+                                        }
+                                    }
                                 } else {
                                     authViewModel.login(email, password).invokeOnCompletion {
                                         if (it == null) {
-                                            navController.navigate("main")
+                                            navController.navigate("main") {
+                                                popUpTo("splash") {
+                                                    inclusive = true
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -91,7 +103,11 @@ class MainActivity : ComponentActivity() {
                                     authViewModel.login(email, password).invokeOnCompletion {
                                         if (it == null) {
                                             sharedPreferences.applyCredentials(email, password)
-                                            navController.navigate("main")
+                                            navController.navigate("main") {
+                                                popUpTo("login") {
+                                                    inclusive = true
+                                                }
+                                            }
                                         }
                                     }
                                 }
