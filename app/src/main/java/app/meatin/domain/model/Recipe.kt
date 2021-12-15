@@ -15,6 +15,6 @@ data class Recipe(
     val duration: Int,
     val difficulty: Difficulty,
     @SerializedName("created_at") val createdAt: Long,
-    val heart: Heart,
+    val heart: Heart?,
     override val id: String,
 ) : DocumentedModel

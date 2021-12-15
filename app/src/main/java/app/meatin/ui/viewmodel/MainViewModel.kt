@@ -9,7 +9,9 @@ import app.meatin.domain.model.BriefRecipe
 import app.meatin.domain.repositories.PostRepository
 import app.meatin.domain.repositories.RecipeRepository
 import app.meatin.util.SingleLiveEvent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainViewModel(
     private val postRepository: PostRepository,
@@ -26,15 +28,19 @@ class MainViewModel(
     val error: LiveData<String> = _error
 
     fun fetch() = viewModelScope.launch {
-        postRepository.getCuratedPosts().onSuccess {
-            _curatedPosts.postValue(it)
-        }.onFailure {
-            _error.postValue(it.message)
-        }
-        recipeRepository.getCuratedRecipes().onSuccess {
-            _curatedRecipes.postValue(it)
-        }.onFailure {
-            _error.postValue(it.message)
+        withContext(Dispatchers.IO) {
+            postRepository.getCuratedPosts().onSuccess {
+                println(it)
+                _curatedPosts.postValue(it)
+            }.onFailure {
+                println(it)
+                _error.postValue(it.message)
+            }
+            recipeRepository.getCuratedRecipes().onSuccess {
+                _curatedRecipes.postValue(it)
+            }.onFailure {
+                _error.postValue(it.message)
+            }
         }
     }
 }
