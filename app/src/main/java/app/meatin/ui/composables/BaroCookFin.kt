@@ -33,7 +33,7 @@ fun BaroCookFin(
     meatType: String,
     degree: String,
     situation: String,
-    onWritePost: ()-> Unit,
+    onWritePost: () -> Unit,
 ) {
     ConstraintLayout(
         Modifier
