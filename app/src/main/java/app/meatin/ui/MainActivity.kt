@@ -1,4 +1,4 @@
-package app.meatin
+package app.meatin.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
