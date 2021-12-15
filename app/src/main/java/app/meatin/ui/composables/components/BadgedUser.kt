@@ -35,7 +35,7 @@ fun BadgedUser(
                 .height(18.dp)
                 .width(18.dp),
             painter = rememberImagePainter(
-                data = user.repBadge.image
+                data = user.repBadge?.image
             ),
             contentDescription = null,
             contentScale = ContentScale.Crop
@@ -43,7 +43,7 @@ fun BadgedUser(
         CoreText(
             modifier = Modifier
                 .padding(start = 4.dp),
-            text = user.repBadge.label,
+            text = user.repBadge?.label ?: "",
             overflow = TextOverflow.Ellipsis,
             style = MeatInTypography.regular,
             color = labelColor,

@@ -62,7 +62,7 @@ fun PostPreviewCard(
                 painter = rememberImagePainter(data = post.photo), contentDescription = "Preview image"
             )
         }
-        ExtraInfo(post.heart, post.nComments)
+        ExtraInfo(post.heart ?: FakeValues.HEARTED_FALSE, post.nComments)
     }
 }
 

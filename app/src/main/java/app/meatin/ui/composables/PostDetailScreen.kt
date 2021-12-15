@@ -32,12 +32,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.RelocationRequester
 import androidx.compose.ui.layout.relocationRequester
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import app.meatin.domain.model.BriefCommunityUser
+import androidx.navigation.NavController
 import app.meatin.domain.model.FakeValues
 import app.meatin.domain.model.Post
 import app.meatin.ui.composables.components.CommentItem
@@ -57,9 +56,9 @@ import java.net.URI
 @Composable
 fun PostDetailScreen(
     modifier: Modifier = Modifier,
+    navController: NavController,
     post: Post,
-    profile: BriefCommunityUser,
-    onClick: () -> Unit
+    onCommentAdd: () -> Unit,
 ) {
     Scaffold(
         content = {
@@ -93,7 +92,7 @@ fun PostDetailScreen(
                                 end.linkTo(parent.end)
                             },
                         painter = rememberImagePainter(
-                            data = URI(post.photos[0]).toASCIIString()
+                            data = URI(post.photos?.getOrNull(0) ?: "").toASCIIString()
                         ),
                         contentDescription = null,
                         contentScale = ContentScale.Crop
@@ -131,8 +130,8 @@ fun PostDetailScreen(
                                 end.linkTo(parent.end, 16.dp)
                             }
                             .shadow(1.dp),
-                        user = profile,
-                        profileUri = profile.profileImage,
+                        user = post.author,
+                        profileUri = post.author.profileImage ?: "",
                         onClick = { },
                     )
 
@@ -174,6 +173,9 @@ fun PostDetailScreen(
                             .constrainAs(taggedRecipe) {
                                 top.linkTo(taggedRecipeText.bottom, 12.dp)
                                 width = Dimension.fillToConstraints
+                            }
+                            .clickable {
+                                navController.navigate("recipe_overview/${post.linkedRecipe.id}")
                             }
                             .fillMaxWidth()
                             .padding(start = 16.dp, end = 16.dp, bottom = 10.dp),
@@ -241,7 +243,7 @@ fun PostDetailScreen(
                                     .clickable(
                                         indication = null,
                                         interactionSource = MutableInteractionSource()
-                                    ) { onClick() }
+                                    ) { onCommentAdd() }
                                     .padding(start = 16.dp, end = 16.dp),
                                 text = "게시",
                                 color = Flamingo,
@@ -279,20 +281,19 @@ fun PostDetailScreen(
                 onBookmarkClick = { checkedBookmark = it },
                 onShareClick = {},
                 isBookmarked = checkedBookmark,
-                hearts = post.heart.count
+                hearts = post.heart?.count ?: 0
             )
         }
     )
 }
 
-@ExperimentalComposeUiApi
-@Preview(heightDp = 10000)
-@ExperimentalCoilApi
-@Composable
-fun PostDetailScreenPreview() {
-    PostDetailScreen(
-        post = FakeValues.POST,
-        profile = FakeValues.BRIEF_COMMUNITY_USER,
-        onClick = {}
-    )
-}
+//@ExperimentalComposeUiApi
+//@Preview(heightDp = 10000)
+//@ExperimentalCoilApi
+//@Composable
+//fun PostDetailScreenPreview() {
+//    PostDetailScreen(
+//        post = FakeValues.POST,
+//        onCommentAdd = {}
+//    )
+//}

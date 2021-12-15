@@ -30,17 +30,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
 import app.meatin.R
 import app.meatin.domain.model.AdvertisementModel
 import app.meatin.domain.model.BriefPost
 import app.meatin.domain.model.BriefRecipe
-import app.meatin.domain.model.FakeValues
 import app.meatin.ui.composables.components.Advertisement
 import app.meatin.ui.composables.components.MeatTypeNavigation
-import app.meatin.ui.composables.components.PPCPreview
 import app.meatin.ui.composables.components.PostPreviewCard
 import app.meatin.ui.composables.components.RecipeCard
 import app.meatin.ui.theme.Flamingo
@@ -53,12 +51,12 @@ import java.net.URI
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
+    navController: NavController,
     navIndex: Int,
     advertisementModel: AdvertisementModel,
     recipes: List<BriefRecipe>,
-    posts: List<BriefPost>
+    posts: List<BriefPost>,
 ) {
-    PPCPreview()
     Scaffold(
         content = {
             Column(
@@ -75,7 +73,7 @@ fun MainScreen(
                     val (
                         logo,
                         meatTypeNavigation,
-                        advertisement
+                        advertisement,
                     ) = createRefs()
 
                     Image(
@@ -119,7 +117,7 @@ fun MainScreen(
                 ) {
                     val (
                         recipeCards,
-                        popular
+                        popular,
                     ) = createRefs()
                     CoreText(
                         modifier = Modifier.constrainAs(popular) {
@@ -141,7 +139,12 @@ fun MainScreen(
                             if (count == 0) {
                                 Spacer(modifier = Modifier.width(16.dp))
                             }
-                            RecipeCard(recipe = recipes[count], onClick = {})
+                            RecipeCard(
+                                recipe = recipes[count],
+                                onClick = {
+                                    navController.navigate("recipe_overview/${recipes[count].id}")
+                                }
+                            )
                             if (count == recipes.size - 1) {
                                 Spacer(modifier = Modifier.width(16.dp))
                             }
@@ -178,9 +181,11 @@ fun MainScreen(
                                     start.linkTo(parent.start)
                                     top.linkTo(parent.top)
                                 }
+                                .clickable {
+                                    navController.navigate("post_detail/${post.id}")
+                                }
                                 .padding(16.dp)
                                 .fillMaxWidth()
-                                .clickable { }
                         )
                     }
                     Spacer(modifier = Modifier.height(4.dp))
@@ -207,23 +212,23 @@ fun MainScreen(
     )
 }
 
-@ExperimentalCoilApi
-@Preview
-@Composable
-fun MainScreenPreview() {
-    MainScreen(
-        navIndex = 0,
-        advertisementModel = FakeValues.ADVERTISEMENT,
-        recipes = listOf(
-            FakeValues.BRIEF_RECIPE,
-            FakeValues.BRIEF_RECIPE,
-            FakeValues.BRIEF_RECIPE,
-            FakeValues.BRIEF_RECIPE,
-        ),
-        posts = listOf(
-            FakeValues.BRIEF_POST,
-            FakeValues.BRIEF_POST,
-            FakeValues.BRIEF_POST,
-        )
-    )
-}
+//@ExperimentalCoilApi
+//@Preview
+//@Composable
+//fun MainScreenPreview() {
+//    MainScreen(
+//        navIndex = 0,
+//        advertisementModel = FakeValues.ADVERTISEMENT,
+//        recipes = listOf(
+//            FakeValues.BRIEF_RECIPE,
+//            FakeValues.BRIEF_RECIPE,
+//            FakeValues.BRIEF_RECIPE,
+//            FakeValues.BRIEF_RECIPE,
+//        ),
+//        posts = listOf(
+//            FakeValues.BRIEF_POST,
+//            FakeValues.BRIEF_POST,
+//            FakeValues.BRIEF_POST,
+//        )
+//    )
+//}

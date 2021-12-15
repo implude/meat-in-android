@@ -27,13 +27,14 @@ object FakeValues {
         ""
     )
     val BRIEF_POST = BriefPost(
+        "",
         BRIEF_COMMUNITY_USER,
         "주말엔 역시 문어고기",
         "https://media.discordapp.net/attachments/880049130813132842/900371003039948830/IMG_2593.png",
         1634734699000,
         HEARTED_TRUE,
         1,
-        "짜잔 맛있는 감자랍니다~",
+        "짜잔 맛있는 감자랍니다~"
     )
     val MEAT_TYPE = MeatType(
         "문어고기",
