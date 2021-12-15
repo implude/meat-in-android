@@ -50,7 +50,7 @@ fun Chip(
     onSelectionChanged: (String) -> Unit = {},
 ) {
     Surface(
-        modifier = Modifier.padding(end = 6.dp),
+        modifier = Modifier.padding(end = 12.dp),
         shape = MaterialTheme.shapes.medium,
         color = if (isSelected) Flamingo else DisableLightGray2
     ) {
