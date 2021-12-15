@@ -5,8 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,7 +35,7 @@ fun Advertisement(
 ) {
     Box(
         modifier
-            .size(343.dp, 88.dp)
+            .height(88.dp)
             .clip(RoundedCornerShape(5.dp))
             .clickable { onClick() }
             .background(Color.White)
@@ -47,7 +47,7 @@ fun Advertisement(
                 data = imageUri.toASCIIString()
             ),
             contentDescription = null,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.FillWidth,
         )
 
         Column(

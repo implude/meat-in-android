@@ -110,7 +110,7 @@ object FakeValues {
         ""
     )
     val ADVERTISEMENT = AdvertisementModel(
-        "무한리필로 최고의 맛을 즐기세요 응애",
+        "무한리필로 최고의 맛을 즐기세요",
         "15,900원이라는 합리적인 가격으로!",
         "https://ychef.files.bbci.co.uk/976x549/p04kt0s1.jpg"
     )

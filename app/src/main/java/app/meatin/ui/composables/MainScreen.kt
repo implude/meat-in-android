@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
 import app.meatin.R
 import app.meatin.domain.model.AdvertisementModel
@@ -101,10 +102,12 @@ fun MainScreen(
                         subtitle = advertisementModel.subtitle,
                         imageUri = URI(advertisementModel.imageUri),
                         modifier = Modifier.constrainAs(advertisement) {
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
+                            start.linkTo(parent.start, 16.dp)
+                            end.linkTo(parent.end, 16.dp)
                             top.linkTo(meatTypeNavigation.bottom, 22.dp)
                             bottom.linkTo(parent.bottom, 14.dp)
+
+                            width = Dimension.fillToConstraints
                         },
                         onClick = {}
                     )
