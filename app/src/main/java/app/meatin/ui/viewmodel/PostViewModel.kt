@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import app.meatin.domain.model.Post
 import app.meatin.domain.repositories.PostRepository
 import app.meatin.util.SingleLiveEvent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PostViewModel(
     private val postRepository: PostRepository,
@@ -20,10 +22,12 @@ class PostViewModel(
     val error: LiveData<String> = _error
 
     fun fetch(id: String) = viewModelScope.launch {
-        postRepository.getPost(id).onSuccess {
-            _post.value = it
-        }.onFailure {
-            _error.value = it.message
+        withContext(Dispatchers.IO) {
+            postRepository.getPost(id).onSuccess {
+                _post.postValue(it)
+            }.onFailure {
+                _error.postValue(it.message)
+            }
         }
     }
 }
