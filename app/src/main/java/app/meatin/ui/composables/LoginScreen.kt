@@ -41,6 +41,7 @@ import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.LightFlamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
+import app.meatin.util.emailRegex
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -135,7 +136,7 @@ fun LoginScreen(
                     setEmail(it.replace("""[\r\n\t]""".toRegex(), ""))
                 },
                 placeholder = {
-                    CoreText("2글자 이상 입력해주세요", color = BorderGray, style = MeatInTypography.regularImportant)
+                    CoreText("이메일을 입력해주세요", color = BorderGray, style = MeatInTypography.regularImportant)
                 },
                 keyboardActions = KeyboardActions {
                     onEmailConfirm(email)
@@ -144,9 +145,9 @@ fun LoginScreen(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
                 ),
-                isError = email.length < minNicknameThreshold &&
+                isError = !email.matches(emailRegex) &&
                     (loginState == LoginState.PASSWORD || email.isNotEmpty()),
-                errorMessage = "${minNicknameThreshold}글자 이상 입력해주세요"
+                errorMessage = "이메일 형식에 맞지 않습니다"
             )
 
             CoreText(
@@ -165,7 +166,7 @@ fun LoginScreen(
         }
 
         val isConfirmButtonEnabled =
-            email.length >= minNicknameThreshold &&
+            email.matches(emailRegex) &&
                 (loginState == LoginState.EMAIL || password.length >= minPasswordThreshold)
 
         Button(

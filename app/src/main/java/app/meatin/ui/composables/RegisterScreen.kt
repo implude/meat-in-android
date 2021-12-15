@@ -38,6 +38,7 @@ import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.LightFlamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
+import app.meatin.util.emailRegex
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -150,7 +151,7 @@ fun RegisterScreen(
                     },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password,
-                        imeAction = ImeAction.Done,
+                        imeAction = ImeAction.Next,
                     ),
                     visualTransformation = PasswordVisualTransformation(),
                     isError = password.length < minPasswordThreshold && password.isNotEmpty(),
@@ -176,7 +177,7 @@ fun RegisterScreen(
                     setEmail(it.replace("""[\r\n\t]""".toRegex(), ""))
                 },
                 placeholder = {
-                    CoreText("2글자 이상 입력해주세요", color = BorderGray, style = MeatInTypography.regularImportant)
+                    CoreText("이메일을 입력해주세요", color = BorderGray, style = MeatInTypography.regularImportant)
                 },
                 keyboardActions = KeyboardActions {
                     onEmailConfirm(email)
@@ -185,9 +186,9 @@ fun RegisterScreen(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next,
                 ),
-                isError = email.length < minNicknameThreshold &&
-                    (registerState == RegisterState.PASSWORD || email.isNotEmpty()),
-                errorMessage = "${minNicknameThreshold}글자 이상 입력해주세요"
+                isError = !email.matches(emailRegex) &&
+                    (registerState == RegisterState.PASSWORD || registerState == RegisterState.PASSWORD_VERIFY || email.isNotEmpty()),
+                errorMessage = "이메일 형식에 맞지 않습니다"
             )
 
             DisposableEffect(Unit) {
@@ -198,7 +199,7 @@ fun RegisterScreen(
 
         val isConfirmButtonEnabled =
             email.length >= minNicknameThreshold &&
-                (registerState == RegisterState.EMAIL || password.length >= minPasswordThreshold)
+                (registerState == RegisterState.EMAIL || email.matches(emailRegex))
 
         Button(
             modifier = Modifier
