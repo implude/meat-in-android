@@ -27,4 +27,18 @@ class AuthViewModel(
             }
         }
     }
+
+    fun register(email: String, password: String) = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            authRepository.createUser(
+                email.split("@").first(), "a",
+                email, password
+            ).onSuccess {
+                AuthenticationStore.token = it
+            }.onFailure {
+                println(it)
+                _error.postValue(it.message)
+            }
+        }
+    }
 }

@@ -30,6 +30,8 @@ import app.meatin.ui.composables.LoginState
 import app.meatin.ui.composables.MainScreen
 import app.meatin.ui.composables.PostDetailScreen
 import app.meatin.ui.composables.RecipeOverviewScreen
+import app.meatin.ui.composables.RegisterScreen
+import app.meatin.ui.composables.RegisterState
 import app.meatin.ui.theme.MeatInTheme
 import app.meatin.ui.theme.composefix.CoreText
 import app.meatin.ui.viewmodel.AuthViewModel
@@ -89,18 +91,50 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         composable("login") {
-                            var state by remember { mutableStateOf(LoginState.NICKNAME) }
+                            var state by remember { mutableStateOf(LoginState.EMAIL) }
 
                             LoginScreen(
+                                navController,
                                 loginState = state,
-                                onNicknameConfirm = {
+                                onEmailConfirm = {
                                     state = LoginState.PASSWORD
                                 },
                                 onBackPressedInPassword = {
-                                    state = LoginState.NICKNAME
+                                    state = LoginState.EMAIL
                                 },
                                 onCredentialConfirm = { email, password ->
                                     authViewModel.login(email, password).invokeOnCompletion {
+                                        if (it == null) {
+                                            sharedPreferences.applyCredentials(email, password)
+                                            navController.navigate("main") {
+                                                popUpTo("login") {
+                                                    inclusive = true
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            )
+                        }
+                        composable("register") {
+                            var state by remember { mutableStateOf(RegisterState.EMAIL) }
+
+                            RegisterScreen(
+                                state,
+                                onEmailConfirm = {
+                                    state = RegisterState.PASSWORD
+                                },
+                                onPasswordConfirm = {
+                                    state = RegisterState.PASSWORD_VERIFY
+                                },
+                                onBackPressedInPassword = {
+                                    state = RegisterState.EMAIL
+                                },
+                                onBackPressedInPasswordVerify = {
+                                    state = RegisterState.PASSWORD
+                                },
+                                onCredentialConfirm = { email, password ->
+                                    authViewModel.register(email, password).invokeOnCompletion {
                                         if (it == null) {
                                             sharedPreferences.applyCredentials(email, password)
                                             navController.navigate("main") {
