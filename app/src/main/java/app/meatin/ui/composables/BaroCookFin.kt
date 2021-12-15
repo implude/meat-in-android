@@ -33,6 +33,7 @@ fun BaroCookFin(
     meatType: String,
     degree: String,
     situation: String,
+    onWritePost: ()-> Unit,
 ) {
     ConstraintLayout(
         Modifier
@@ -77,7 +78,7 @@ fun BaroCookFin(
                     TitledLabel(title = "상황", subtitle = situation) {}
                 }
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = onWritePost,
                     Modifier
                         .fillMaxWidth()
                         .height(56.dp)
@@ -113,5 +114,6 @@ fun BaroCookFinPreview() {
         meatPart = "머릿고기",
         degree = "레어",
         situation = "용의 숨결...",
+        onWritePost = {},
     )
 }
