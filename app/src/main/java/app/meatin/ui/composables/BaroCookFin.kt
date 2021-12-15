@@ -40,12 +40,15 @@ fun BaroCookFin(
             .background(Color.White)
     ) {
         val (title, info) = createRefs()
-        Column(Modifier.constrainAs(title) {
-            top.linkTo(parent.top)
-            start.linkTo(parent.start)
-            end.linkTo(parent.end)
-            bottom.linkTo(info.top)
-        }, horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            Modifier.constrainAs(title) {
+                top.linkTo(parent.top)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                bottom.linkTo(info.top)
+            },
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             CoreText(text = "고기가 맛있게 구워졌어요", style = MeatInTypography.bigDescription)
             CoreText(text = "맛있는 식사 되세요!", style = MeatInTypography.description)
         }
