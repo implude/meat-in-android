@@ -55,7 +55,6 @@ fun BarocookTimerSetupScreen(
     var selectedRoastType: String? by remember { mutableStateOf(allRoastType[0]) }
     var selectedEnvType: String? by remember { mutableStateOf(allEnvType[0]) }
 
-
     Scaffold(
         content = {
             Column(
@@ -131,7 +130,6 @@ fun BarocookTimerSetupScreen(
                                 }
                             )
                         }
-
                     }
                     Column(
                         modifier.padding(top = 20.dp)
@@ -186,9 +184,11 @@ fun BarocookTimerSetupScreen(
                         style = MeatInTypography.sectionHeader
                     )
                     CoreText(
-                        text = "$selectedMeatType ${if (selectedMeatType == "돼지고기") selectedPorkPartType else selectedPartType }부위를 ${selectedRoastType}으로 ${selectedEnvType}에 구워요",
-                        style = MeatInTypography.bigDescription.copy(color = Color.DarkGray,
-                            fontSize = 16.sp)
+                        text = "$selectedMeatType ${if (selectedMeatType == "돼지고기") selectedPorkPartType else selectedPartType}부위를 ${selectedRoastType}으로 ${selectedEnvType}에 구워요",
+                        style = MeatInTypography.bigDescription.copy(
+                            color = Color.DarkGray,
+                            fontSize = 16.sp
+                        )
                     )
                     Row(
                         modifier.padding(top = 18.dp),
@@ -237,8 +237,10 @@ fun BarocookTimerSetupScreen(
                         .padding(16.dp)
                         .height(56.dp),
                     onClick = {},
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Flamingo,
-                        contentColor = Color.White),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Flamingo,
+                        contentColor = Color.White
+                    )
                 ) {
                     Icon(
                         modifier = Modifier.size(22.dp),
