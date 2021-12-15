@@ -43,10 +43,10 @@ fun IngredientItem(
     ConstraintLayout(
         modifier
             .height(130.dp)
+            .border(2.dp, Color.Black.copy(alpha = 0.1f), RoundedCornerShape(12.dp))
             .clip(RoundedCornerShape(6.dp))
             .clickable { onClick() }
             .background(Color.White)
-            .border(1.dp, Color.Gray, RoundedCornerShape(6.dp))
     ) {
         val (
             nameText,
@@ -56,13 +56,12 @@ fun IngredientItem(
         ) = createRefs()
 
         CoreText(
-            modifier = Modifier
-                .constrainAs(nameText) {
-                    start.linkTo(parent.start, 16.dp)
-                    end.linkTo(parent.end, 16.dp)
-                    top.linkTo(parent.top, 12.dp)
-                    width = Dimension.fillToConstraints
-                },
+            modifier = Modifier.constrainAs(nameText) {
+                start.linkTo(parent.start, 16.dp)
+                end.linkTo(parent.end, 16.dp)
+                top.linkTo(parent.top, 12.dp)
+                width = Dimension.fillToConstraints
+            },
             text = ingredient.label,
             overflow = TextOverflow.Ellipsis,
             style = MeatInTypography.regularImportant,
@@ -107,7 +106,7 @@ fun IngredientItem(
                 }
                 .height(38.dp),
 
-            text = ingredient.content,
+            text = ingredient.content ?: "",
             overflow = TextOverflow.Ellipsis,
             style = MeatInTypography.regular,
             color = Color.Gray,
