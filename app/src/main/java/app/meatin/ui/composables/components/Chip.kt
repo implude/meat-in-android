@@ -50,7 +50,7 @@ fun Chip(
     onSelectionChanged: (String) -> Unit = {},
 ) {
     Surface(
-        modifier = Modifier.padding(6.dp),
+        modifier = Modifier.padding(end = 6.dp),
         shape = MaterialTheme.shapes.medium,
         color = if (isSelected) Flamingo else DisableLightGray2
     ) {
@@ -79,7 +79,7 @@ fun ChipGroup(
     selectedValue: String? = null,
     onSelectedChanged: (String) -> Unit = {},
 ) {
-    Column(modifier = Modifier.padding(8.dp)) {
+    Column {
         LazyRow {
             items(value) {
                 Chip(
