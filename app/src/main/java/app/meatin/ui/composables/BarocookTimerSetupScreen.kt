@@ -185,7 +185,7 @@ fun BarocookTimerSetupScreen(
                     )
                     CoreText(
                         text = "$selectedMeatType ${if (selectedMeatType == "돼지고기") selectedPorkPartType else selectedPartType}부위를 ${selectedRoastType}${
-                            when (selectedRoastType) {
+                            when(selectedRoastType) {
                                 allRoastType[0] -> "로"
                                 allRoastType[1] -> "로"
                                 allRoastType[2] -> "으로"
