@@ -30,9 +30,9 @@ import app.meatin.ui.composables.LoginState
 import app.meatin.ui.composables.MainScreen
 import app.meatin.ui.composables.PostDetailScreen
 import app.meatin.ui.composables.RecipeOverviewScreen
-import app.meatin.ui.composables.SplashScreen
 import app.meatin.ui.composables.RegisterScreen
 import app.meatin.ui.composables.RegisterState
+import app.meatin.ui.composables.SplashScreen
 import app.meatin.ui.theme.MeatInTheme
 import app.meatin.ui.viewmodel.AuthViewModel
 import app.meatin.ui.viewmodel.MainViewModel
