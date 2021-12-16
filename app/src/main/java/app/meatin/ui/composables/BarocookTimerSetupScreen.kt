@@ -192,7 +192,7 @@ fun BarocookTimerSetupScreen(
                         else -> "(으)로"
                     }
                     CoreText(
-                        text = "$selectedMeatType ${if (selectedMeatType == "돼지고기") selectedPorkPartType else selectedPartType}부위를 ${selectedRoastType+postPosition} ${selectedEnvType}에 구워요",
+                        text = "$selectedMeatType ${if (selectedMeatType == "돼지고기") selectedPorkPartType else selectedPartType}부위를 ${selectedRoastType + postPosition} ${selectedEnvType}에 구워요",
                         style = MeatInTypography.bigDescription.copy(
                             color = Color.DarkGray,
                             fontSize = 16.sp
