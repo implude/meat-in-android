@@ -2,6 +2,7 @@ package app.meatin.ui.composables.components
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -33,7 +34,7 @@ import coil.annotation.ExperimentalCoilApi
 fun View() {
     var selectedMeatType: String? by remember { mutableStateOf(allMeatType[0]) }
     ChipGroup(
-        value = allEnvType,
+        value = allMeatType,
         selectedValue = selectedMeatType,
         onSelectedChanged = {
             Log.d("select", it)
@@ -50,7 +51,6 @@ fun Chip(
     onSelectionChanged: (String) -> Unit = {},
 ) {
     Surface(
-        modifier = Modifier.padding(6.dp),
         shape = MaterialTheme.shapes.medium,
         color = if (isSelected) Flamingo else DisableLightGray2
     ) {
@@ -79,8 +79,10 @@ fun ChipGroup(
     selectedValue: String? = null,
     onSelectedChanged: (String) -> Unit = {},
 ) {
-    Column(modifier = Modifier.padding(8.dp)) {
-        LazyRow {
+    Column {
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
             items(value) {
                 Chip(
                     name = it,
