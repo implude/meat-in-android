@@ -17,10 +17,14 @@ class AuthViewModel(
     private val _error = SingleLiveEvent<String>()
     val error: LiveData<String> = _error
 
+    private val _authSuccessEvent = SingleLiveEvent<Unit>()
+    val authSuccessEvent: LiveData<Unit> = _authSuccessEvent
+
     fun login(email: String, password: String) = viewModelScope.launch {
         withContext(Dispatchers.IO) {
             authRepository.login(email, password).onSuccess {
                 AuthenticationStore.token = it
+                _authSuccessEvent.call()
             }.onFailure {
                 println(it)
                 _error.postValue(it.message)
@@ -35,6 +39,7 @@ class AuthViewModel(
                 email, password
             ).onSuccess {
                 AuthenticationStore.token = it
+                _authSuccessEvent.call()
             }.onFailure {
                 println(it)
                 _error.postValue(it.message)

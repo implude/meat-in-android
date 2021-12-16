@@ -32,8 +32,8 @@ import app.meatin.ui.composables.PostDetailScreen
 import app.meatin.ui.composables.RecipeOverviewScreen
 import app.meatin.ui.composables.RegisterScreen
 import app.meatin.ui.composables.RegisterState
+import app.meatin.ui.composables.SplashScreen
 import app.meatin.ui.theme.MeatInTheme
-import app.meatin.ui.theme.composefix.CoreText
 import app.meatin.ui.viewmodel.AuthViewModel
 import app.meatin.ui.viewmodel.MainViewModel
 import app.meatin.ui.viewmodel.PostViewModel
@@ -65,13 +65,14 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     NavHost(navController = navController, startDestination = "splash") {
                         composable("splash") {
-                            CoreText(text = "THIS is SPLASH")
+                            SplashScreen()
                             LaunchedEffect(Unit) {
+                                delay(2700L)
+
                                 val email = sharedPreferences.loginEmail
                                 val password = sharedPreferences.loginPassword
 
                                 if (email == null || password == null) {
-                                    delay(1_000L)
                                     navController.navigate("login") {
                                         popUpTo("splash") {
                                             inclusive = true
@@ -92,9 +93,11 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("login") {
                             var state by remember { mutableStateOf(LoginState.EMAIL) }
+                            var authError by remember { mutableStateOf(false) }
 
                             LoginScreen(
-                                navController,
+                                authError = authError,
+                                navController = navController,
                                 loginState = state,
                                 onEmailConfirm = {
                                     state = LoginState.PASSWORD
@@ -103,15 +106,17 @@ class MainActivity : ComponentActivity() {
                                     state = LoginState.EMAIL
                                 },
                                 onCredentialConfirm = { email, password ->
-                                    authViewModel.login(email, password).invokeOnCompletion {
-                                        if (it == null) {
-                                            sharedPreferences.applyCredentials(email, password)
-                                            navController.navigate("main") {
-                                                popUpTo("login") {
-                                                    inclusive = true
-                                                }
+                                    authViewModel.login(email, password)
+                                    authViewModel.authSuccessEvent.observe(this@MainActivity) {
+                                        sharedPreferences.applyCredentials(email, password)
+                                        navController.navigate("main") {
+                                            popUpTo("login") {
+                                                inclusive = true
                                             }
                                         }
+                                    }
+                                    authViewModel.error.observe(this@MainActivity) {
+                                        authError = true
                                     }
                                 }
                             )
