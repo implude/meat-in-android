@@ -36,12 +36,13 @@ import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
 import coil.annotation.ExperimentalCoilApi
+import kotlin.random.Random
 
 @ExperimentalComposeUiApi
 @ExperimentalCoilApi
 @Composable
 fun BarocookTimerSetupScreen(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val allMeatType: List<String> = listOf("돼지고기", "소고기", "닭고기", "가공육류")
     val allPartType: List<String> = listOf("머리", "가슴", "배", "다리")
@@ -203,7 +204,7 @@ fun BarocookTimerSetupScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         CoreText(
-                            text = "365",
+                            text = (Random.nextInt(10 - 5) + 5).toString(),
                             style = MeatInTypography.pageTitle.copy(
                                 color = Flamingo,
                                 fontSize = 26.sp
@@ -221,7 +222,7 @@ fun BarocookTimerSetupScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         CoreText(
-                            text = "12476",
+                            text = (Random.nextInt(5 - 2) + 2).toString(),
                             style = MeatInTypography.pageTitle.copy(
                                 color = Flamingo,
                                 fontSize = 26.sp
