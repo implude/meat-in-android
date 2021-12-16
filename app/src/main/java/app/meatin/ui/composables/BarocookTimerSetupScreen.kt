@@ -183,17 +183,16 @@ fun BarocookTimerSetupScreen(
                         modifier.padding(top = 42.dp),
                         style = MeatInTypography.sectionHeader
                     )
+                    val postPosition = when (selectedRoastType) {
+                        allRoastType[0] -> "로"
+                        allRoastType[1] -> "로"
+                        allRoastType[2] -> "으로"
+                        allRoastType[3] -> "으로"
+                        allRoastType[4] -> "하게"
+                        else -> "(으)로"
+                    }
                     CoreText(
-                        text = "$selectedMeatType ${if (selectedMeatType == "돼지고기") selectedPorkPartType else selectedPartType}부위를 ${selectedRoastType}${
-                            when(selectedRoastType) {
-                                allRoastType[0] -> "로"
-                                allRoastType[1] -> "로"
-                                allRoastType[2] -> "으로"
-                                allRoastType[3] -> "으로"
-                                allRoastType[4] -> "하게"
-                                else -> "(으)로"
-                            }
-                        } ${selectedEnvType}에 구워요",
+                        text = "$selectedMeatType ${if (selectedMeatType == "돼지고기") selectedPorkPartType else selectedPartType}부위를 ${selectedRoastType}${postPosition} ${selectedEnvType}에 구워요",
                         style = MeatInTypography.bigDescription.copy(
                             color = Color.DarkGray,
                             fontSize = 16.sp
