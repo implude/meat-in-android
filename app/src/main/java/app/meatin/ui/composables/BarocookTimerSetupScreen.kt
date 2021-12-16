@@ -32,9 +32,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.meatin.R
 import app.meatin.ui.composables.components.ChipGroup
-import app.meatin.ui.theme.composefix.CoreText
 import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.MeatInTypography
+import app.meatin.ui.theme.composefix.CoreText
 import coil.annotation.ExperimentalCoilApi
 
 @ExperimentalComposeUiApi
