@@ -30,7 +30,7 @@ import coil.compose.rememberImagePainter
 
 @ExperimentalCoilApi
 @Composable
-fun BaroCook (
+fun BaroCook(
     index: Int,
     recipeSteps: List<RecipeStep>
 ) {
@@ -70,14 +70,12 @@ fun BaroCook (
             )
         }
     }
-
 }
-
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 @Preview
-fun BaroCookPreview () {
+fun BaroCookPreview() {
     var index by remember { mutableStateOf(0) }
     val recipeSteps = listOf(
         RecipeStep(
@@ -108,14 +106,15 @@ fun BaroCookPreview () {
                 } else {
                     1
                 }
-                      },
+            },
             modifier = Modifier
                 .padding(top = 40.dp, bottom = 48.dp)
                 .width(343.dp)
                 .height(55.dp)
                 .align(Alignment.BottomCenter),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = Flamingo)
+                backgroundColor = Flamingo
+            )
         ) {
             CoreText(
                 text = when (index) {
@@ -127,5 +126,4 @@ fun BaroCookPreview () {
             )
         }
     }
-
 }
