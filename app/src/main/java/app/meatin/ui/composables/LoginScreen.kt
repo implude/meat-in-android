@@ -37,6 +37,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import app.meatin.ui.composables.components.CustomTextField
 import app.meatin.ui.theme.BorderGray
+import app.meatin.ui.theme.ErrorRed
 import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.LightFlamingo
 import app.meatin.ui.theme.MeatInTypography
@@ -46,6 +47,7 @@ import app.meatin.util.emailRegex
 @OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun LoginScreen(
+    authError: Boolean = false,
     navController: NavController,
     loginState: LoginState,
     onEmailConfirm: (String) -> Unit,
@@ -59,7 +61,6 @@ fun LoginScreen(
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    val minNicknameThreshold = 2
     val minPasswordThreshold = 8
 
     Column(
@@ -150,6 +151,14 @@ fun LoginScreen(
                 errorMessage = "이메일 형식에 맞지 않습니다"
             )
 
+            if (authError) {
+                CoreText(
+                    text = "계정 정보가 일치하지 않습니다.",
+                    style = MeatInTypography.regularImportant,
+                    color = ErrorRed
+                )
+            }
+
             CoreText(
                 text = "계정이 없으신가요? 회원가입하세요.",
                 style = MeatInTypography.regularImportant,
@@ -199,8 +208,8 @@ fun LoginScreenPreview() {
     var loginState by remember { mutableStateOf(LoginState.EMAIL) }
 
     LoginScreen(
-        rememberNavController(),
-        loginState,
+        navController = rememberNavController(),
+        loginState = loginState,
         onEmailConfirm = { loginState = LoginState.PASSWORD },
         onBackPressedInPassword = { loginState = LoginState.EMAIL },
         onCredentialConfirm = { _, _ -> }

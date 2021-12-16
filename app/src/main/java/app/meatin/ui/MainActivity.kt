@@ -93,9 +93,11 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("login") {
                             var state by remember { mutableStateOf(LoginState.EMAIL) }
+                            var authError by remember { mutableStateOf(false) }
 
                             LoginScreen(
-                                navController,
+                                authError = authError,
+                                navController = navController,
                                 loginState = state,
                                 onEmailConfirm = {
                                     state = LoginState.PASSWORD
@@ -104,15 +106,17 @@ class MainActivity : ComponentActivity() {
                                     state = LoginState.EMAIL
                                 },
                                 onCredentialConfirm = { email, password ->
-                                    authViewModel.login(email, password).invokeOnCompletion {
-                                        if (it == null) {
-                                            sharedPreferences.applyCredentials(email, password)
-                                            navController.navigate("main") {
-                                                popUpTo("login") {
-                                                    inclusive = true
-                                                }
+                                    authViewModel.login(email, password)
+                                    authViewModel.authSuccessEvent.observe(this@MainActivity) {
+                                        sharedPreferences.applyCredentials(email, password)
+                                        navController.navigate("main") {
+                                            popUpTo("login") {
+                                                inclusive = true
                                             }
                                         }
+                                    }
+                                    authViewModel.error.observe(this@MainActivity) {
+                                        authError = true
                                     }
                                 }
                             )
