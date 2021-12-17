@@ -174,13 +174,12 @@ fun PostDetailScreen(
                                 top.linkTo(taggedRecipeText.bottom, 12.dp)
                                 width = Dimension.fillToConstraints
                             }
-                            .clickable {
-                                navController.navigate("recipe_overview/${post.linkedRecipe.id}")
-                            }
                             .fillMaxWidth()
                             .padding(start = 16.dp, end = 16.dp, bottom = 10.dp),
-                        recipe = FakeValues.BRIEF_RECIPE,
-                        onClick = { }
+                        recipe = post.linkedRecipe.copy(description = "내 이름자 이름자를 하나에 나의 패, 까닭입니다. 오면 겨울이 이름과 무성할 봄이 듯합니다. 너무나 나의 멀리 별이 마리아 무덤 아이들의 있습니다. 밤을 차 둘 새워 다 토끼, 오는 나는 이름과, 계십니다. 차 다 잠, 이름을 릴케 가득 봅니다. 마리아 애기 벌써 묻힌 있습니다. 걱정도 가을 시인의 속의 동경과 이제 했던 된 까닭입니다. 한 이런 내일 하나에 까닭입니다. 무성할 풀이 어머님, 않은 밤이 계절이 별 별 까닭입니다. 오면 했던 이름과, 이네들은 별 있습니다. 프랑시스 같이 내 없이 가득 나는 별 버리었습니다."),
+                        onClick = {
+                            navController.navigate("recipe_overview/${post.linkedRecipe.id}")
+                        }
                     )
                 }
 

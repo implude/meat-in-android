@@ -6,6 +6,7 @@ import app.meatin.domain.model.Difficulty
 import app.meatin.domain.model.Ingredient
 import app.meatin.domain.model.Recipe
 import app.meatin.domain.model.RecipeStep
+import app.meatin.domain.model.RecipeStepWrapper
 import app.meatin.domain.repositories.RecipeRepository
 import app.meatin.domain.services.MeatInService
 import app.meatin.util.launch
@@ -18,7 +19,7 @@ class RecipeRepositoryImpl(
 
     override fun getRecipe(recipeId: String): Result<Recipe> = launch(service.getRecipeById(recipeId))
 
-    override fun getRecipeSteps(recipeId: String): Result<List<RecipeStep>> = launch(service.getRecipeSteps(recipeId))
+    override fun getRecipeSteps(recipeId: String): Result<RecipeStepWrapper> = launch(service.getRecipeSteps(recipeId))
 
     override fun createRecipe(
         ingredient: List<Ingredient>,

@@ -59,7 +59,7 @@ fun TaggedRecipe(
             column,
         ) = createRefs()
 
-        val heart = if (recipe.heart.hearted) {
+        val heart = if (recipe.heart?.hearted == true) {
             Icons.Default.Favorite
         } else {
             Icons.Default.FavoriteBorder
@@ -149,7 +149,7 @@ fun TaggedRecipe(
                 CoreText(
                     modifier = Modifier
                         .padding(start = 4.dp),
-                    text = recipe.heart.count.toString(),
+                    text = (recipe.heart?.count ?: 0).toString(),
                     style = MeatInTypography.subHeader.copy(
                         fontSize = 12.sp,
                         lineHeight = (12 * 1.5).sp
