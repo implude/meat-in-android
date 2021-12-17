@@ -47,7 +47,6 @@ import app.meatin.ui.theme.composefix.CoreText
 import app.meatin.ui.viewmodel.MainViewModel
 import coil.annotation.ExperimentalCoilApi
 import java.net.URI
-import kotlinx.coroutines.flow.collect
 
 @ExperimentalCoilApi
 @Composable

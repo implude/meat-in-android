@@ -15,7 +15,6 @@ import app.meatin.domain.model.LoginRequestModel
 import app.meatin.domain.model.ModifyMyInfoRequestModel
 import app.meatin.domain.model.Post
 import app.meatin.domain.model.Recipe
-import app.meatin.domain.model.RecipeStep
 import app.meatin.domain.model.RecipeStepWrapper
 import retrofit2.Call
 import retrofit2.http.Body

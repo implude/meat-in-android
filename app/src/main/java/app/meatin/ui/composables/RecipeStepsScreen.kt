@@ -34,7 +34,7 @@ fun RecipeStepScreen(
     val recipeSteps = recipeViewModel.recipeSteps.collectAsState()
 
     if (index == recipeSteps.value.size) {
-        RecipeCookFin(navController = navController, briefRecipe = recipe.value.toBrief()) {
+        RecipeCookFin {
             navController.popBackStack()
         }
     } else {

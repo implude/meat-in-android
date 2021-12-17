@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
-import app.meatin.domain.model.FakeValues
 import app.meatin.domain.model.Post
 import app.meatin.ui.composables.components.CommentItem
 import app.meatin.ui.composables.components.PostBottomAppBar

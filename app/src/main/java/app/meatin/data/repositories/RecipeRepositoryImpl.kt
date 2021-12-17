@@ -5,7 +5,6 @@ import app.meatin.domain.model.CreateRecipeRequestModel
 import app.meatin.domain.model.Difficulty
 import app.meatin.domain.model.Ingredient
 import app.meatin.domain.model.Recipe
-import app.meatin.domain.model.RecipeStep
 import app.meatin.domain.model.RecipeStepWrapper
 import app.meatin.domain.repositories.RecipeRepository
 import app.meatin.domain.services.MeatInService

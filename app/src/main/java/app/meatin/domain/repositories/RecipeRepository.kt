@@ -4,7 +4,6 @@ import app.meatin.domain.model.BriefRecipe
 import app.meatin.domain.model.Difficulty
 import app.meatin.domain.model.Ingredient
 import app.meatin.domain.model.Recipe
-import app.meatin.domain.model.RecipeStep
 import app.meatin.domain.model.RecipeStepWrapper
 
 interface RecipeRepository {
