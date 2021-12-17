@@ -1,11 +1,13 @@
 package app.meatin.ui.composables
 
+import android.content.Context
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,16 +22,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.meatin.ui.composables.components.CustomTextField
@@ -50,6 +56,7 @@ fun RegisterScreen(
     onBackPressedInPasswordVerify: () -> Unit,
     onCredentialConfirm: (email: String, password: String) -> Unit,
 ) {
+    val localUriHandler = LocalUriHandler.current
     val (email, setEmail) = remember { mutableStateOf("") }
     val (password, setPassword) = remember { mutableStateOf("") }
     val (passwordVerify, setPasswordVerify) = remember { mutableStateOf("") }
@@ -200,6 +207,32 @@ fun RegisterScreen(
         val isConfirmButtonEnabled =
             email.length >= minNicknameThreshold &&
                 (registerState == RegisterState.EMAIL || email.matches(emailRegex))
+
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(bottom = 15.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            CoreText(
+                text = "회원가입 시 ",
+                style = MeatInTypography.description
+            )
+            CoreText(
+                text = "개인정보 수집",
+                style = MeatInTypography.description.copy(
+                    color = Color.Black,
+                    textDecoration = TextDecoration.Underline
+                ),
+                onClick = {
+                    localUriHandler.openUri("https://meatin.app/policy")
+                }
+            )
+            CoreText(
+                text = "에 동의합니다.",
+                style = MeatInTypography.description
+            )
+        }
 
         Button(
             modifier = Modifier
