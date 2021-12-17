@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -73,7 +72,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
 }
 
 @ExperimentalComposeUiApi
@@ -238,7 +236,7 @@ private fun MeatInApp(
 
             composable(
                 "recipe_cook/{recipeId}",
-                arguments = listOf(navArgument("recipeId") { type = NavType.StringType})
+                arguments = listOf(navArgument("recipeId") { type = NavType.StringType })
             ) {
                 val recipeId = it.arguments?.getString("recipeId") ?: ""
                 Log.d("MainActivity", recipeId)
