@@ -21,6 +21,7 @@ import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,8 +37,6 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
 import app.meatin.R
 import app.meatin.domain.model.AdvertisementModel
-import app.meatin.domain.model.BriefPost
-import app.meatin.domain.model.BriefRecipe
 import app.meatin.ui.composables.components.Advertisement
 import app.meatin.ui.composables.components.MeatTypeNavigation
 import app.meatin.ui.composables.components.PostPreviewCard
@@ -45,6 +44,7 @@ import app.meatin.ui.composables.components.RecipeCard
 import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
+import app.meatin.ui.viewmodel.MainViewModel
 import coil.annotation.ExperimentalCoilApi
 import java.net.URI
 
@@ -53,10 +53,8 @@ import java.net.URI
 fun MainScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    navIndex: Int,
     advertisementModel: AdvertisementModel,
-    recipes: List<BriefRecipe>,
-    posts: List<BriefPost>,
+    mainViewModel: MainViewModel,
 ) {
     Scaffold(
         content = {
@@ -86,7 +84,7 @@ fun MainScreen(
                         painter = painterResource(R.drawable.ic_logo),
                         contentDescription = null
                     )
-                    var meatTypeIndex by remember { mutableStateOf(navIndex) }
+                    var meatTypeIndex by remember { mutableStateOf(0) }
                     MeatTypeNavigation(
                         meatTypeList = listOf("모든고기", "소고기", "돼지고기", "닭고기", "간편식"),
                         onClick = { meatTypeIndex = it },
@@ -118,6 +116,7 @@ fun MainScreen(
                         .background(Color.White)
                         .fillMaxWidth()
                 ) {
+                    val curatedRecipes = mainViewModel.curatedRecipes.collectAsState()
                     val (
                         recipeCards,
                         popular,
@@ -138,17 +137,17 @@ fun MainScreen(
                             bottom.linkTo(parent.bottom, margin = 16.dp)
                         }
                     ) {
-                        items(recipes.size) { count ->
+                        items(curatedRecipes.value.size) { count ->
                             if (count == 0) {
                                 Spacer(modifier = Modifier.width(16.dp))
                             }
                             RecipeCard(
-                                recipe = recipes[count],
+                                recipe = curatedRecipes.value[count],
                                 onClick = {
-                                    navController.navigate("recipe_overview/${recipes[count].id}")
+                                    navController.navigate("recipe_overview/${curatedRecipes.value[count].id}")
                                 }
                             )
-                            if (count == recipes.size - 1) {
+                            if (count == curatedRecipes.value.size - 1) {
                                 Spacer(modifier = Modifier.width(16.dp))
                             }
                         }
@@ -161,6 +160,7 @@ fun MainScreen(
                         .fillMaxWidth()
                 ) {
                     val popularPostTitle = createRef()
+
                     CoreText(
                         text = "실시간 인기 포스트",
                         modifier = Modifier.constrainAs(popularPostTitle) {
@@ -170,7 +170,9 @@ fun MainScreen(
                         style = MeatInTypography.sectionHeader
                     )
                 }
-                posts.forEach { post ->
+
+                val curatedPosts = mainViewModel.curatedPosts.collectAsState()
+                curatedPosts.value.forEach { post ->
                     ConstraintLayout(
                         modifier
                             .background(Color.White)

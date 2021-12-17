@@ -95,7 +95,7 @@ fun RecipeCard(
                     Modifier.align(Alignment.BottomStart),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    val heartIcon = if (recipe.heart.hearted) {
+                    val heartIcon = if (recipe.heart?.hearted == true) {
                         Icons.Default.Favorite
                     } else {
                         Icons.Default.FavoriteBorder
@@ -110,7 +110,7 @@ fun RecipeCard(
                         tint = DarkFlamingo,
                     )
                     CoreText(
-                        text = recipe.heart.count.toString(),
+                        text = (recipe.heart?.count ?: 0).toString(),
                         style = MeatInTypography.regularImportant.copy(fontSize = 12.sp),
                         color = DarkFlamingo,
                     )

@@ -17,4 +17,17 @@ data class Recipe(
     @SerializedName("created_at") val createdAt: Long,
     val heart: Heart?,
     override val id: String,
-) : DocumentedModel
+) : DocumentedModel {
+
+    fun toBrief() = BriefRecipe(
+        name = name,
+        description = description,
+        thumbnail = thumbnail,
+        meatType = meatType,
+        duration = duration,
+        difficulty = difficulty,
+        createdAt = createdAt,
+        heart = heart,
+        id = id,
+    )
+}

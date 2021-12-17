@@ -4,7 +4,7 @@ import app.meatin.domain.model.BriefRecipe
 import app.meatin.domain.model.Difficulty
 import app.meatin.domain.model.Ingredient
 import app.meatin.domain.model.Recipe
-import app.meatin.domain.model.RecipeStep
+import app.meatin.domain.model.RecipeStepWrapper
 
 interface RecipeRepository {
 
@@ -12,7 +12,7 @@ interface RecipeRepository {
 
     fun getRecipe(recipeId: String): Result<Recipe>
 
-    fun getRecipeSteps(recipeId: String): Result<List<RecipeStep>>
+    fun getRecipeSteps(recipeId: String): Result<RecipeStepWrapper>
 
     /**
      * @param thumbnail base64-encoded image

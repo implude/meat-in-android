@@ -15,7 +15,7 @@ import app.meatin.domain.model.LoginRequestModel
 import app.meatin.domain.model.ModifyMyInfoRequestModel
 import app.meatin.domain.model.Post
 import app.meatin.domain.model.Recipe
-import app.meatin.domain.model.RecipeStep
+import app.meatin.domain.model.RecipeStepWrapper
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -60,7 +60,7 @@ interface MeatInService {
     fun getRecipeById(@Path("id") id: String): Call<Recipe>
 
     @GET("recipe/{id}/step")
-    fun getRecipeSteps(@Path("id") id: String): Call<List<RecipeStep>>
+    fun getRecipeSteps(@Path("id") id: String): Call<RecipeStepWrapper>
 
     @POST("recipe")
     fun createRecipe(@Body createRecipeRequestModel: CreateRecipeRequestModel): Call<Recipe>

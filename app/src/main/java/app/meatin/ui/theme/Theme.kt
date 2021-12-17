@@ -11,7 +11,6 @@ private val LightColorPalette = lightColors(
     primaryVariant = Flamingo,
     error = ErrorRed,
     background = BackgroundFullBrightGray,
-
 )
 
 @Composable

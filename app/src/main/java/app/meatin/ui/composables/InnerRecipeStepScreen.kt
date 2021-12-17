@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -19,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.meatin.domain.model.RecipeStep
@@ -30,17 +32,18 @@ import coil.compose.rememberImagePainter
 
 @ExperimentalCoilApi
 @Composable
-fun BaroCookScreen(
+fun InnerRecipeStepScreen(
+    modifier: Modifier = Modifier,
     index: Int,
-    recipeSteps: List<RecipeStep>
+    title: String,
+    recipeSteps: List<RecipeStep>,
 ) {
-    val splitArray = recipeSteps[index].title.split(",")
-    val intro = splitArray[0]
-    val subtitle = splitArray[1]
-    Box(Modifier.fillMaxSize()) {
+    val intro = if (index == 0) "만들어보세요" else getHangulCount(index + 1)
+    val subtitle = if (index == 0) title else recipeSteps[index].title.split(": ")[1]
+    Box(modifier.fillMaxSize()) {
         Column(
             Modifier
-                .width(327.dp)
+                .fillMaxWidth()
                 .align(Alignment.Center)
         ) {
             CoreText(
@@ -56,13 +59,13 @@ fun BaroCookScreen(
                 modifier = Modifier
                     .padding(top = 17.dp, bottom = 16.dp)
                     .height(220.dp)
-                    .width(327.dp)
+                    .fillMaxWidth()
                     .clip(RoundedCornerShape(4.dp)),
                 painter = rememberImagePainter(
                     data = recipeSteps[index].image,
                 ),
                 contentDescription = null,
-
+                contentScale = ContentScale.FillBounds
             )
             CoreText(
                 text = recipeSteps[index].content,
@@ -70,6 +73,10 @@ fun BaroCookScreen(
             )
         }
     }
+}
+
+fun getHangulCount(index: Int): String {
+    return listOf("", "첫", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉")[index] + " 번째"
 }
 
 @OptIn(ExperimentalCoilApi::class)
@@ -82,23 +89,20 @@ fun BaroCookScreenPreview() {
             "https://www.seriouseats.com/thmb/Q4DbCSfWJfnDqpqA7164YRMTgeY=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__recipes__images__2016__02__20160208-sous-vide-pork-chop-guide-food-lab-37-9bfa2f9b8a464bccad99ea08423b9d8e.jpg",
             "구워보세요,육즙 가득한 삼겹살",
             "코로나 때문에 외식을 자주 못하는 요즘, 고깃집에서 먹는 삼겹살의 맛을 집에서 구워보세요!",
-            "",
         ),
         RecipeStep(
             "https://www.seriouseats.com/thmb/Q4DbCSfWJfnDqpqA7164YRMTgeY=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__recipes__images__2016__02__20160208-sous-vide-pork-chop-guide-food-lab-37-9bfa2f9b8a464bccad99ea08423b9d8e.jpg",
             "첫번째,기깔나게 삼겹살 손질하기",
             "생삼겹을 준비한 다음, 키친타올로 핏물을 제거해주세요.",
-            "",
         ),
         RecipeStep(
             "https://www.seriouseats.com/thmb/Q4DbCSfWJfnDqpqA7164YRMTgeY=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__recipes__images__2016__02__20160208-sous-vide-pork-chop-guide-food-lab-37-9bfa2f9b8a464bccad99ea08423b9d8e.jpg",
             "두번째,후라이팬 예열하기",
             "강불에서 갈군 후라이펜에 물을 떨궈 물방울이 맺히면 물을 닦고, 후라이펜에 기름을 둘러주세요.",
-            "",
         ),
     )
     Box(Modifier.fillMaxSize()) {
-        BaroCookScreen(index, recipeSteps)
+        InnerRecipeStepScreen(index = index, title = "맛있는 고기", recipeSteps = recipeSteps)
         Button(
             onClick = {
                 index += if (index == recipeSteps.size - 1) {
