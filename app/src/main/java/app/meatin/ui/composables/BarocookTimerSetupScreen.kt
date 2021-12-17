@@ -43,7 +43,7 @@ import kotlin.random.Random
 @Composable
 fun BarocookTimerSetupScreen(
     modifier: Modifier = Modifier,
-    configured: (meatType: Int, partType: Int, roastType: Int, envType: Int, minutes: Int, flipTimes: Int) -> Unit,
+    configured: (meatType: String, partType: String, roastType: String, envType: String, minutes: Int, flipTimes: Int) -> Unit,
 ) {
     val allMeatType: List<String> = listOf("돼지고기", "소고기", "닭고기", "딜리시미트 한돈", "딜리시미트 한우")
     val allPartType: List<String> = listOf("머리", "가슴", "배", "다리")
@@ -53,14 +53,17 @@ fun BarocookTimerSetupScreen(
     val allRoastType: List<String> = listOf("레어", "미디움 레어", "미디움", "웰던", "빠삭빠삭")
     val allEnvType: List<String> = listOf("후라이펜", "직화", "연탄")
 
-    var selectedMeatType: String? by remember { mutableStateOf(allMeatType[0]) }
-    var selectedPorkPartType: String? by remember { mutableStateOf(allPorkPartType[0]) }
-    var selectedDelishPorkPartType: String? by remember { mutableStateOf(allDelishPorkPartType[0]) }
-    var selectedDelishBeefPartType: String? by remember { mutableStateOf(allDelishBeefPartType[0]) }
-    var selectedPartType: String? by remember { mutableStateOf(allPartType[0]) }
-    var selectedRoastType: String? by remember { mutableStateOf(allRoastType[0]) }
-    var selectedEnvType: String? by remember { mutableStateOf(allEnvType[0]) }
+    var selectedMeatType: String by remember { mutableStateOf(allMeatType[0]) }
+    var selectedPorkPartType: String by remember { mutableStateOf(allPorkPartType[0]) }
+    var selectedDelishPorkPartType: String by remember { mutableStateOf(allDelishPorkPartType[0]) }
+    var selectedDelishBeefPartType: String by remember { mutableStateOf(allDelishBeefPartType[0]) }
+    var selectedPartType: String by remember { mutableStateOf(allPartType[0]) }
+    var selectedRoastType: String by remember { mutableStateOf(allRoastType[0]) }
+    var selectedEnvType: String by remember { mutableStateOf(allEnvType[0]) }
 
+    var minutes = 0
+    var flipTimes = 0
+    var finallySelectedPartType = ""
     Scaffold(
         content = {
             Column(
@@ -226,6 +229,7 @@ fun BarocookTimerSetupScreen(
                         "딜리시미트 한우" -> selectedDelishBeefPartType
                         else -> selectedPartType
                     }
+                    finallySelectedPartType = meatType
                     CoreText(
                         text = "$selectedMeatType ${meatType}부위를 ${selectedRoastType + postPosition} ${selectedEnvType}에 구워요",
                         style = MeatInTypography.bigDescription.copy(
@@ -237,8 +241,9 @@ fun BarocookTimerSetupScreen(
                         modifier.padding(top = 18.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        minutes = Random.nextInt(10 - 5) + 5
                         CoreText(
-                            text = (Random.nextInt(10 - 5) + 5).toString(),
+                            text = minutes.toString(),
                             style = MeatInTypography.pageTitle.copy(
                                 color = Flamingo,
                                 fontSize = 26.sp
@@ -255,8 +260,9 @@ fun BarocookTimerSetupScreen(
                         modifier.padding(top = 5.dp, bottom = 90.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        flipTimes = Random.nextInt(5 - 2) + 2
                         CoreText(
-                            text = (Random.nextInt(5 - 2) + 2).toString(),
+                            text = flipTimes.toString(),
                             style = MeatInTypography.pageTitle.copy(
                                 color = Flamingo,
                                 fontSize = 26.sp
@@ -280,7 +286,14 @@ fun BarocookTimerSetupScreen(
                         .padding(16.dp)
                         .height(56.dp),
                     onClick = {
-//                              configured(allMeatType.indexOf(selectedMeatType), )
+                        configured(
+                            selectedMeatType,
+                            finallySelectedPartType,
+                            selectedRoastType,
+                            selectedEnvType,
+                            minutes,
+                            flipTimes,
+                        )
                     },
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = Flamingo,
@@ -310,6 +323,6 @@ fun BarocookTimerSetupScreen(
 @Composable
 fun BarocookTimerSetupScreenPreview() {
     BarocookTimerSetupScreen(
-        configured = {_, _, _, _, _, _ -> }
+        configured = { _, _, _, _, _, _ -> }
     )
 }
