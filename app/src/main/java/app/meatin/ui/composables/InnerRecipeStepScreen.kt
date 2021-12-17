@@ -39,7 +39,17 @@ fun InnerRecipeStepScreen(
     recipeSteps: List<RecipeStep>,
 ) {
     val intro = if (index == 0) "만들어보세요" else getHangulCount(index + 1)
-    val subtitle = if (index == 0) title else recipeSteps[index].title.split(": ")[1]
+    val subtitle = if (index == 0) {
+        title
+    } else {
+        val recipeStepSplit = recipeSteps[index].title.split(": ")
+
+        if (recipeStepSplit.size <= 1) {
+            recipeSteps[index].title
+        } else {
+            recipeSteps[index].title.split(": ")[1]
+        }
+    }
     Box(modifier.fillMaxSize()) {
         Column(
             Modifier
