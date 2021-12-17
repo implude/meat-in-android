@@ -42,16 +42,21 @@ import kotlin.random.Random
 @ExperimentalCoilApi
 @Composable
 fun BarocookTimerSetupScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    configured: (meatType: Int, partType: Int, roastType: Int, envType: Int, minutes: Int, flipTimes: Int) -> Unit,
 ) {
-    val allMeatType: List<String> = listOf("돼지고기", "소고기", "닭고기", "가공육류")
+    val allMeatType: List<String> = listOf("돼지고기", "소고기", "닭고기", "딜리시미트 한돈", "딜리시미트 한우")
     val allPartType: List<String> = listOf("머리", "가슴", "배", "다리")
     val allPorkPartType: List<String> = listOf("삼겹살", "목살", "갈비", "부채살")
+    val allDelishPorkPartType: List<String> = listOf("가브리살", "항정살", "삼겹살", "목살")
+    val allDelishBeefPartType: List<String> = listOf("채끝", "등심")
     val allRoastType: List<String> = listOf("레어", "미디움 레어", "미디움", "웰던", "빠삭빠삭")
     val allEnvType: List<String> = listOf("후라이펜", "직화", "연탄")
 
     var selectedMeatType: String? by remember { mutableStateOf(allMeatType[0]) }
     var selectedPorkPartType: String? by remember { mutableStateOf(allPorkPartType[0]) }
+    var selectedDelishPorkPartType: String? by remember { mutableStateOf(allDelishPorkPartType[0]) }
+    var selectedDelishBeefPartType: String? by remember { mutableStateOf(allDelishBeefPartType[0]) }
     var selectedPartType: String? by remember { mutableStateOf(allPartType[0]) }
     var selectedRoastType: String? by remember { mutableStateOf(allRoastType[0]) }
     var selectedEnvType: String? by remember { mutableStateOf(allEnvType[0]) }
@@ -112,24 +117,47 @@ fun BarocookTimerSetupScreen(
                             modifier.padding(bottom = 8.dp),
                             style = MeatInTypography.regularImportant
                         )
-                        if (selectedMeatType == "돼지고기") {
-                            ChipGroup(
-                                value = allPorkPartType,
-                                selectedValue = selectedPorkPartType,
-                                onSelectedChanged = {
-                                    Log.d("select", it)
-                                    selectedPorkPartType = it
-                                }
-                            )
-                        } else {
-                            ChipGroup(
-                                value = allPartType,
-                                selectedValue = selectedPartType,
-                                onSelectedChanged = {
-                                    Log.d("select", it)
-                                    selectedPartType = it
-                                }
-                            )
+                        when (selectedMeatType) {
+                            "돼지고기" -> {
+                                ChipGroup(
+                                    value = allPorkPartType,
+                                    selectedValue = selectedPorkPartType,
+                                    onSelectedChanged = {
+                                        Log.d("select", it)
+                                        selectedPorkPartType = it
+                                    }
+                                )
+                            }
+                            "딜리시미트 한돈" -> {
+                                ChipGroup(
+                                    value = allDelishPorkPartType,
+                                    selectedValue = selectedDelishPorkPartType,
+                                    onSelectedChanged = {
+                                        Log.d("select", it)
+                                        selectedDelishPorkPartType = it
+                                    }
+                                )
+                            }
+                            "딜리시미트 한우" -> {
+                                ChipGroup(
+                                    value = allDelishBeefPartType,
+                                    selectedValue = selectedDelishBeefPartType,
+                                    onSelectedChanged = {
+                                        Log.d("select", it)
+                                        selectedDelishBeefPartType = it
+                                    }
+                                )
+                            }
+                            else -> {
+                                ChipGroup(
+                                    value = allPartType,
+                                    selectedValue = selectedPartType,
+                                    onSelectedChanged = {
+                                        Log.d("select", it)
+                                        selectedPartType = it
+                                    }
+                                )
+                            }
                         }
                     }
                     Column(
@@ -192,8 +220,14 @@ fun BarocookTimerSetupScreen(
                         allRoastType[4] -> "하게"
                         else -> "(으)로"
                     }
+                    val meatType = when (selectedMeatType) {
+                        "돼지고기" -> selectedPorkPartType
+                        "딜리시미트 한돈" -> selectedDelishPorkPartType
+                        "딜리시미트 한우" -> selectedDelishBeefPartType
+                        else -> selectedPartType
+                    }
                     CoreText(
-                        text = "$selectedMeatType ${if (selectedMeatType == "돼지고기") selectedPorkPartType else selectedPartType}부위를 ${selectedRoastType + postPosition} ${selectedEnvType}에 구워요",
+                        text = "$selectedMeatType ${meatType}부위를 ${selectedRoastType + postPosition} ${selectedEnvType}에 구워요",
                         style = MeatInTypography.bigDescription.copy(
                             color = Color.DarkGray,
                             fontSize = 16.sp
@@ -245,7 +279,9 @@ fun BarocookTimerSetupScreen(
                         .fillMaxWidth()
                         .padding(16.dp)
                         .height(56.dp),
-                    onClick = {},
+                    onClick = {
+//                              configured(allMeatType.indexOf(selectedMeatType), )
+                    },
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = Flamingo,
                         contentColor = Color.White
@@ -273,5 +309,7 @@ fun BarocookTimerSetupScreen(
 @ExperimentalCoilApi
 @Composable
 fun BarocookTimerSetupScreenPreview() {
-    BarocookTimerSetupScreen()
+    BarocookTimerSetupScreen(
+        configured = {_, _, _, _, _, _ -> }
+    )
 }
