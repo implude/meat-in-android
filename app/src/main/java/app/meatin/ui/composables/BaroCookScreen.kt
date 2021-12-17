@@ -1,4 +1,4 @@
-package app.meatin.ui.composables.components
+package app.meatin.ui.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -30,7 +30,7 @@ import coil.compose.rememberImagePainter
 
 @ExperimentalCoilApi
 @Composable
-fun BaroCook(
+fun BaroCookScreen(
     index: Int,
     recipeSteps: List<RecipeStep>
 ) {
@@ -75,7 +75,7 @@ fun BaroCook(
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 @Preview
-fun BaroCookPreview() {
+fun BaroCookScreenPreview() {
     var index by remember { mutableStateOf(0) }
     val recipeSteps = listOf(
         RecipeStep(
@@ -98,7 +98,7 @@ fun BaroCookPreview() {
         ),
     )
     Box(Modifier.fillMaxSize()) {
-        BaroCook(index, recipeSteps)
+        BaroCookScreen(index, recipeSteps)
         Button(
             onClick = {
                 index += if (index == recipeSteps.size - 1) {
