@@ -51,7 +51,7 @@ fun BarocookTimerSetupScreen(
     val allDelishPorkPartType: List<String> = listOf("가브리살", "항정살", "삼겹살", "목살")
     val allDelishBeefPartType: List<String> = listOf("채끝", "등심")
     val allRoastType: List<String> = listOf("레어", "미디움 레어", "미디움", "웰던", "빠삭빠삭")
-    val allEnvType: List<String> = listOf("후라이펜", "직화", "연탄")
+    val allEnvType: List<String> = listOf("후라이팬", "직화", "연탄")
 
     var selectedMeatType: String by remember { mutableStateOf(allMeatType[0]) }
     var selectedPorkPartType: String by remember { mutableStateOf(allPorkPartType[0]) }
