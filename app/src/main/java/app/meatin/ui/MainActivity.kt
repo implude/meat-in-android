@@ -210,7 +210,7 @@ private fun MeatInApp(
                     recipe = recipe.value.copy(briefContent = recipeSteps.value.map(RecipeStep::content)),
                     navController = navController,
                     onProfileButtonClick = { /*TODO*/ },
-                    onCookButtonClicked = { /*TODO*/ },
+                    onCookButtonClicked = { navController.navigate("recipe_cook/${recipe.value.id}") },
                     onHeartChanged = { },
                 )
             }
@@ -237,7 +237,7 @@ private fun MeatInApp(
             }
 
             composable(
-                "recipe_overview/{recipeId}/cook",
+                "recipe_cook/{recipeId}",
                 arguments = listOf(navArgument("recipeId") { type = NavType.StringType})
             ) {
                 val recipeId = it.arguments?.getString("recipeId") ?: ""
@@ -245,9 +245,6 @@ private fun MeatInApp(
                 LaunchedEffect(recipeId) {
                     recipeViewModel.fetch(recipeId)
                 }
-
-                val recipe = recipeViewModel.recipe.collectAsState()
-                val recipeSteps = recipeViewModel.recipeSteps.collectAsState()
 
                 RecipeStepScreen(navController = navController, recipeViewModel = recipeViewModel)
             }

@@ -1,7 +1,6 @@
 package app.meatin.ui.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.meatin.domain.model.FakeValues
@@ -38,7 +37,7 @@ class RecipeViewModel(
                 println(it)
             }
             repository.getRecipeSteps(id).onSuccess {
-                _recipeSteps.emit(it.steps)
+                _recipeSteps.emit(it.steps.sortedBy(RecipeStep::title))
             }.onFailure {
                 _error.postValue(it.message)
             }
