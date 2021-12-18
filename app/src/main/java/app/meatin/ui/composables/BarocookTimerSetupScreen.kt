@@ -241,7 +241,7 @@ fun BarocookTimerSetupScreen(
                         modifier.padding(top = 18.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        minutes = 1 // Random.nextInt(10 - 5) + 5
+                        minutes = Random.nextInt(10 - 5) + 5
                         CoreText(
                             text = minutes.toString(),
                             style = MeatInTypography.pageTitle.copy(
