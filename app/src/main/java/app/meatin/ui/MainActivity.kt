@@ -200,7 +200,6 @@ private fun MeatInApp(
                 BarocookTimerSetupScreen(
                     navController = navController,
                     configured = { meatType, partType, roastType, envType, minutes, flipTimes ->
-                        
                     }
                 )
             }
