@@ -35,10 +35,10 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import app.meatin.ui.theme.DarkFlamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
+import kotlinx.coroutines.delay
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
-import kotlinx.coroutines.delay
 
 @Composable
 fun Timer(
