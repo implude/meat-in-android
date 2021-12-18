@@ -30,6 +30,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import app.meatin.R
 import app.meatin.ui.composables.components.ChipGroup
 import app.meatin.ui.theme.Flamingo
@@ -43,6 +45,7 @@ import kotlin.random.Random
 @Composable
 fun BarocookTimerSetupScreen(
     modifier: Modifier = Modifier,
+    navController: NavController,
     configured: (meatType: String, partType: String, roastType: String, envType: String, minutes: Int, flipTimes: Int) -> Unit,
 ) {
     val allMeatType: List<String> = listOf("돼지고기", "소고기", "닭고기", "딜리시미트 한돈", "딜리시미트 한우")
@@ -80,21 +83,10 @@ fun BarocookTimerSetupScreen(
                             .fillMaxWidth()
                             .height(20.dp)
                     )
-                    Row(
-                        modifier,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_left_arrow),
-                            contentDescription = "left_arrow"
-                        )
-                        CoreText(
-                            text = "바로 굽기 타이머",
-                            modifier
-                                .padding(start = 12.dp),
-                            style = MeatInTypography.pageTitle
-                        )
-                    }
+                    CoreText(
+                        text = "바로 굽기 타이머",
+                        style = MeatInTypography.pageTitle
+                    )
                     Column(
                         modifier.padding(top = 37.dp)
                     ) {
@@ -323,6 +315,7 @@ fun BarocookTimerSetupScreen(
 @Composable
 fun BarocookTimerSetupScreenPreview() {
     BarocookTimerSetupScreen(
+        navController = rememberNavController(),
         configured = { _, _, _, _, _, _ -> }
     )
 }

@@ -25,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import app.meatin.domain.model.FakeValues
 import app.meatin.domain.model.RecipeStep
+import app.meatin.ui.composables.BarocookTimerSetupScreen
 import app.meatin.ui.composables.LoginScreen
 import app.meatin.ui.composables.LoginState
 import app.meatin.ui.composables.MainScreen
@@ -188,6 +189,19 @@ private fun MeatInApp(
                     navController,
                     FakeValues.ADVERTISEMENT,
                     mainViewModel,
+                )
+            }
+
+            composable("barocook_setup") {
+                LaunchedEffect(Unit) {
+                    mainViewModel.fetch()
+                }
+
+                BarocookTimerSetupScreen(
+                    navController = navController,
+                    configured = { meatType, partType, roastType, envType, minutes, flipTimes ->
+                        
+                    }
                 )
             }
 
