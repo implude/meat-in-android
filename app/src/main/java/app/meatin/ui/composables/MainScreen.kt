@@ -199,9 +199,11 @@ fun MainScreen(
         },
         floatingActionButtonPosition = FabPosition.End,
         floatingActionButton = {
-            FloatingActionButton(onClick = {
-                navController.navigate("barocook_setup")
-            }) {
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate("barocook_setup")
+                }
+            ) {
                 Box(
                     modifier = Modifier
                         .clip(CircleShape)
