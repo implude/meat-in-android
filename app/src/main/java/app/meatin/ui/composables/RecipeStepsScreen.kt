@@ -1,5 +1,6 @@
 package app.meatin.ui.composables
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import app.meatin.domain.model.RecipeDisplayable
+import app.meatin.domain.model.Timer
+import app.meatin.ui.composables.components.getTimerLabel
 import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
@@ -33,28 +37,34 @@ fun RecipeStepScreen(
     val recipe = recipeViewModel.recipe.collectAsState()
     val recipeSteps = recipeViewModel.recipeSteps.collectAsState()
 
-    if (index == recipeSteps.value.size) {
+    val recipeDisplayableList: List<RecipeDisplayable> =
+        recipeSteps.value.map {
+            listOf(it, it.timer?.firstOrNull())
+        }.flatten().filterNotNull()
+
+    Log.d("RecipeStepScreen", recipeDisplayableList.toString())
+
+    if (index > recipeDisplayableList.size) {
         RecipeCookFin {
             navController.popBackStack()
         }
     } else {
-        Column(
-            Modifier
-                .padding(16.dp)
-                .fillMaxSize()
-        ) {
+        Column(Modifier.fillMaxSize()) {
             InnerRecipeStepScreen(
                 index = index,
-                title = recipe.value.name,
-                recipeSteps = recipeSteps.value,
-                modifier = Modifier.weight(1f)
+                recipe = recipe.value,
+                recipeDisplayableList = recipeDisplayableList,
+                modifier = Modifier.weight(1f),
+                onTimerFinished = { index += 1 }
             )
             Button(
+                enabled = recipeDisplayableList.size > 1,
                 onClick = {
                     index += 1
                 },
                 modifier = Modifier
                     .padding(top = 40.dp, bottom = 48.dp)
+                    .padding(horizontal = 16.dp)
                     .fillMaxWidth()
                     .height(55.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -62,8 +72,10 @@ fun RecipeStepScreen(
                 )
             ) {
                 CoreText(
-                    text = when (index) {
-                        0 -> "시작하기"
+                    text = if (index == 0) {
+                        "시작하기"
+                    } else when (val nextDisplayableList = recipeDisplayableList.getOrNull(index)) {
+                        is Timer -> "${getTimerLabel(nextDisplayableList.duration / 1000)} 타이머 시작"
                         else -> "다음 단계"
                     },
                     style = MeatInTypography.sectionHeader,

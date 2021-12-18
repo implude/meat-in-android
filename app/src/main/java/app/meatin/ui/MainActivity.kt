@@ -25,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import app.meatin.domain.model.FakeValues
 import app.meatin.domain.model.RecipeStep
+import app.meatin.ui.composables.BaroCookScreen
 import app.meatin.ui.composables.LoginScreen
 import app.meatin.ui.composables.LoginState
 import app.meatin.ui.composables.MainScreen
@@ -245,6 +246,12 @@ private fun MeatInApp(
                 }
 
                 RecipeStepScreen(navController = navController, recipeViewModel = recipeViewModel)
+            }
+
+            composable(
+                "barocook"
+            ) {
+                BaroCookScreen(navController = navController)
             }
         }
     }

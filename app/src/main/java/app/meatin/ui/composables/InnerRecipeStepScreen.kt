@@ -1,45 +1,71 @@
 package app.meatin.ui.composables
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import app.meatin.domain.model.Recipe
+import app.meatin.domain.model.RecipeDisplayable
 import app.meatin.domain.model.RecipeStep
+import app.meatin.ui.composables.components.Timer
 import app.meatin.ui.theme.Flamingo
 import app.meatin.ui.theme.MeatInTypography
 import app.meatin.ui.theme.composefix.CoreText
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
+import app.meatin.domain.model.Timer as TimerModel
 
 @ExperimentalCoilApi
 @Composable
 fun InnerRecipeStepScreen(
     modifier: Modifier = Modifier,
     index: Int,
-    title: String,
-    recipeSteps: List<RecipeStep>,
+    recipe: Recipe,
+    recipeDisplayableList: List<RecipeDisplayable>,
+    onTimerFinished: () -> Unit,
 ) {
-    val intro = if (index == 0) "만들어보세요" else getHangulCount(index + 1)
-    val subtitle = if (index == 0) title else recipeSteps[index].title.split(": ")[1]
+
+    val onlyRecipeSteps = recipeDisplayableList.filterIsInstance(RecipeStep::class.java)
+    if (index == 0) {
+        TitleView(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            recipe = recipe
+        )
+    } else when (val currentDisplayable = recipeDisplayableList[index - 1]) {
+        is RecipeStep -> RecipeStepView(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            index = onlyRecipeSteps.indexOf(currentDisplayable) + 1,
+            recipeStep = currentDisplayable
+        )
+        is TimerModel -> TimerView(
+            millisecond = currentDisplayable.duration,
+            onRemainingTimeChange = { if (it == 0L) onTimerFinished() }
+        )
+    }
+}
+
+@ExperimentalCoilApi
+@Composable
+private fun TitleView(
+    modifier: Modifier = Modifier,
+    recipe: Recipe,
+) {
     Box(modifier.fillMaxSize()) {
         Column(
             Modifier
@@ -47,7 +73,61 @@ fun InnerRecipeStepScreen(
                 .align(Alignment.Center)
         ) {
             CoreText(
-                text = "$intro,",
+                text = "구워보세요,",
+                modifier = Modifier.padding(bottom = 3.dp),
+                style = MeatInTypography.sectionHeader,
+            )
+            CoreText(
+                text = recipe.name,
+                style = MeatInTypography.pageTitle,
+            )
+            Image(
+                modifier = Modifier
+                    .padding(top = 17.dp, bottom = 16.dp)
+                    .height(220.dp)
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(4.dp)),
+                painter = rememberImagePainter(
+                    data = recipe.thumbnail,
+                ),
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds
+            )
+            CoreText(
+                text = recipe.description,
+                style = MeatInTypography.sectionHeader,
+            )
+        }
+    }
+}
+
+@ExperimentalCoilApi
+@Composable
+private fun RecipeStepView(
+    modifier: Modifier = Modifier,
+    index: Int,
+    recipeStep: RecipeStep,
+) {
+    val split = recipeStep.title.split(" 번째, ")
+
+    val (intro, subtitle) = if (split.size <= 1) {
+        "${getHangulCount(index)} 번째," to recipeStep.title
+    } else {
+        "${split[0]} 번째," to split[1]
+    }
+
+    val image = recipeStep.image
+
+    val content = recipeStep.content
+
+    Box(modifier.fillMaxSize()) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .align(Alignment.Center)
+        ) {
+            CoreText(
+                text = intro,
                 modifier = Modifier.padding(bottom = 3.dp),
                 style = MeatInTypography.sectionHeader,
             )
@@ -62,13 +142,13 @@ fun InnerRecipeStepScreen(
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(4.dp)),
                 painter = rememberImagePainter(
-                    data = recipeSteps[index].image,
+                    data = image,
                 ),
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds
             )
             CoreText(
-                text = recipeSteps[index].content,
+                text = content,
                 style = MeatInTypography.sectionHeader,
             )
         }
@@ -76,58 +156,26 @@ fun InnerRecipeStepScreen(
 }
 
 fun getHangulCount(index: Int): String {
-    return listOf("", "첫", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉")[index] + " 번째"
+    return listOf("", "첫", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열")[index]
 }
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
-@Preview
-fun BaroCookScreenPreview() {
-    var index by remember { mutableStateOf(0) }
-    val recipeSteps = listOf(
-        RecipeStep(
-            "https://www.seriouseats.com/thmb/Q4DbCSfWJfnDqpqA7164YRMTgeY=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__recipes__images__2016__02__20160208-sous-vide-pork-chop-guide-food-lab-37-9bfa2f9b8a464bccad99ea08423b9d8e.jpg",
-            "구워보세요,육즙 가득한 삼겹살",
-            "코로나 때문에 외식을 자주 못하는 요즘, 고깃집에서 먹는 삼겹살의 맛을 집에서 구워보세요!",
-        ),
-        RecipeStep(
-            "https://www.seriouseats.com/thmb/Q4DbCSfWJfnDqpqA7164YRMTgeY=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__recipes__images__2016__02__20160208-sous-vide-pork-chop-guide-food-lab-37-9bfa2f9b8a464bccad99ea08423b9d8e.jpg",
-            "첫번째,기깔나게 삼겹살 손질하기",
-            "생삼겹을 준비한 다음, 키친타올로 핏물을 제거해주세요.",
-        ),
-        RecipeStep(
-            "https://www.seriouseats.com/thmb/Q4DbCSfWJfnDqpqA7164YRMTgeY=/450x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__recipes__images__2016__02__20160208-sous-vide-pork-chop-guide-food-lab-37-9bfa2f9b8a464bccad99ea08423b9d8e.jpg",
-            "두번째,후라이팬 예열하기",
-            "강불에서 갈군 후라이펜에 물을 떨궈 물방울이 맺히면 물을 닦고, 후라이펜에 기름을 둘러주세요.",
-        ),
-    )
-    Box(Modifier.fillMaxSize()) {
-        InnerRecipeStepScreen(index = index, title = "맛있는 고기", recipeSteps = recipeSteps)
-        Button(
-            onClick = {
-                index += if (index == recipeSteps.size - 1) {
-                    0
-                } else {
-                    1
-                }
-            },
+private fun TimerView(
+    millisecond: Long,
+    onRemainingTimeChange: (Long) -> Unit,
+) {
+    Box(modifier = Modifier
+        .background(Flamingo)
+        .fillMaxSize()) {
+        Timer(millisecond = millisecond, onRemainingTimeChange = onRemainingTimeChange)
+        CoreText(
             modifier = Modifier
-                .padding(top = 40.dp, bottom = 48.dp)
-                .width(343.dp)
-                .height(55.dp)
-                .align(Alignment.BottomCenter),
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = Flamingo
-            )
-        ) {
-            CoreText(
-                text = when (index) {
-                    0 -> "시작하기"
-                    else -> "다음 단계"
-                },
-                style = MeatInTypography.sectionHeader,
-                color = Color.White
-            )
-        }
+                .align(Alignment.BottomCenter)
+                .padding(16.dp),
+            text = "스킵", color = Color.White, style = MeatInTypography.subHeader,
+            onClick = {
+                onRemainingTimeChange(0)
+            }
+        )
     }
 }
