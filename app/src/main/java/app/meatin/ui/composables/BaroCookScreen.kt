@@ -43,20 +43,22 @@ fun BaroCookScreen(navController: NavController) {
     var flipTimes by remember { mutableStateOf(0) }
 
     when (state) {
-        BaroCookState.PRE_COOK -> PreCookScreen(onConfigured = { _meatType, _partType, _roastType, _envType, _minutes, _flipTimes ->
-            meatType = _meatType
-            partType = _partType
-            roastType = _roastType
-            envType = _envType
-            minutes = _minutes.toLong()
-            flipTimes = _flipTimes
+        BaroCookState.PRE_COOK -> PreCookScreen(
+            onConfigured = { _meatType, _partType, _roastType, _envType, _minutes, _flipTimes ->
+                meatType = _meatType
+                partType = _partType
+                roastType = _roastType
+                envType = _envType
+                minutes = _minutes.toLong()
+                flipTimes = _flipTimes
 
-            if (meatType == "딜리시미트 한돈" && partType == "삼겹살" && roastType == "미디움" && envType == "후라이팬") {
-                navController.navigate("recipe_cook/153f69ce-6c47-40d3-a0e4-ec262261053a")
-            } else {
-                state = BaroCookState.TIMER
+                if (meatType == "딜리시미트 한돈" && partType == "삼겹살" && roastType == "미디움" && envType == "후라이팬") {
+                    navController.navigate("recipe_cook/153f69ce-6c47-40d3-a0e4-ec262261053a")
+                } else {
+                    state = BaroCookState.TIMER
+                }
             }
-        })
+        )
         BaroCookState.TIMER -> TimerScreen(minutes * 60 * 1000, flipTimes) { state = BaroCookState.POST_COOK }
         BaroCookState.POST_COOK -> BaroCookFin(
             meatPart = partType,
@@ -88,7 +90,8 @@ fun TimerScreen(totalTime: Long, totalFlips: Int, onTimerEnd: () -> Unit) {
             .fillMaxSize()
     ) {
         Timer(
-            millisecond = totalTime, onRemainingTimeChange = {
+            millisecond = totalTime,
+            onRemainingTimeChange = {
                 remainingTime = it
                 remainingFlips = (remainingTime.toDouble() / totalTime * (totalFlips + 1)).toInt()
                 if (it == 0L) {

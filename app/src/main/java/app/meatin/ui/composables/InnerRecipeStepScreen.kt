@@ -164,9 +164,11 @@ private fun TimerView(
     millisecond: Long,
     onRemainingTimeChange: (Long) -> Unit,
 ) {
-    Box(modifier = Modifier
-        .background(Flamingo)
-        .fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .background(Flamingo)
+            .fillMaxSize()
+    ) {
         Timer(millisecond = millisecond, onRemainingTimeChange = onRemainingTimeChange)
         CoreText(
             modifier = Modifier
