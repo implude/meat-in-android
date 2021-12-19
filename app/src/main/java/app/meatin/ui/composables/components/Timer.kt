@@ -43,12 +43,13 @@ import kotlin.math.sin
 @Composable
 fun Timer(
     modifier: Modifier = Modifier,
-    second: Long,
+    millisecond: Long,
     initialValue: Float = 1f,
+    onRemainingTimeChange: (Long) -> Unit,
 ) {
 
     var currentTime by remember {
-        mutableStateOf(second)
+        mutableStateOf(millisecond)
     }
     var isTimerRunning by remember {
         mutableStateOf(true)
@@ -58,13 +59,17 @@ fun Timer(
     }
 
     LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
-        if (currentTime == 0L) {
-            isTimerRunning = false
-        }
-        if (currentTime > 0L && isTimerRunning) {
-            delay(100L)
-            currentTime -= 100L
-            value = currentTime / second.toFloat()
+        while (true) {
+            if (currentTime == 0L) {
+                isTimerRunning = false
+                break
+            }
+            if (currentTime > 0L && isTimerRunning) {
+                delay(100L)
+                currentTime -= 100L
+                value = currentTime / millisecond.toFloat()
+                onRemainingTimeChange(currentTime)
+            }
         }
     }
     Box(
@@ -108,13 +113,13 @@ fun Timer(
                             .clip(CircleShape)
                             .clickable(
                                 onClick = {
-                                    if (currentTime <= 0L) {
-                                        currentTime = second
-                                        isTimerRunning = true
-                                    } else {
-
-                                        isTimerRunning = !isTimerRunning
-                                    }
+//                                    if (currentTime <= 0L) {
+//                                        currentTime = millisecond
+//                                        isTimerRunning = true
+//                                    } else {
+//
+//                                        isTimerRunning = !isTimerRunning
+//                                    }
                                 }
                             )
 
@@ -187,6 +192,7 @@ fun TimerPreview() {
     Timer(
         modifier = Modifier
             .size(width = 400.dp, height = 400.dp),
-        second = 100L * 1000L,
+        millisecond = 100L * 1000L,
+        onRemainingTimeChange = {}
     )
 }

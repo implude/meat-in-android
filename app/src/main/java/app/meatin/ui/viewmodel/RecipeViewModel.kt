@@ -37,9 +37,11 @@ class RecipeViewModel(
                 println(it)
             }
             repository.getRecipeSteps(id).onSuccess {
-                _recipeSteps.emit(it.steps.sortedBy(RecipeStep::title))
+                _recipeSteps.emit(it.steps)
+                println(it)
             }.onFailure {
                 _error.postValue(it.message)
+                println(it)
             }
         }
     }

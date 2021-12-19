@@ -1,7 +1,6 @@
 package app.meatin.ui.composables
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,7 +33,6 @@ fun RecipeCookFin(
         Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .background(Color.White)
     ) {
         val (title, button) = createRefs()
         Column(

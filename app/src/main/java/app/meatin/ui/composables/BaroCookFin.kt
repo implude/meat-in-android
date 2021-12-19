@@ -90,7 +90,7 @@ fun BaroCookFin(
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         CoreText(
-                            text = "포스트 작성하러 가기",
+                            text = "돌아가기",
                             style = MeatInTypography.sectionHeader,
                             color = Color.White
                         )
