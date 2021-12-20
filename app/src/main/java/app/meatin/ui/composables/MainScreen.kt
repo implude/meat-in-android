@@ -36,7 +36,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
 import app.meatin.R
-import app.meatin.domain.model.AdvertisementModel
 import app.meatin.ui.composables.components.Advertisement
 import app.meatin.ui.composables.components.MeatTypeNavigation
 import app.meatin.ui.composables.components.PostPreviewCard
@@ -53,8 +52,8 @@ import java.net.URI
 fun MainScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    advertisementModel: AdvertisementModel,
     mainViewModel: MainViewModel,
+    onAdvertisementClick: (url: String) -> Unit,
 ) {
     Scaffold(
         content = {
@@ -95,10 +94,11 @@ fun MainScreen(
                             top.linkTo(logo.bottom, 34.dp)
                         }
                     )
+                    val advertisementModel = mainViewModel.advertisement.collectAsState()
                     Advertisement(
-                        title = advertisementModel.title,
-                        subtitle = advertisementModel.subtitle,
-                        imageUri = URI(advertisementModel.imageUri),
+                        title = advertisementModel.value.title,
+                        subtitle = advertisementModel.value.description,
+                        imageUri = URI(advertisementModel.value.image),
                         modifier = Modifier.constrainAs(advertisement) {
                             start.linkTo(parent.start, 16.dp)
                             end.linkTo(parent.end, 16.dp)
@@ -107,7 +107,12 @@ fun MainScreen(
 
                             width = Dimension.fillToConstraints
                         },
-                        onClick = {}
+                        onClick = {
+                            val url = advertisementModel.value.targetUrl
+                            if (url.isNotEmpty()) {
+                                onAdvertisementClick(advertisementModel.value.targetUrl)
+                            }
+                        }
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))

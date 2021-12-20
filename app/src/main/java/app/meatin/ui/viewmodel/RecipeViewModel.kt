@@ -18,7 +18,7 @@ class RecipeViewModel(
     private val repository: RecipeRepository,
 ) : ViewModel() {
 
-    private val _recipe = MutableStateFlow<Recipe>(FakeValues.RECIPE)
+    private val _recipe = MutableStateFlow(FakeValues.RECIPE)
     val recipe: StateFlow<Recipe> = _recipe
 
     private val _recipeSteps = MutableStateFlow<List<RecipeStep>>(listOf())
@@ -28,6 +28,9 @@ class RecipeViewModel(
     val error: LiveData<String> = _error
 
     fun fetch(id: String) = viewModelScope.launch {
+        _recipe.emit(FakeValues.RECIPE)
+        _recipeSteps.emit(listOf())
+
         withContext(Dispatchers.IO) {
             repository.getRecipe(id).onSuccess {
                 _recipe.emit(it)

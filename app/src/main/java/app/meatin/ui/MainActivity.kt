@@ -1,5 +1,8 @@
 package app.meatin.ui
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
@@ -23,7 +26,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import app.meatin.domain.model.FakeValues
 import app.meatin.domain.model.RecipeStep
 import app.meatin.ui.composables.BaroCookScreen
 import app.meatin.ui.composables.LoginScreen
@@ -69,6 +71,7 @@ class MainActivity : ComponentActivity() {
                     mainViewModel,
                     sharedPreferences,
                     this@MainActivity,
+                    this,
                 )
             }
         }
@@ -85,6 +88,7 @@ private fun MeatInApp(
     mainViewModel: MainViewModel,
     sharedPreferences: SharedPreferencesManager,
     lifecycleOwner: LifecycleOwner,
+    context: Context,
 ) {
     val navController = rememberNavController()
 
@@ -187,9 +191,12 @@ private fun MeatInApp(
                 MainScreen(
                     Modifier.fillMaxWidth(),
                     navController,
-                    FakeValues.ADVERTISEMENT,
-                    mainViewModel,
-                )
+                    mainViewModel
+                ) {
+                    Intent(Intent.ACTION_VIEW, Uri.parse(it)).let { intent ->
+                        context.startActivity(intent)
+                    }
+                }
             }
 
             composable(

@@ -24,6 +24,7 @@ class PostViewModel(
     val error: LiveData<String> = _error
 
     fun fetch(id: String) = viewModelScope.launch {
+        _post.emit(FakeValues.POST)
         withContext(Dispatchers.IO) {
             postRepository.getPost(id).onSuccess {
                 _post.emit(it)

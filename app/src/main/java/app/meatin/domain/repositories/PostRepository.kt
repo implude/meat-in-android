@@ -1,5 +1,6 @@
 package app.meatin.domain.repositories
 
+import app.meatin.domain.model.AdvertisementModel
 import app.meatin.domain.model.BriefPost
 import app.meatin.domain.model.Comment
 import app.meatin.domain.model.Post
@@ -22,4 +23,6 @@ interface PostRepository {
     fun bookmarkPost(postId: String): Result<Unit>
 
     fun unbookmarkPost(postId: String): Result<Unit>
+
+    fun getAdvertisement(): Result<AdvertisementModel>
 }

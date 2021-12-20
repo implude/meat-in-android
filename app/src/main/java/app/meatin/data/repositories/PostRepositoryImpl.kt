@@ -1,5 +1,6 @@
 package app.meatin.data.repositories
 
+import app.meatin.domain.model.AdvertisementModel
 import app.meatin.domain.model.BriefPost
 import app.meatin.domain.model.Comment
 import app.meatin.domain.model.CreateCommentRequestModel
@@ -38,4 +39,6 @@ class PostRepositoryImpl(
     override fun bookmarkPost(postId: String): Result<Unit> = launch(service.bookmarkPost(postId))
 
     override fun unbookmarkPost(postId: String): Result<Unit> = launch(service.unbookmarkPost(postId))
+
+    override fun getAdvertisement(): Result<AdvertisementModel> = launch(service.ad())
 }

@@ -1,5 +1,6 @@
 package app.meatin.domain.services
 
+import app.meatin.domain.model.AdvertisementModel
 import app.meatin.domain.model.AuthToken
 import app.meatin.domain.model.BriefCommunityUser
 import app.meatin.domain.model.BriefPost
@@ -94,4 +95,7 @@ interface MeatInService {
 
     @POST("user/login")
     fun login(@Body loginRequestModel: LoginRequestModel): Call<AuthToken>
+
+    @GET("ad")
+    fun ad(): Call<AdvertisementModel>
 }
