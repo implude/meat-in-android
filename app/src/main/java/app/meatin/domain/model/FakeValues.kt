@@ -10,14 +10,14 @@ object FakeValues {
         false
     )
     val BADGE = Badge(
-        "https://media.discordapp.net/attachments/880049130813132842/900366666486132786/gold_class.png",
-        "유사 백선생",
-        "백선생급의 어마어마한 요리사",
+        "",
+        "",
+        "",
         ""
     )
     val BRIEF_BADGE = BriefBadge(
-        "https://media.discordapp.net/attachments/880049130813132842/900366666486132786/gold_class.png",
-        "유사 백선생",
+        "",
+        "",
         ""
     )
     val BRIEF_COMMUNITY_USER = BriefCommunityUser(
@@ -36,12 +36,12 @@ object FakeValues {
         "짜잔 맛있는 감자랍니다~"
     )
     val MEAT_TYPE = MeatType(
-        "문어고기",
+        "",
         ""
     )
     val DIFFICULTY = Difficulty(
-        "어려움",
-        8,
+        "",
+        0,
     )
     val BRIEF_RECIPE = BriefRecipe(
         "",
