@@ -58,7 +58,7 @@ fun PostPreviewCard(
 
         if (post.photo != null) {
             Image(
-                contentScale = ContentScale.FillWidth,
+                contentScale = ContentScale.Crop,
                 painter = rememberImagePainter(data = post.photo), contentDescription = "Preview image"
             )
         }
@@ -114,7 +114,7 @@ private fun PostHeader(user: BriefCommunityUser, date: Long) =
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape),
-            painter = rememberImagePainter(data = user.profileImage), contentDescription = "User profile image",
+            painter = rememberImagePainter(data = user.photo), contentDescription = "User profile image",
         )
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
             BadgedUser(user = user)

@@ -408,7 +408,7 @@ private fun Header(recipe: Recipe, onProfileButtonClick: () -> Unit) {
                     end.linkTo(parent.end)
                 }
                 .fillMaxWidth(),
-            user = recipe.author, profileUri = recipe.author.profileImage ?: "",
+            user = recipe.author, profileUri = recipe.author.photo ?: "",
             onClick = onProfileButtonClick,
         )
         Row(
