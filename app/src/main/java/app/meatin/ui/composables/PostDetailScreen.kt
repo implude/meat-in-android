@@ -130,7 +130,7 @@ fun PostDetailScreen(
                             }
                             .shadow(1.dp),
                         user = post.author,
-                        profileUri = post.author.profileImage ?: "",
+                        profileUri = post.author.photo ?: "",
                         onClick = { },
                     )
 
